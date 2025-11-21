@@ -14,7 +14,7 @@ esac
 # --- Fastfetch random logo updater (Zsh) ---
 if [[ $- == *i* ]]; then
     PROFILE_DIR="$HOME/.config/fastfetch/profiles"
-    LOGO_LINK="$HOME/.config/fastfetch/logo.png"
+    LOGO_LINK="$HOME/Pictures/logo.png"
 
     # Collect all PNGs into an array safely (Zsh way)
     png_files=($PROFILE_DIR/*.png(N))
