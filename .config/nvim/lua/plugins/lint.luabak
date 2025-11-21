@@ -1,0 +1,48 @@
+return {
+  "mfussenegger/nvim-lint",
+  name = "lint",
+  event = { "BufReadPost", "BufWritePost" },
+  opts = {
+    linters_by_ft = {
+      php = { "phpcs" },
+    },
+  },
+  config = function(_, opts)
+    local lint = require("lint")
+    lint.linters_by_ft = opts.linters_by_ft
+
+    lint.linters.phpcs = {
+      name = "phpcs",
+      cmd = "ddev",
+
+      args = {
+        "exec",
+        "vendor/bin/phpcs",
+        "--standard=phpcs.xml",
+        "--report=emacs",
+        "--no-colors", -- ✅ THIS is what’s missing
+        "$FILENAME",
+      },
+      stdin = false,
+      stream = "stderr",
+      exit_codes = { 0, 1 },
+      parser = function(output, bufnr)
+        -- Remap /var/www/html/ (inside container) → actual project root (on host)
+        local fixed_output = output:gsub("/var/www/html/", vim.fn.getcwd() .. "/")
+        return require("lint.parser").from_errorformat("%f:%l:%c: %t%*[ ]-%m", {
+          source = "phpcs",
+          severity = {
+            W = vim.diagnostic.severity.WARN,
+            E = vim.diagnostic.severity.ERROR,
+          },
+        })(fixed_output, bufnr)
+      end,
+    }
+
+    vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
+      callback = function()
+        lint.try_lint()
+      end,
+    })
+  end,
+}

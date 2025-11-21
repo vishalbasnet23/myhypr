@@ -1,0 +1,26 @@
+return {
+  "stevearc/conform.nvim",
+  opts = {
+    formatters_by_ft = {
+      php = { "phpcbf" },
+    },
+    formatters = {
+      phpcbf = {
+        command = "ddev",
+        args = function(ctx)
+          return {
+            "exec",
+            "vendor/bin/phpcbf",
+            "--standard=phpcs.xml",
+            ctx.filename,
+          }
+        end,
+        stdin = false,
+        tempfile_postfix = nil,
+        cwd = require("conform.util").root_file({ "phpcs.xml", "composer.json", ".git" }),
+        -- ✅ Tell Conform to allow exit code 3
+        exit_codes = { 0, 1, 2, 3 },
+      },
+    },
+  },
+}
