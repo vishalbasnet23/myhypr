@@ -1,87 +1,39 @@
-#!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# weather info from wttr. https://github.com/chubin/wttr.in
-# Remember to add city 
+#!/usr/bin/env bash
 
-city=
-cachedir="$HOME/.cache/rbn"
-cachefile=${0##*/}-$1
+CACHE_DIR="$HOME/.cache/rbn"
+CACHE_FILE="$CACHE_DIR/Weather.cache"
+mkdir -p "$CACHE_DIR"
 
-if [ ! -d $cachedir ]; then
-    mkdir -p $cachedir
+# Get location (approx)
+LOC=$(curl -s https://ipinfo.io/loc)
+LAT=$(echo "$LOC" | cut -d',' -f1)
+LON=$(echo "$LOC" | cut -d',' -f2)
+
+if [[ -z $LAT || -z $LON ]]; then
+  echo '{"text":"N/A ","alt":"NoLocation","tooltip":"Location error"}'
+  exit 1
 fi
 
-if [ ! -f $cachedir/$cachefile ]; then
-    touch $cachedir/$cachefile
-fi
+# Fetch weather
+WEATHER=$(curl -s "https://api.open-meteo.com/v1/forecast?latitude=$LAT&longitude=$LON&current=temperature_2m,weather_code")
 
-# Save current IFS
-SAVEIFS=$IFS
-# Change IFS to new line.
-IFS=$'\n'
+# Save to cache
+echo "$WEATHER" >"$CACHE_FILE"
 
-cacheage=$(($(date +%s) - $(stat -c '%Y' "$cachedir/$cachefile")))
-if [ $cacheage -gt 1740 ] || [ ! -s $cachedir/$cachefile ]; then
-    data=($(curl -s https://en.wttr.in/"$city"$1\?0qnT 2>&1))
-    echo ${data[0]} | cut -f1 -d, > $cachedir/$cachefile
-    echo ${data[1]} | sed -E 's/^.{15}//' >> $cachedir/$cachefile
-    echo ${data[2]} | sed -E 's/^.{15}//' >> $cachedir/$cachefile
-fi
+TEMP=$(jq '.current.temperature_2m' <<<"$WEATHER")
+CODE=$(jq '.current.weather_code' <<<"$WEATHER")
 
-weather=($(cat $cachedir/$cachefile))
-
-# Restore IFSClear
-IFS=$SAVEIFS
-
-temperature=$(echo ${weather[2]} | sed -E 's/([[:digit:]]+)\.\./\1 to /g')
-
-#echo ${weather[1]##*,}
-
-# https://fontawesome.com/icons?s=solid&c=weather
-case $(echo ${weather[1]##*,} | tr '[:upper:]' '[:lower:]') in
-"clear" | "sunny")
-    condition=""
-    ;;
-"partly cloudy")
-    condition="󰖕"
-    ;;
-"cloudy")
-    condition=""
-    ;;
-"overcast")
-    condition=""
-    ;;
-"fog" | "freezing fog")
-    condition=""
-    ;;
-"patchy rain possible" | "patchy light drizzle" | "light drizzle" | "patchy light rain" | "light rain" | "light rain shower" | "mist" | "rain")
-    condition="󰼳"
-    ;;
-"moderate rain at times" | "moderate rain" | "heavy rain at times" | "heavy rain" | "moderate or heavy rain shower" | "torrential rain shower" | "rain shower")
-    condition=""
-    ;;
-"patchy snow possible" | "patchy sleet possible" | "patchy freezing drizzle possible" | "freezing drizzle" | "heavy freezing drizzle" | "light freezing rain" | "moderate or heavy freezing rain" | "light sleet" | "ice pellets" | "light sleet showers" | "moderate or heavy sleet showers")
-    condition="󰼴"
-    ;;
-"blowing snow" | "moderate or heavy sleet" | "patchy light snow" | "light snow" | "light snow showers")
-    condition="󰙿"
-    ;;
-"blizzard" | "patchy moderate snow" | "moderate snow" | "patchy heavy snow" | "heavy snow" | "moderate or heavy snow with thunder" | "moderate or heavy snow showers")
-    condition=""
-    ;;
-"thundery outbreaks possible" | "patchy light rain with thunder" | "moderate or heavy rain with thunder" | "patchy light snow with thunder")
-    condition=""
-    ;;
-*)
-    condition=""
-    echo -e "{\"text\":\""$condition"\", \"alt\":\""${weather[0]}"\", \"tooltip\":\""${weather[0]}: $temperature ${weather[1]}"\"}"
-    ;;
+# Simple icon map
+case $CODE in
+0) ICON="☀️" ;;
+1 | 2 | 3) ICON="⛅" ;;
+45 | 48) ICON="🌫️" ;;
+51 | 53 | 55) ICON="🌦️" ;;
+61 | 63 | 65) ICON="🌧️" ;;
+71 | 73 | 75) ICON="❄️" ;;
+95 | 96 | 99) ICON="⛈️" ;;
+*) ICON="❓" ;;
 esac
 
-#echo $temp $condition
+echo "{\"text\":\"$TEMP°C $ICON\",\"alt\":\"Weather\",\"tooltip\":\"Temp: $TEMP°C\"}"
 
-echo -e "{\"text\":\""$temperature $condition"\", \"alt\":\""${weather[0]}"\", \"tooltip\":\""${weather[0]}: $temperature ${weather[1]}"\"}"
-
-cached_weather=" $temperature  \n$condition ${weather[1]}"
-
-echo -e $cached_weather >  "$HOME/.cache/.weather_cache"
