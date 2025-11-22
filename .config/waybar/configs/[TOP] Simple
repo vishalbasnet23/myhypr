@@ -29,11 +29,13 @@
     
 "modules-center": [
 	"clock#2",
+  "custom/weather",
 	"group/notify",
 	],
     
 "modules-right": [
 	"hyprland/window",  
+  "power-profiles-daemon",
 	"battery",
  	"group/audio", 
 	"custom/power",
