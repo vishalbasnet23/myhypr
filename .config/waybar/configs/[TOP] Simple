@@ -35,9 +35,11 @@
     
 "modules-right": [
 	"hyprland/window",  
-  "power-profiles-daemon",
 	"battery",
  	"group/audio", 
+  "custom/separator#blank",
+  "power-profiles-daemon",
+  "custom/separator#blank",
 	"custom/power",
 	],
 }
