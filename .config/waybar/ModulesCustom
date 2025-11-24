@@ -272,5 +272,14 @@
 "custom/arrow10": {
 	"format": "",
 	"tooltip": false
+},
+
+"custom/pacupdate": {
+    "exec": "$HOME/.config/hypr/UserScripts/PacmanUpdate.sh",
+    "format": " 󰁈 ",
+    "interval": 21600,
+    "tooltip": true,
+    "tooltip-format": "System updates available: {}",
+    "on-click": "$HOME/.config/hypr/UserScripts/PacmanUpdateTerminal.sh"
 }
 }
