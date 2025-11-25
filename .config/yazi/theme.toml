@@ -4,9 +4,7 @@
 
 
 [flavor]
-dark  = ""
-light = ""
-
+dark= "flexoki-dark"
 
 [mgr]
 cwd = { fg = "green" }
