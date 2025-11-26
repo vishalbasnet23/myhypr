@@ -285,7 +285,7 @@
 },
 
 "network#speed": {
-	"interval": 1,
+	"interval": 3,
 	"format": "{ifname}",
 	"format-wifi": "{icon}  {bandwidthUpBytes}  {bandwidthDownBytes}",
 	"format-ethernet": "󰌘  {bandwidthUpBytes}  {bandwidthDownBytes}",

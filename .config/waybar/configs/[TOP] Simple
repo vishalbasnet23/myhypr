@@ -37,9 +37,7 @@
 	"hyprland/window",  
 	"battery",
  	"group/audio", 
-  "custom/separator#blank",
-  "power-profiles-daemon",
-  "custom/separator#blank",
+  "network#speed",
 	"custom/power",
 	],
 }
