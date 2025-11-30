@@ -30,3 +30,5 @@ if [[ $- == *i* ]]; then
         ln -sf -- "$ACTIVE_LOGO" "$LOGO_LINK"
     fi
 fi
+
+function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
