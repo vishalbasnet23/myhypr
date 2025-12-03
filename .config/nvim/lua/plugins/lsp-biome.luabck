@@ -1,0 +1,31 @@
+return {
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        biome = {
+          -- Properly handle root_dir to exclude Astro files
+          root_dir = function(fname, bufnr)
+            -- Check if it's an Astro file by checking the buffer filetype
+            if bufnr then
+              local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+              if filetype == "astro" then
+                return nil -- Don't activate Biome for Astro files
+              end
+            end
+
+            -- For other files, use standard Biome root detection
+            local util = require("lspconfig.util")
+            return util.root_pattern("biome.json", "biome.jsonc")(fname)
+          end,
+        },
+        astro = {
+          -- Ensure Astro LS can format
+          on_attach = function(client, bufnr)
+            client.server_capabilities.documentFormattingProvider = true
+          end,
+        },
+      },
+    },
+  },
+}
