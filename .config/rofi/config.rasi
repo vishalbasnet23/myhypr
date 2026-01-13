@@ -10,4 +10,3 @@ configuration {
 element-text {
     font:	"JetBrains Mono 12";
 }
-
