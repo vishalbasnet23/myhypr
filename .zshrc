@@ -169,3 +169,7 @@ fi
 
 
 eval "$(/home/vishalbasnet23/.local/bin/mise activate zsh)"
+
+# Added by flyctl installer
+export FLYCTL_INSTALL="/home/vishalbasnet23/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
