@@ -104,6 +104,7 @@
 	"modules": [
 		"custom/swaync",
     "custom/pacupdate",
+    "custom/cycle_wall"
 	]
 },
 
