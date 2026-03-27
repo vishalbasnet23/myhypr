@@ -54,6 +54,15 @@ return {
     end,
   },
   {
+    "biisal/blackhole",
+    priority = 1000,
+    config = function()
+      require("blackhole").setup({
+        transparent = true, -- Enable transparency
+      })
+    end,
+  },
+  {
     "DonJulve/NeoCyberVim.nvim",
     lazy = false,
     priority = 1000,
@@ -74,7 +83,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "NeoCyberVim",
+      colorscheme = "blackhole",
     },
   },
 }

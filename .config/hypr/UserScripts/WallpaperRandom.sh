@@ -1,30 +1,54 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Script for Random Wallpaper ( CTRL ALT W)
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
+# Random Wallpaper with wpaperd + random transitions (CTRL ALT W)
 
-wallDIR="$HOME/Pictures/wallpapers"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
+CONFIG="$HOME/.config/wpaperd/config.toml"
 
-focused_monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+# Get the currently focused monitor name
+MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
 
-PICS=($(find -L ${wallDIR} -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.pnm" -o -name "*.tga" -o -name "*.tiff" -o -name "*.webp" -o -name "*.bmp" -o -name "*.farbfeld" -o -name "*.gif" \)))
-RANDOMPICS=${PICS[ $RANDOM % ${#PICS[@]} ]}
+# List of wpaperd transitions
+TRANSITIONS=(
+  "book-flip"
+  "bounce"
+  "bow-tie-horizontal"
+  "bow-tie-vertical"
+  "circle"
+  "circle-open"
+  "cross-warp"
+  "directional"
+  "dissolve"
+  "doom"
+  "dreamy"
+  "fade"
+  "glitch-displace"
+  "grid-flip"
+  "hexagonalize"
+  "pixelize"
+  "ripple"
+  "rotate-scale-fade"
+  "simple-zoom"
+  "swirl"
+  "water-drop"
+  "window-blinds"
+)
 
+# Pick a random transition
+RANDOM_TRANSITION=${TRANSITIONS[$RANDOM % ${#TRANSITIONS[@]}]}
 
-# Transition config
-FPS=30
-TYPE="random"
-DURATION=1
-BEZIER=".43,1.19,1,.4"
-SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION --transition-bezier $BEZIER"
+# Update the transition in config
+sed -i '/^\[default\.transition\./d' "$CONFIG"
+echo "" >>"$CONFIG"
+echo "[default.transition.$RANDOM_TRANSITION]" >>"$CONFIG"
 
+# Cycle wallpaper on the focused monitor only (monitor name is required)
+wpaperctl next "$MONITOR"
 
-swww query || swww-daemon --format xrgb && swww img -o $focused_monitor ${RANDOMPICS} $SWWW_PARAMS
+# Get current wallpaper path using wpaperd's symlink
+CURRENT_WALL=$(readlink -f "$HOME/.local/state/wpaperd/wallpapers/$MONITOR")
 
-wait $!
-"$SCRIPTSDIR/WallustSwww.sh" &&
-
-# wait $!
-# sleep 2
-# "$SCRIPTSDIR/Refresh.sh"
-
+# Run wallust/color theming hook
+if [ -f "$SCRIPTSDIR/WallustSwww.sh" ]; then
+  "$SCRIPTSDIR/WallustSwww.sh" "$CURRENT_WALL"
+fi
