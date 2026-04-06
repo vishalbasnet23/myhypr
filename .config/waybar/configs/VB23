@@ -28,8 +28,8 @@
 
 "modules-left": [
   "hyprland/workspaces#roman", 
-  "mpris", 
   "tray",
+  "mpris", 
 ],
 
 "modules-center": [
@@ -45,7 +45,7 @@
   "custom/separator#blank",
   "group/audio",
   "custom/separator#blank",
-  "temperature",
+  "group/mobo_drawer",
   "custom/separator#blank",	
   "network",
   "custom/separator#blank",	

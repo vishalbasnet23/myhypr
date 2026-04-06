@@ -1,0 +1,37 @@
+/*
+*
+* Cyberpunk 
+* Maintainer: Vishalbasnet23 
+*
+*/
+
+@define-color base   #0a0a0f;
+@define-color mantle #07070b;
+@define-color crust  #040405;
+
+@define-color text     #f5f7ff;
+@define-color subtext0 #9aa4c7;
+@define-color subtext1 #c2ccff;
+
+@define-color surface0 #12121a;
+@define-color surface1 #1a1a26;
+@define-color surface2 #242438;
+
+@define-color overlay0 #3a3f66;
+@define-color overlay1 #4f5590;
+@define-color overlay2 #6c73c2;
+
+@define-color blue      #3a86ff;
+@define-color lavender  #9b5cff;
+@define-color sapphire  #00bbf9;
+@define-color sky       #00f5ff;
+@define-color teal      #00ffc6;
+@define-color green     #39ff14;
+@define-color yellow    #ffe600;
+@define-color peach     #ff9e00;
+@define-color maroon    #ff006e;
+@define-color red       #ff003c;
+@define-color mauve     #c77dff;
+@define-color pink      #ff4df2;
+@define-color flamingo  #ff7a8a;
+@define-color rosewater #ffb3c1;

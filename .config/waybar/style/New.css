@@ -11,7 +11,7 @@
   /* padding: 0.03125rem; */
 }
 
-@import "../waybar/style/catppuccin-themes/mocha.css";
+@import "../waybar/style/custom/vibrant.css";
 
 window#waybar {
   transition-property: background-color;
@@ -116,6 +116,7 @@ window#waybar.hidden {
 
 #battery {
   color: @green;
+  border-radius: 10px;
 }
 
 @keyframes blink {

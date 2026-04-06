@@ -1,0 +1,37 @@
+/*
+*
+* Vibrant 
+* Maintainer: Vishalbasnet23 
+*
+*/
+
+@define-color base   #1a1c2c;
+@define-color mantle #151726;
+@define-color crust  #0f1120;
+
+@define-color text     #f1f3ff;
+@define-color subtext0 #a9b0d6;
+@define-color subtext1 #c5cbff;
+
+@define-color surface0 #2c2f48;
+@define-color surface1 #3a3e5c;
+@define-color surface2 #4a4f75;
+
+@define-color overlay0 #62689a;
+@define-color overlay1 #7a80b2;
+@define-color overlay2 #969dd1;
+
+@define-color blue      #2979ff;
+@define-color lavender  #8e5cff;
+@define-color sapphire  #00bcd4;
+@define-color sky       #00e5ff;
+@define-color teal      #00d4a3;
+@define-color green     #00e676;
+@define-color yellow    #ffd600;
+@define-color peach     #ff9100;
+@define-color maroon    #ff1744;
+@define-color red       #ff3d00;
+@define-color mauve     #d500f9;
+@define-color pink      #ff4081;
+@define-color flamingo  #ff6e6e;
+@define-color rosewater #ff8fa3;
