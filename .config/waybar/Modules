@@ -139,8 +139,8 @@
 
 "clock#4": {
 	"interval": 60,
-    //"format": "{:%B | %a %d, %Y | %I:%M %p}", // AM PM format
-    "format": "{:%B | %a %d, %Y | %H:%M}", // 24H
+    "format": "{:%B | %a %d, %Y | %I:%M %p}", // AM PM format
+    //"format": "{:%B | %a %d, %Y | %H:%M}", // 24H
 	"format-alt": "{:%a %b %d, %G}",
 	"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
 },
@@ -151,7 +151,12 @@
 	"format-alt": "{:%A, %d %B, %Y (%R)}",
 	"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
 },
-
+"clock#6": {
+    "timezone": "Asia/Kathmandu",
+    "format": "| {:%I:%M %p} NST", //for AM/PM
+    //"format": "  | {:%H:%M - %d/%b}", // 24H
+    "tooltip": false
+},
 "cpu": {
 	"format": "{usage}% 󰍛",
 	"interval": 1,

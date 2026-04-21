@@ -173,3 +173,19 @@ eval "$(/home/vishalbasnet23/.local/bin/mise activate zsh)"
 # Added by flyctl installer
 export FLYCTL_INSTALL="/home/vishalbasnet23/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+zip_clean () {
+  dir="${1:-.}"
+  name="${2:-$(basename "$dir")}.zip"
+
+  zip -r "$name" "$dir" \
+    -x "*/.git/*" \
+       "*/node_modules/*" \
+       "*/.venv/*" \
+       "*/venv/*" \
+       "*/env/*" \
+       "*/__pycache__/*" \
+       "*.pyc"
+
+  echo "✔ Created: $name"
+}

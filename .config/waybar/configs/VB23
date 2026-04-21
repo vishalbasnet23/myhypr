@@ -35,6 +35,7 @@
 "modules-center": [
   "custom/weather",
   "clock#4",
+  "clock#6",
   "group/notify",
 ],
 
