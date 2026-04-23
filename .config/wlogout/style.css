@@ -1,80 +1,130 @@
+/* wlogout — Vibrant Theme */
+
 window {
-  font-family: Fira Code Medium;
-  font-size: 16pt;
-  color: #cdd6f4; /* text */
-  background-color: rgba(30, 30, 46, 0.6);
+  font-family: "Maple Mono NF CN";
+  font-size: 11pt;
+  font-weight: 600;
+  color: #f1f3ff;
+  background-color: rgba(15, 17, 32, 0.75);
 }
 
+/* ---- Base Button ---- */
 button {
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 20%;
-  background-color: rgba(200, 220, 255, 0);
-  border-radius: 80px; /* Increased border radius for a more rounded look */
-  margin: 10px;
-  animation: gradient_f 10s ease-in infinite;
+  background-size: 35%;
+  background-color: transparent;
+  border-radius: 16px;
+  border: 1px solid rgba(97, 104, 154, 0.25);
+  color: #7a80b2;
+  margin: 8px;
+  min-width: 120px;
+  min-height: 120px;
   transition:
-    all 0.3s cubic-bezier(0.55, 0, 0.28, 1.682),
-    box-shadow 0.2s ease-in-out,
-    background-color 0.2s ease-in-out;
+    all 0.25s cubic-bezier(0.55, 0, 0.28, 1.682),
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 button:focus {
-  background-size: 25%;
-  border: 0px;
+  outline: none;
+  background-size: 37%;
+  border-color: rgba(97, 104, 154, 0.5);
 }
 
-button:hover {
-  background-color: rgb(145, 215, 227);
-  color: #1e1e2e;
-  background-size: 70%;
-  margin: 5px;
-  border-radius: 80px;
-}
-
-/* Adjust the size of the icon or content inside the button */
-button span {
-  font-size: 1.2em; /* Increase the font size */
-}
-
+/* ---- Lock — blue ---- */
 #lock {
-  background-image: image(url("./icons/lock.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/lock.png");
+  border-color: rgba(41, 121, 255, 0.25);
 }
 #lock:hover {
-  background-image: image(url("./icons/lock-hover.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/lock-hover.png");
+  background-color: rgba(41, 121, 255, 0.15);
+  border-color: #2979ff;
+  color: #2979ff;
+  margin: 4px;
+}
+#lock:focus {
+  border-color: rgba(41, 121, 255, 0.5);
 }
 
+/* ---- Logout — teal ---- */
 #logout {
-  background-image: image(url("./icons/logout.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/logout.png");
+  border-color: rgba(0, 212, 163, 0.25);
 }
 #logout:hover {
-  background-image: image(url("./icons/logout-hover.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/logout-hover.png");
+  background-color: rgba(0, 212, 163, 0.15);
+  border-color: #00d4a3;
+  color: #00d4a3;
+  margin: 4px;
+}
+#logout:focus {
+  border-color: rgba(0, 212, 163, 0.5);
 }
 
+/* ---- Suspend — sky ---- */
 #suspend {
-  background-image: image(url("./icons/sleep.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/sleep.png");
+  border-color: rgba(0, 229, 255, 0.25);
 }
 #suspend:hover {
-  background-image: image(url("./icons/sleep-hover.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/sleep-hover.png");
+  background-color: rgba(0, 229, 255, 0.12);
+  border-color: #00e5ff;
+  color: #00e5ff;
+  margin: 4px;
+}
+#suspend:focus {
+  border-color: rgba(0, 229, 255, 0.5);
 }
 
-#shutdown {
-  background-image: image(url("./icons/power.png"));
-}
-#shutdown:hover {
-  background-image: image(url("./icons/power-hover.png"));
-}
-
-#reboot {
-  background-image: image(url("./icons/restart.png"));
-}
-#reboot:hover {
-  background-image: image(url("./icons/restart-hover.png"));
-}
-
+/* ---- Hibernate — lavender ---- */
 #hibernate {
-  background-image: image(url("./icons/hibernate.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/hibernate.png");
+  border-color: rgba(142, 92, 255, 0.25);
 }
 #hibernate:hover {
-  background-image: image(url("./icons/hibernate-hover.png"));
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/hibernate-hover.png");
+  background-color: rgba(142, 92, 255, 0.15);
+  border-color: #8e5cff;
+  color: #8e5cff;
+  margin: 4px;
+}
+#hibernate:focus {
+  border-color: rgba(142, 92, 255, 0.5);
+}
+
+/* ---- Reboot — peach ---- */
+#reboot {
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/restart.png");
+  border-color: rgba(255, 145, 0, 0.25);
+}
+#reboot:hover {
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/restart-hover.png");
+  background-color: rgba(255, 145, 0, 0.15);
+  border-color: #ff9100;
+  color: #ff9100;
+  margin: 4px;
+}
+#reboot:focus {
+  border-color: rgba(255, 145, 0, 0.5);
+}
+
+/* ---- Shutdown — pink ---- */
+#shutdown {
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/power.png");
+  border-color: rgba(255, 64, 129, 0.25);
+}
+#shutdown:hover {
+  background-image: url("/home/vishalbasnet23/.config/wlogout/icons/power-hover.png");
+  background-color: rgba(255, 64, 129, 0.15);
+  border-color: #ff4081;
+  color: #ff4081;
+  margin: 4px;
+}
+#shutdown:focus {
+  border-color: rgba(255, 64, 129, 0.5);
 }
