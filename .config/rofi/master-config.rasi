@@ -1,234 +1,293 @@
-/* Master Config */
+/* Master Config — Vibrant Flat Theme */
 
 /* ---- Configuration ---- */
-
 configuration {
-	modi:                       "drun,run,filebrowser";
+    modi:                       "drun,run,filebrowser";
     show-icons:                 true;
     display-drun:               "Apps";
     display-run:                "Run";
     display-filebrowser:        "Files";
     display-window:             "Windows";
-  	drun-display-format:        "{name}";
-	  hover-select:               true;
-	  me-select-entry:            "MouseSecondary";
+    drun-display-format:        "{name}";
+    hover-select:               true;
+    me-select-entry:            "MouseSecondary";
     me-accept-entry:            "MousePrimary";
-	  window-format:              "{w} · {c} · {t}";
-	  dpi:						1;
+    window-format:              "{w} · {c} · {t}";
+    dpi:                        1;
 }
 
-/* ---- Load wallust colors ---- */
-@theme "~/.config/rofi/wallust/colors-rofi.rasi"
-
-/* ---- Global Properties ---- */
+/* ---- Vibrant Color Palette ---- */
 * {
+    base:           #1a1c2c;
+    mantle:         #151726;
+    crust:          #0f1120;
 
-    background-alt:              @selected-active-background; // Buttons background
-    selected:                    #9399b2; // Button selected
-    active:                      @selected-normal-background; // Window activated
-    urgent:                      @selected; // When hovering the activated window (maybe more?)
+    text:           #f1f3ff;
+    subtext0:       #a9b0d6;
+    subtext1:       #c5cbff;
 
-    text-selected:               #181825;
-    text-color:                  #c6e6f3;
-    border-color:                @selected;
+    surface0:       #2c2f48;
+    surface1:       #3a3e5c;
+    surface2:       #4a4f75;
+
+    overlay0:       #62689a;
+    overlay1:       #7a80b2;
+    overlay2:       #969dd1;
+
+    blue:           #2979ff;
+    lavender:       #8e5cff;
+    sapphire:       #00bcd4;
+    sky:            #00e5ff;
+    teal:           #00d4a3;
+    green:          #00e676;
+    yellow:         #ffd600;
+    peach:          #ff9100;
+    maroon:         #ff1744;
+    red:            #ff3d00;
+    mauve:          #d500f9;
+    pink:           #ff4081;
+    flamingo:       #ff6e6e;
+    rosewater:      #ff8fa3;
+
+    /* Semantic roles */
+    text-color:                  @text;
+    background-color:            transparent;
+    border-color:                @blue;
 }
 
 /* ---- Window ---- */
 window {
-    // Default
     enabled:                    true;
     fullscreen:                 false;
     transparency:               "real";
     cursor:                     "default";
     spacing:                    0px;
+
+    /* Flat — left accent border only, like swaync */
     border:                     0px;
-    border-radius:              14px;
+    border-radius:              0px;
+
     location:                   center;
     anchor:                     center;
-
-    // Style Values
-    width:                      44%;
-    background-color:           #0E0E16;
+    width:                      42%;
+    background-color:           rgba(15, 17, 32, 0.60);
 }
 
-/* ----- Main Box ----- */
+/* ---- Mainbox ---- */
 mainbox {
-    padding:			5px;
-    enabled:                     true;
-    orientation:                 vertical;
-    children:                    [ "inputbar", "listbox" ];
-    background-color:            #0E0E16;
-}
+    padding:                    14px;
+    enabled:                    true;
+    orientation:                vertical;
+    spacing:                    10px;
+    children:                   [ "inputbar", "listbox" ];
+    background-color:           transparent;
 
+    /* Blue left accent strip — mirrors swaync control center */
+    border:                     2px 2px 2px 2px;
+    border-color:               @lavender;
+    border-radius:              0px;
+}
 
 /* ---- Inputbar ---- */
 inputbar {
-    enabled:                     true;
-    padding:                     0px 0px 0px 0px;
-    margin:                      10px;
-    background-color:            transparent;
-    orientation:                 horizontal;
-    children:                    ["entry", "dummy", "mode-switcher" ];
-    
+    enabled:                    true;
+    padding:                    10px 14px;
+    margin:                     0px 0px 4px 0px;
+    border-radius:              0px;
+
+    /* Subtle bottom divider in teal */
+    border:                     0px 0px 1px 0px;
+    border-color:               rgba(0, 212, 163, 0.35);
+    background-color:           rgba(44, 47, 72, 0.45);
+    orientation:                horizontal;
+    children:                   [ "entry", "dummy", "mode-switcher" ];
 }
 
-/* ---- Entry input ---- */
+/* ---- Entry ---- */
 entry {
-    font: "JetBrainsMono Nerd Font 13";
-    enabled:                     true;
-    expand:                      false;
-    width:                       100%;
-    padding:                     0px;
-    border-radius:               1px;
-    background-color:            #0E0E16;
-    text-color:                  #cdd6f4;
-    cursor:                      text;
-    placeholder:                 "  Search "; // << Search symbol
-    placeholder-color:           inherit;
+    font:                       "Maple Mono NF CN 13";
+    enabled:                    true;
+    expand:                     false;
+    width:                      100%;
+    padding:                    2px 0px;
+    background-color:           transparent;
+    text-color:                 @text;
+    cursor:                     text;
+    placeholder:                "  Search ";
+    placeholder-color:          @overlay1;
 }
 
 /* ---- Listbox ---- */
 listbox {
-    spacing:                     10px;
-    padding:                     0px;
-    background-color:            transparent;
-    orientation:                 vertical;
-    children:                    ["listview" ];
+    spacing:                    6px;
+    padding:                    0px;
+    background-color:           transparent;
+    orientation:                vertical;
+    children:                   [ "listview" ];
 }
 
 /* ---- Listview ---- */
 listview {
-    enabled:                     true;
-    columns:                     1;
-    lines:                       8;
-    cycle:                       true;
-    dynamic:                     true;
-    scrollbar:                   true;
-    layout:                      vertical;
-    reverse:                     false;
-    fixed-height:                false;
-    fixed-columns:               true;    
-    spacing:                     8px;
-    background-color:            transparent;
-
-//  Adapt rofi theme
-    border:                      0px;
+    enabled:                    true;
+    columns:                    1;
+    lines:                      8;
+    cycle:                      true;
+    dynamic:                    true;
+    scrollbar:                  true;
+    layout:                     vertical;
+    reverse:                    false;
+    fixed-height:               false;
+    fixed-columns:              true;
+    spacing:                    2px;
+    background-color:           transparent;
+    border:                     0px;
+    border-radius:              0px;
 }
 
-/* ---- Dummy ---- */
+/* ---- Dummy spacer ---- */
 dummy {
-    expand:                      true;
-    background-color:            transparent;
+    expand:                     true;
+    background-color:           transparent;
 }
 
 /* ---- Mode Switcher ---- */
-mode-switcher{
-    enabled:                     true;
-    spacing:                     10px;
-    background-color:            transparent;
+mode-switcher {
+    enabled:                    true;
+    spacing:                    6px;
+    background-color:           transparent;
 }
+
+/* Each button gets a different accent — blue, teal, lavender */
 button {
-    width:                       4%;
-    padding:                     0px;
-    border-radius:               7px;
-    background-color:            @text-selected;
-    text-color:                  @text-color;
-    cursor:                      pointer;
+    padding:                    2px 12px;
+    border-radius:              0px;
+    background-color:           rgba(44, 47, 72, 0.55);
+    text-color:                 @subtext1;
+    cursor:                     pointer;
+    font:                       "Maple Mono NF CN 11";
+    border:                     0px 0px 0px 2px;
+    border-color:               @blue;
 }
+
 button selected {
-    background-color:            @selected;
-    text-color:                  @text-selected;
+    background-color:           rgba(41, 121, 255, 0.25);
+    text-color:                 @sky;
+    border-color:               @sky;
 }
 
 /* ---- Scrollbar ---- */
 scrollbar {
-    width:        4px;
-    border:       0;
-    handle-color: @border-color;
-    handle-width: 8px;
-    padding:      0;
-    border-radius:      12px;
+    width:                      3px;
+    border:                     0;
+    handle-color:               rgba(41, 121, 255, 0.6);
+    handle-width:               6px;
+    padding:                    0;
+    border-radius:              0px;
 }
 
 /* ---- Elements ---- */
 element {
-    enabled:                     true;
-    spacing:                     10px;
-    padding:                     5px;
-    border-radius:               5px;
-    background-color:            transparent;
-    cursor:                      pointer;
+    enabled:                    true;
+    spacing:                    10px;
+    padding:                    7px 10px;
+    border-radius:              0px;
+    background-color:           transparent;
+    cursor:                     pointer;
+
+    /* Left accent strip — default blue */
+    border:                     0px 0px 0px 2px;
+    border-color:               transparent;
 }
 
+/* Normal items — no strip until hovered/selected */
 element normal.normal {
-    background-color:            inherit;
-    text-color:                  inherit;
+    background-color:           transparent;
+    text-color:                 @text;
+    border-color:               transparent;
 }
 element normal.urgent {
-    background-color:            @urgent;
-    text-color:                  @foreground;
+    background-color:           rgba(255, 64, 129, 0.10);
+    text-color:                 @pink;
+    border-color:               @pink;
 }
 element normal.active {
-    background-color:            @active;
-    text-color:                  @foreground;
+    background-color:           rgba(0, 212, 163, 0.10);
+    text-color:                 @teal;
+    border-color:               @teal;
 }
 
+/* Selected — blue strip + tinted bg */
 element selected.normal {
-    background-color:            @selected;
-    text-color:                  @text-selected;
+    background-color:           rgba(41, 121, 255, 0.18);
+    text-color:                 @text;
+    border-color:               @blue;
 }
 element selected.urgent {
-    background-color:            @urgent;
-    text-color:                  @text-selected;
+    background-color:           rgba(255, 64, 129, 0.25);
+    text-color:                 @text;
+    border-color:               @pink;
 }
 element selected.active {
-    background-color:            @urgent;
-    text-color:                  @text-selected;
+    background-color:           rgba(0, 212, 163, 0.20);
+    text-color:                 @text;
+    border-color:               @teal;
 }
-// Adapt rofi theme
+
+/* Alternating rows — very subtle lavender strip */
 element alternate.normal {
-    background-color:            transparent;
-    text-color:                  inherit;
+    background-color:           rgba(44, 47, 72, 0.20);
+    text-color:                 @subtext1;
+    border-color:               transparent;
 }
 element alternate.urgent {
-    background-color:            transparent;
-    text-color:                  inherit;
+    background-color:           transparent;
+    text-color:                 @pink;
+    border-color:               transparent;
 }
 element alternate.active {
-    background-color:            transparent;
-    text-color:                  inherit;
+    background-color:           transparent;
+    text-color:                 @teal;
+    border-color:               transparent;
 }
+
 element-icon {
-    background-color:            transparent;
-    text-color:                  inherit;
-    size:                        20px;
-    cursor:                      inherit;
+    background-color:           transparent;
+    text-color:                 inherit;
+    size:                       22px;
+    cursor:                     inherit;
 }
+
 element-text {
-    background-color:            transparent;
-    text-color:                  inherit;
-    cursor:                      inherit;
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
-
+    background-color:           transparent;
+    text-color:                 inherit;
+    cursor:                     inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
 }
 
-/* ---- Message ---- */
+/* ---- Message / Textbox ---- */
 message {
-    background-color:            transparent;
-    border:                      0px;
+    background-color:           transparent;
+    border:                     0px;
+    border-radius:              0px;
 }
+
 textbox {
-    padding:                     4px;
-    border-radius:               12px;
-    background-color:            @background-alt;
-    text-color:                  @background;
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
+    padding:                    6px 10px;
+    border-radius:              0px;
+    border:                     0px 0px 0px 2px;
+    border-color:               @sapphire;
+    background-color:           rgba(44, 47, 72, 0.50);
+    text-color:                 @subtext1;
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
 }
+
 error-message {
-    padding:                     12px;
-    border-radius:               20px;
-    background-color:            @background-alt;
-    text-color:                  @background;
+    padding:                    14px;
+    border-radius:              0px;
+    border:                     0px 0px 0px 3px;
+    border-color:               @pink;
+    background-color:           rgba(255, 64, 129, 0.12);
+    text-color:                 @pink;
 }

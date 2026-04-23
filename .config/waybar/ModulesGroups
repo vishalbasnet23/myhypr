@@ -137,4 +137,16 @@
         "custom/reboot"
       ]
 },
+"group/time": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 300,
+        "children-class": "custom/time",
+        "transition-left-to-right": false,
+      },
+      "modules": [
+        "clock#4",
+        "clock#6"
+      ]
+  }
 }

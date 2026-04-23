@@ -153,7 +153,7 @@
 },
 "clock#6": {
     "timezone": "Asia/Kathmandu",
-    "format": "| {:%I:%M %p} NST", //for AM/PM
+    "format": "{:%I:%M %p} NST", //for AM/PM
     //"format": "  | {:%H:%M - %d/%b}", // 24H
     "tooltip": false
 },

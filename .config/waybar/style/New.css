@@ -1,14 +1,9 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Catppuccin Mocha */
-
 * {
-  font-family: "JetBrainsMono Nerd Font";
-  font-weight: bold;
+  font-family: "Maple Mono NF CN";
+  font-weight: 600;
   min-height: 0;
-  /* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
   font-size: 97%;
   font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
-  /* padding: 0.03125rem; */
 }
 
 @import "../waybar/style/custom/vibrant.css";
@@ -17,8 +12,6 @@ window#waybar {
   transition-property: background-color;
   transition-duration: 0.5s;
   background: transparent;
-  /*border: 2px solid @overlay0;*/
-  /*background: @theme_base_color;*/
   border-radius: 10px;
 }
 
@@ -30,15 +23,14 @@ window#waybar.hidden {
   background: none;
 }
 
-/* This section can be use if you want to separate waybar modules */
+/* ---- Module Groups ---- */
 .modules-left,
 .modules-center,
 .modules-right {
-  font-weight: bold;
+  font-weight: 600;
   margin: 0px 10px;
   margin-top: 4px;
   background: #0e0e16;
-  border: 0px solid @overlay0;
   padding-top: 0px;
   padding-bottom: 0px;
   padding-right: 4px;
@@ -46,15 +38,32 @@ window#waybar.hidden {
   border-radius: 20px;
 }
 
-.modules-left,
-.modules-right {
-  border: 0px solid @blue;
+/* Left — blue border */
+.modules-left {
+  border: 2px solid @blue;
   padding-top: 1px;
   padding-bottom: 1px;
   padding-right: 4px;
   padding-left: 4px;
 }
 
+/* Center — teal border */
+.modules-center {
+  border: 2px solid @teal;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* Right — lavender border */
+.modules-right {
+  border: 2px solid @lavender;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
+/* ---- All Modules Base ---- */
 #backlight,
 #backlight-slider,
 #battery,
@@ -105,6 +114,7 @@ window#waybar.hidden {
   padding-left: 6px;
 }
 
+/* ---- Module Colors ---- */
 #idle_inhibitor {
   color: @blue;
 }
@@ -127,7 +137,7 @@ window#waybar.hidden {
 
 #battery.critical:not(.charging) {
   background-color: @red;
-  color: @theme_text_color;
+  color: @text;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;
@@ -172,21 +182,24 @@ window#waybar.hidden {
   color: @flamingo;
 }
 
+/* ---- Workspaces ---- */
 #workspaces button {
   box-shadow: none;
   text-shadow: none;
   padding: 0px;
-  border-radius: 9px;
+  border-radius: 0px;
   padding-left: 4px;
   padding-right: 4px;
+  border-bottom: 2px solid transparent;
   animation: gradient_f 20s ease-in infinite;
   transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
 
 #workspaces button:hover {
-  border-radius: 10px;
+  border-radius: 0px;
   color: @overlay0;
   background-color: @surface0;
+  border-bottom: 2px solid @overlay1;
   padding-left: 2px;
   padding-right: 2px;
   animation: gradient_f 20s ease-in infinite;
@@ -195,12 +208,14 @@ window#waybar.hidden {
 
 #workspaces button.persistent {
   color: @surface1;
-  border-radius: 10px;
+  border-radius: 0px;
+  border-bottom: 2px solid transparent;
 }
 
 #workspaces button.active {
   color: @teal;
-  border-radius: 10px;
+  border-radius: 0px;
+  border-bottom: 2px solid @teal;
   padding-left: 8px;
   padding-right: 8px;
   animation: gradient_f 20s ease-in infinite;
@@ -210,8 +225,10 @@ window#waybar.hidden {
 #workspaces button.urgent {
   color: @red;
   border-radius: 0px;
+  border-bottom: 2px solid @red;
 }
 
+/* ---- Taskbar ---- */
 #taskbar button.active {
   padding-left: 8px;
   padding-right: 8px;
@@ -226,6 +243,7 @@ window#waybar.hidden {
   transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
 
+/* ---- Custom Modules ---- */
 #custom-cava_mviz {
   color: @pink;
 }
@@ -239,7 +257,7 @@ window#waybar.hidden {
 }
 
 #custom-updater {
-  color: @red;
+  color: @peach;
 }
 
 #custom-light_dark {
@@ -254,6 +272,7 @@ window#waybar.hidden {
   color: @maroon;
 }
 
+/* ---- Audio ---- */
 #pulseaudio {
   color: @green;
 }
@@ -261,26 +280,33 @@ window#waybar.hidden {
 #pulseaudio.bluetooth {
   color: @pink;
 }
+
 #pulseaudio.muted {
   color: @red;
 }
 
+/* ---- Window Title ---- */
 #window {
   color: @mauve;
 }
 
+/* ---- MPRIS ---- */
 #custom-waybar-mpris {
   color: @lavender;
 }
 
+/* ---- Network ---- */
 #network {
   color: @teal;
 }
+
 #network.disconnected,
 #network.disabled {
   background-color: @surface0;
   color: @text;
 }
+
+/* ---- Sliders ---- */
 #pulseaudio-slider slider {
   min-width: 0px;
   min-height: 0px;

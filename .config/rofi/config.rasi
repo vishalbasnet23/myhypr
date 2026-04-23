@@ -4,9 +4,8 @@
 
 /* ---- Configuration ---- */
 configuration {
-	font: "JetBrains Mono 10";
+    font: "Maple Mono NF CN 10";
 }
-
 element-text {
-    font:	"JetBrains Mono 12";
+    font: "Maple Mono NF CN 12";
 }
