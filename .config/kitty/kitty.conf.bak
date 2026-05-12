@@ -46,10 +46,12 @@ tab_bar_align right
 tab_bar_style powerline
 tab_powerline_style slanted
 tab_title_template "{index}: {title}"
-# active_tab_foreground   #333333
-# active_tab_background   #FFF01F
-# inactive_tab_foreground #333333
-# inactive_tab_background #FE347E
+
+active_tab_foreground   #333333
+active_tab_background   #FFF01F
+
+inactive_tab_foreground #333333
+inactive_tab_background #FE347E
 
 
 # ==============================
@@ -81,10 +83,4 @@ map ctrl+alt+f toggle_fullscreen
 # include monokai-soda.conf
 # include cyberpunk.conf
 #
-# include encom.conf
-
-
-# BEGIN_KITTY_THEME
-# Copland OS
-include current-theme.conf
-# END_KITTY_THEME
+include encom.conf

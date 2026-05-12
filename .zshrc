@@ -185,7 +185,10 @@ zip_clean () {
        "*/venv/*" \
        "*/env/*" \
        "*/__pycache__/*" \
-       "*.pyc"
+       "*.pyc" \
+      "*/.next/*" \
+      "*/.claude/*" \
 
   echo "✔ Created: $name"
 }
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"

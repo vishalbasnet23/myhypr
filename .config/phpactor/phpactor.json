@@ -1,0 +1,9 @@
+{
+  "composer.enable": true,
+  "php.version": "8.3",
+  "worse_reflection.additive_stubs": [
+    "/home/vishalbasnet23/.config/composer/vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"
+  ],
+  "indexer.enabled_watchers": ["find"],
+  "indexer.follow_symlinks": true
+}
