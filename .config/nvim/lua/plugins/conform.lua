@@ -10,6 +10,7 @@ return {
       json = { "biome", "prettier", stop_after_first = true },
       jsonc = { "biome", "prettier", stop_after_first = true },
       php = { "phpcbf" },
+      blade = { "blade-formatter" },
     },
     formatters = {
       biome = {
