@@ -1,10 +1,19 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# This is for changing kb_layouts. Set kb_layouts in $settings_file
+# This is for changing kb_layouts. Set kb_layout in UserConfigs/UserSettings.lua
+#
+# MIGRATION (Lua config): this used to grep `kb_layout = ` out of UserSettings.conf. That
+# no longer matches the Lua syntax, and grepping the file was always fragile (it also
+# matched commented-out lines). We now ask Hyprland for the *running* value with
+# `hyprctl getoption input:kb_layout`, which is config-format agnostic.
 
 layout_file="$HOME/.cache/kb_layout"
-settings_file="$HOME/.config/hypr/UserConfigs/UserSettings.conf"
 notif_icon="$HOME/.config/swaync/images/ja.png"
+
+# Comma-separated list of configured layouts, straight from the compositor.
+read_kb_layouts() {
+  hyprctl -j getoption input:kb_layout 2>/dev/null | jq -r '.str // empty' | tr -d '[:space:]'
+}
 
 # Refined ignore list with patterns or specific device names
 ignore_patterns=(
@@ -15,10 +24,12 @@ ignore_patterns=(
   )
 
 
+kb_layout_line=$(read_kb_layouts)
+
 # Create layout file with default layout if it does not exist
 if [ ! -f "$layout_file" ]; then
   echo "Creating layout file..."
-  default_layout=$(grep 'kb_layout = ' "$settings_file" | cut -d '=' -f 2 | tr -d '[:space:]' | cut -d ',' -f 1 2>/dev/null)
+  default_layout=$(echo "$kb_layout_line" | cut -d ',' -f 1)
   default_layout=${default_layout:-"us"} # Default to 'us' layout
   echo "$default_layout" > "$layout_file"
   echo "Default layout set to $default_layout"
@@ -27,16 +38,12 @@ fi
 current_layout=$(cat "$layout_file")
 echo "Current layout: $current_layout"
 
-# Read available layouts from settings file
-if [ -f "$settings_file" ]; then
-  kb_layout_line=$(grep 'kb_layout = ' "$settings_file" | cut -d '=' -f 2)
-  # Remove leading and trailing spaces around each layout
-  kb_layout_line=$(echo "$kb_layout_line" | tr -d '[:space:]')
-  IFS=',' read -r -a layout_mapping <<< "$kb_layout_line"
-else
-  echo "Settings file not found!"
+# Read available layouts from the running Hyprland config
+if [ -z "$kb_layout_line" ]; then
+  echo "Could not read input:kb_layout from Hyprland (is it running?)"
   exit 1
 fi
+IFS=',' read -r -a layout_mapping <<< "$kb_layout_line"
 
 layout_count=${#layout_mapping[@]}
 echo "Number of layouts: $layout_count"

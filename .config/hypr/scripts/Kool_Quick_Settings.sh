@@ -2,12 +2,12 @@
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Rofi menu for KooL Hyprland Quick Settings (SUPER SHIFT E)
 
-# Modify this config file for default terminal and EDITOR
-config_file="$HOME/.config/hypr/UserConfigs/01-UserDefaults.conf"
-
-tmp_config_file=$(mktemp)
-sed 's/^\$//g; s/ = /=/g' "$config_file" >"$tmp_config_file"
-source "$tmp_config_file"
+# Modify UserConfigs/01-UserDefaults.lua for default terminal and EDITOR
+#
+# MIGRATION (Lua config): 01-UserDefaults is now a .lua file returning a table, so the old
+# mktemp + sed + source dance no longer works. The shared helper reads the Lua table and
+# exports $term / $files / $edit / $Search_Engine.
+source "$HOME/.config/hypr/scripts/UserDefaults.sh" || exit 1
 # ##################################### #
 
 # variables
@@ -32,6 +32,7 @@ view/edit Decorations
 view/edit Animations
 view/edit Laptop Keybinds
 view/edit Default Keybinds
+view/edit Main Config
 Choose Kitty Terminal Theme
 Configure Monitors (nwg-displays)
 Configure Workspace Rules (nwg-displays)
@@ -53,16 +54,27 @@ main() {
 
   # Map choices to corresponding files
   case "$choice" in
-  "view/edit User Defaults") file="$UserConfigs/01-UserDefaults.conf" ;;
-  "view/edit ENV variables") file="$UserConfigs/ENVariables.conf" ;;
-  "view/edit Window Rules") file="$UserConfigs/WindowRules.conf" ;;
-  "view/edit User Keybinds") file="$UserConfigs/UserKeybinds.conf" ;;
-  "view/edit User Settings") file="$UserConfigs/UserSettings.conf" ;;
-  "view/edit Startup Apps") file="$UserConfigs/Startup_Apps.conf" ;;
-  "view/edit Decorations") file="$UserConfigs/UserDecorations.conf" ;;
-  "view/edit Animations") file="$UserConfigs/UserAnimations.conf" ;;
-  "view/edit Laptop Keybinds") file="$UserConfigs/Laptops.conf" ;;
-  "view/edit Default Keybinds") file="$configs/Keybinds.conf" ;;
+  # MIGRATION (Lua config): all of these are now .lua
+  "view/edit User Defaults") file="$UserConfigs/01-UserDefaults.lua" ;;
+  "view/edit ENV variables") file="$UserConfigs/ENVariables.lua" ;;
+  "view/edit Window Rules") file="$UserConfigs/WindowRules.lua" ;;
+  "view/edit User Keybinds") file="$UserConfigs/UserKeybinds.lua" ;;
+  "view/edit User Settings") file="$UserConfigs/UserSettings.lua" ;;
+  "view/edit Startup Apps") file="$UserConfigs/Startup_Apps.lua" ;;
+  "view/edit Decorations") file="$UserConfigs/UserDecorations.lua" ;;
+  "view/edit Animations") file="$UserConfigs/UserAnimations.lua" ;;
+  "view/edit Laptop Keybinds") file="$UserConfigs/Laptops.lua" ;;
+  "view/edit Default Keybinds") file="$configs/Keybinds.lua" ;;
+  # Point at the staged entry point until the migration is actually activated —
+  # otherwise opening this entry in an editor and saving would CREATE hyprland.lua,
+  # which is exactly what flips Hyprland from the .conf config to the Lua one.
+  "view/edit Main Config")
+    if [[ -f "$HOME/.config/hypr/hyprland.lua" ]]; then
+      file="$HOME/.config/hypr/hyprland.lua"
+    else
+      file="$HOME/.config/hypr/hyprland.lua.new"
+    fi
+    ;;
   "Choose Kitty Terminal Theme") $scriptsDir/Kitty_themes.sh ;;
   "Configure Monitors (nwg-displays)")
     if ! command -v nwg-displays &>/dev/null; then

@@ -49,10 +49,12 @@ echo -e "Local changes synced to repo..."
 
 # === Apply custom modifications before commit/push ===
 
-# 1. Modify kb_options in UserSettings.conf
-USERS_CONF="$REPO_DIR/.config/hypr/UserConfigs/UserSettings.conf"
+# 1. Modify kb_options in UserSettings.lua
+# MIGRATION (Lua config): retargeted from UserSettings.conf, and the value is now a
+# quoted Lua string (`kb_options = "ctrl:nocaps",`) rather than a bare hyprlang value.
+USERS_CONF="$REPO_DIR/.config/hypr/UserConfigs/UserSettings.lua"
 if [ -f "$USERS_CONF" ]; then
-  sed -i 's/kb_options = ctrl:nocaps/kb_options =/' "$USERS_CONF"
+  sed -i 's/kb_options = "ctrl:nocaps"/kb_options = ""/' "$USERS_CONF"
 fi
 
 # 2. Update hyprland.conf label block (LC_TIME and font_family)

@@ -132,24 +132,43 @@ set_sddm_wallpaper() {
 
 modify_startup_config() {
   local selected_file="$1"
-  local startup_config="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
+  local startup_config="$HOME/.config/hypr/UserConfigs/Startup_Apps.lua"
+
+  # MIGRATION (Lua config): retargeted from Startup_Apps.conf to Startup_Apps.lua.
+  #  * comment marker is `--`, not `#`
+  #  * the line is `hl.exec_cmd("awww-daemon")`, not `exec-once = awww-daemon`
+  #  * `$livewallpaper = ...` is now `local livewallpaper = ...`
+  #
+  # BUGFIX while migrating: the old awww-daemon patterns required `--format xrgb`, which
+  # the actual line (`exec-once = awww-daemon`) never had — so the image/video toggle for
+  # that line silently did nothing. The patterns below match the real line.
+
+  if [[ ! -f "$startup_config" ]]; then
+    echo "Warning: $startup_config not found, skipping startup config update." >&2
+    return 0
+  fi
 
   # Check if it's a live wallpaper (video)
   if [[ "$selected_file" =~ \.(mp4|mkv|mov|webm)$ ]]; then
-    # For video wallpapers:
-    sed -i '/^\s*exec-once\s*=\s*awww-daemon\s*--format\s*xrgb\s*$/s/^/\#/' "$startup_config"
-    sed -i '/^\s*#\s*exec-once\s*=\s*mpvpaper\s*.*$/s/^#\s*//;' "$startup_config"
+    # For video wallpapers: disable awww-daemon, enable mpvpaper
+    sed -i 's|^\([[:space:]]*\)hl\.exec_cmd("awww-daemon")|\1-- hl.exec_cmd("awww-daemon")|' "$startup_config"
+    sed -i 's|^\([[:space:]]*\)--[[:space:]]*hl\.exec_cmd("mpvpaper|\1hl.exec_cmd("mpvpaper|' "$startup_config"
 
-    # Update the livewallpaper variable with the selected video path (using $HOME)
-    selected_file="${selected_file/#$HOME/\$HOME}" # Replace /home/user with $HOME
-    sed -i "s|^\$livewallpaper=.*|\$livewallpaper=\"$selected_file\"|" "$startup_config"
+    # Update the livewallpaper variable, keeping it $HOME-relative where possible so the
+    # dotfiles stay portable (the Lua file already defines `HOME`).
+    local lua_path
+    if [[ "$selected_file" == "$HOME"/* ]]; then
+      lua_path="HOME .. \"${selected_file#"$HOME"}\""
+    else
+      lua_path="\"$selected_file\""
+    fi
+    sed -i "s|^local livewallpaper = .*|local livewallpaper = $lua_path|" "$startup_config"
 
     echo "Configured for live wallpaper (video)."
   else
-    # For image wallpapers:
-    sed -i '/^\s*#\s*exec-once\s*=\s*awww-daemon\s*--format\s*xrgb\s*$/s/^\s*#\s*//;' "$startup_config"
-
-    sed -i '/^\s*exec-once\s*=\s*mpvpaper\s*.*$/s/^/\#/' "$startup_config"
+    # For image wallpapers: enable awww-daemon, disable mpvpaper
+    sed -i 's|^\([[:space:]]*\)--[[:space:]]*hl\.exec_cmd("awww-daemon")|\1hl.exec_cmd("awww-daemon")|' "$startup_config"
+    sed -i 's|^\([[:space:]]*\)hl\.exec_cmd("mpvpaper|\1-- hl.exec_cmd("mpvpaper|' "$startup_config"
 
     echo "Configured for static wallpaper (image)."
   fi

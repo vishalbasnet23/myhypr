@@ -1,21 +1,11 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  #
-# This file used on waybar modules sourcing defaults set in $HOME/.config/hypr/UserConfigs/01-UserDefaults.conf
+# This file used on waybar modules sourcing defaults set in $HOME/.config/hypr/UserConfigs/01-UserDefaults.lua
 
-# Define the path to the config file
-config_file=$HOME/.config/hypr/UserConfigs/01-UserDefaults.conf
-
-# Check if the config file exists
-if [[ ! -f "$config_file" ]]; then
-    echo "Error: Configuration file not found!"
-    exit 1
-fi
-
-# Process the config file in memory, removing the $ and fixing spaces
-config_content=$(sed 's/\$//g' "$config_file" | sed 's/ = /=/')
-
-# Source the modified content directly from the variable
-eval "$config_content"
+# MIGRATION (Lua config): 01-UserDefaults is now a .lua file returning a table, so the old
+# `sed 's/\$//g' | eval` trick against the .conf no longer works. The shared helper reads
+# the Lua table and exports $term / $files / $edit / $Search_Engine.
+source "$HOME/.config/hypr/scripts/UserDefaults.sh" || exit 1
 
 # Check if $term is set correctly
 if [[ -z "$term" ]]; then

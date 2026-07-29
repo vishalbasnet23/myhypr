@@ -18,23 +18,27 @@
 
 
 
-# This is for changing kb_layouts. Set kb_layouts in 
+# This is for changing kb_layouts. Set kb_layout in UserConfigs/UserSettings.lua
+#
+# MIGRATION (Lua config): this used to grep `kb_layout` out of UserSettings.conf, which
+# does not match Lua syntax and also matched `kb_layout` in comments. We now read the
+# running value with `hyprctl getoption input:kb_layout` — format agnostic and always
+# in sync with what the compositor actually loaded.
 
 MAP_FILE="$HOME/.cache/kb_layout_per_window"
-CFG_FILE="$HOME/.config/hypr/UserConfigs/UserSettings.conf"
 ICON="$HOME/.config/swaync/images/ja.png"
 SCRIPT_NAME="$(basename "$0")"
 
 # Ensure map file exists
 touch "$MAP_FILE"
 
-# Read layouts from config
-if ! grep -q 'kb_layout' "$CFG_FILE"; then
-  echo "Error: cannot find kb_layout in $CFG_FILE" >&2
+# Read layouts from the running Hyprland config
+kb_layouts=($(hyprctl -j getoption input:kb_layout 2>/dev/null | jq -r '.str // empty' | tr -d '[:space:]' | tr ',' ' '))
+count=${#kb_layouts[@]}
+if [ "$count" -eq 0 ]; then
+  echo "Error: cannot read input:kb_layout from Hyprland (is it running?)" >&2
   exit 1
 fi
-kb_layouts=($(grep 'kb_layout' "$CFG_FILE" | cut -d '=' -f2 | tr -d '[:space:]' | tr ',' ' '))
-count=${#kb_layouts[@]}
 
 # Get current active window ID
 get_win() {

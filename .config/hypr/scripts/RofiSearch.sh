@@ -2,22 +2,12 @@
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # For Searching via web browsers
 
-# Define the path to the config file
-config_file=$HOME/.config/hypr/UserConfigs/01-UserDefaults.conf
+# MIGRATION (Lua config): 01-UserDefaults is now a .lua file returning a table, so the old
+# `sed 's/\$//g' | eval` trick against the .conf no longer works. The shared helper reads
+# the Lua table and exports $term / $files / $edit / $Search_Engine.
+source "$HOME/.config/hypr/scripts/UserDefaults.sh" || exit 1
 
-# Check if the config file exists
-if [[ ! -f "$config_file" ]]; then
-    echo "Error: Configuration file not found!"
-    exit 1
-fi
-
-# Process the config file in memory, removing the $ and fixing spaces
-config_content=$(sed 's/\$//g' "$config_file" | sed 's/ = /=/')
-
-# Source the modified content directly from the variable
-eval "$config_content"
-
-# Check if $term is set correctly
+# Check if $Search_Engine is set correctly
 if [[ -z "$Search_Engine" ]]; then
     echo "Error: \$Search_Engine is not set in the configuration file!"
     exit 1
