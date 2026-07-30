@@ -81,9 +81,13 @@ return {
     end,
   },
   {
+    "ianklapouch/wildberries.nvim",
+    name = "wildberries",
+  },
+  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "blackhole",
+      colorscheme = "wildberries",
     },
   },
 }
