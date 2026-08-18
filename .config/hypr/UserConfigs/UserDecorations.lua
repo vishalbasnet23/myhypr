@@ -41,11 +41,11 @@ hl.config({
 	decoration = {
 		rounding = 4,
 		active_opacity = 1.0,
-		inactive_opacity = 0.5,
+		inactive_opacity = 0.8,
 		fullscreen_opacity = 1.0,
 		dim_inactive = true,
-		dim_strength = 0.1,
-		dim_special = 0.8,
+		dim_strength = 0.2,
+		dim_special = 0.5,
 
 		shadow = {
 			enabled = true,
