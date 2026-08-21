@@ -19,7 +19,27 @@ mv ~/.config/hypr/hyprland.lua.new ~/.config/hypr/hyprland.lua
 rm ~/.config/hypr/hyprland.lua      # hyprland.conf takes over again
 ```
 
-Every original `.conf` is left untouched, so rollback is that single `rm`.
+Every original `.conf` was left untouched at migration time, so rollback was that
+single `rm`.
+
+> **Update 2026-08-21 — the `.conf` tree has been deleted from the working tree.**
+> All 32 migrated `.conf` files (`hyprland.conf`, `configs/Keybinds.conf`, the
+> `UserConfigs/*.conf` set, `animations/*.conf`, `Monitor_Profiles/default.conf`)
+> plus the never-sourced `application-style.conf` and `wallust/wallust-hyprland.conf`
+> are gone. Nothing loaded them — Hyprland reads `hyprland.lua`, and the pickers were
+> rewritten to copy `*.lua` presets only.
+>
+> **Rollback is now git, which is what it always really was:** the notes below already
+> said the patched scripts must be reverted alongside the config, and that is a
+> checkout either way.
+>
+> ```sh
+> git checkout fdc1e5b^ -- .config/hypr   # restore the whole pre-migration tree
+> rm ~/.config/hypr/hyprland.lua          # hand control back to hyprland.conf
+> ```
+>
+> `hyprlock.conf` and `hypridle.conf` are untouched by all of this — they belong to
+> hyprlock/hypridle, which never moved to Lua.
 
 ## Files
 
