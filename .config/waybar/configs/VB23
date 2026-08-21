@@ -27,9 +27,9 @@
 "width": 1444,
 
 "modules-left": [
+  "custom/mediapill",
   "hyprland/workspaces#roman", 
   "tray",
-  "mpris", 
 ],
 
 "modules-center": [

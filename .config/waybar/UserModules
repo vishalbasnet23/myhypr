@@ -7,4 +7,14 @@
 
 {
 
+// Reserved space for the quickshell media pill (modules/mediaControls/MediaPill.qml).
+// Draws nothing itself: quickshell parks a layer-shell surface over this gap,
+// because waybar has no hover event and the pill needs hover to open its popup.
+// Width lives in TWO places and must match: #custom-mediapill min-width in
+// style/New.css and ConfigOptions.media.pillWidth in the quickshell config.
+"custom/mediapill": {
+  "format": " ",
+  "tooltip": false,
+},
+
 }

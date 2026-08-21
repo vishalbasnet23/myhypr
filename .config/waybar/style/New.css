@@ -347,3 +347,13 @@ window#waybar.hidden {
   min-width: 10px;
   border-radius: 5px;
 }
+
+/* ---- Media pill ---- */
+/* Empty reserved strip; the quickshell mediaPill surface renders over it.
+   Keep min-width in sync with ConfigOptions.media.pillWidth. */
+#custom-mediapill {
+  min-width: 220px;
+  padding: 0px;
+  margin: 0px;
+  background: transparent;
+}

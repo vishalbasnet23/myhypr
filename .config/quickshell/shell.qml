@@ -4,6 +4,7 @@
 
 import "./modules/common/"
 import "./modules/overview/"
+import "./modules/mediaControls/"
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -14,6 +15,7 @@ ShellRoot {
     // Enable/disable modules here. False = not loaded at all, so rest assured
     // no unnecessary stuff will take up memory if you decide to only use, say, the overview.
     property bool enableOverview: true
+    property bool enableMediaControls: true
 
     // Force initialization of some singletons
     Component.onCompleted: {
@@ -22,5 +24,7 @@ ShellRoot {
     }
 
     Loader { active: enableOverview; sourceComponent: Overview {} }
+    Loader { active: enableMediaControls; sourceComponent: MediaControls {} }
+    Loader { active: enableMediaControls; sourceComponent: MediaPill {} }
 
 }
