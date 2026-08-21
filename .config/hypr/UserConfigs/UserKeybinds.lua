@@ -24,7 +24,6 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("pkill rofi || true && rofi -show dru
 -- hl.bind(mainMod .. " + B", hl.dsp.exec_cmd('xdg-open "https://"')) -- default browser
 -- hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("pkill rofi || true && ags -t 'overview'")) -- desktop overview (if installed)
 hl.bind(mainMod .. " + A", hl.dsp.global("quickshell:overviewToggle")) -- desktop overview (if installed)
-hl.bind(mainMod .. " + CTRL + M", hl.dsp.global("quickshell:mediaToggle")) -- now playing popup (pin/unpin; hovering the bar pill also opens it)
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(term))                -- terminal
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(files))                    -- file manager
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))                  -- Launch Firefox

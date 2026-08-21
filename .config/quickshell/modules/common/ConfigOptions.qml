@@ -38,22 +38,6 @@ Singleton {
     }
     
     property QtObject bar: QtObject {
-        property bool bottom: false // Instead of top
-
-        // Geometry of the *waybar* surface, so the quickshell media pill can be
-        // parked in the gap left by the removed waybar mpris module. These must
-        // match waybar: `width` and `margin-top` from waybar/configs/VB23, the
-        // rendered height from `hyprctl layers` (ns=waybar), and the
-        // .modules-left margin+padding from waybar/style/New.css (10px + 4px).
-        property real waybarWidth: 1444
-        property real waybarHeight: 36
-        property real waybarMarginTop: 5
-        property real waybarSidePadding: 14
-    }
-
-    property QtObject media: QtObject {
-        property real pillWidth: 220     // keep in sync with #custom-mediapill min-width
-        property real popupWidth: 420
-        property int hoverCloseDelay: 350 // ms of grace when moving pill -> popup
+    property bool bottom: false // Instead of top
     }
 }

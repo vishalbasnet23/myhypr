@@ -323,61 +323,39 @@
 }
 
 /* ---- MPRIS Widget ---- */
-/* Styled to match the quickshell now-playing card
-   (quickshell/modules/mediaControls/PlayerControl.qml). Values map 1:1 onto
-   the QML Appearance tokens:
-     card radius 17px  = Appearance.rounding.normal
-     art radius 12px   = Appearance.rounding.small   (set in config.json)
-     padding 14px      = PlayerControl.cardPadding
-     title 1.2rem      = Appearance.font.pixelSize.textLarge (19px)
-     subtitle 0.82rem  = Appearance.font.pixelSize.textSmall (13px)
-   The colours differ by source: quickshell reads wallust's qml_color.json and
-   restyles on every wallpaper change, while these are the panel's static
-   palette. Wiring wallust's swaync template would unify them. */
 .widget-mpris {
   color: @text;
-  background: alpha(@surface0, 0.96);
-  border: 1px solid alpha(@overlay0, 0.45);
-  border-radius: 17px;
-  padding: 14px;
-  margin: 8px;
-}
-
-.widget-mpris-player {
-  margin: 0px;
-  padding: 0px;
-}
-
-/* Transport row: circular buttons, accent-filled play/pause like the QML one. */
-.widget-mpris > box > button {
-  border-radius: 9999px;
-  min-width: 34px;
-  min-height: 34px;
-  margin: 0px 2px;
-  color: @text;
-  background: transparent;
+  background: alpha(@surface0, 0.45);
   border: none;
+  border-bottom: 3px solid @sapphire;
+  padding: 6px;
+  margin: 5px;
+  border-radius: 0px;
+}
+
+.widget-mpris > box > button {
+  border-radius: 0px;
+  color: @sky;
+  background: transparent;
 }
 
 .widget-mpris > box > button:hover {
-  background: alpha(@overlay0, 0.35);
+  background: alpha(@blue, 0.2);
   color: @text;
 }
 
-.widget-mpris > box > button:active,
-.widget-mpris > box > button:checked {
-  background: @sapphire;
-  color: @crust;
+.widget-mpris-player {
+  margin: 5px;
 }
 
 .widget-mpris-title {
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: @text;
 }
 
 .widget-mpris-subtitle {
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   color: @subtext0;
 }
 

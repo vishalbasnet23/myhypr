@@ -43,9 +43,9 @@
       "text": "Notification"
     },
     "mpris": {
-    "image-size": 96,
-    "image-radius": 12
-  },
+      "image-size": 60,
+      "image-radius": 0
+    },
     "notifications": {
       "fit-to-screen": false,
       "control-center-list-size": 0,
