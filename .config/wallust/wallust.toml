@@ -37,8 +37,12 @@ threshold = 11
 cava.template = 'colors-cava'
 cava.target = '~/.config/cava/config'
 
-hypr.template = 'colors-hyprland.conf'
-hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
+# Disabled: nothing in the Lua config ever sourced wallust-hyprland.conf
+# (UserDecorations.lua is explicitly "no wallust"), and the only file that
+# referenced it was the orphan hyprlock-1080p.conf. Re-enable if you want
+# wallpaper-driven border colours back.
+#hypr.template = 'colors-hyprland.conf'
+#hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
 
 rofi.template = 'colors-rofi.rasi'
 rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
