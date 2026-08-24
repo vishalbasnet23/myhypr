@@ -52,6 +52,15 @@
                                                            drawer children, seps    */
 @define-color wb-faint       rgba(255, 255, 255, 0.28); /* inactive ws, disabled    */
 
+/* ---- Interaction ----
+   @ui-hover is deliberately COLOURLESS: hover is a lift, not a meaning, so it
+   must not compete with the state colours. @sel is the ONE selection accent for
+   the whole system - waybar's active workspace, swaync's normal-urgency strip,
+   rofi's selected row. Change it here and in swaync/style.css to retheme the
+   whole system's selection colour in two lines. */
+@define-color ui-hover       rgba(255, 255, 255, 0.10);
+@define-color sel            #2979ff;
+
 * {
   font-family: "Maple Mono NF CN";
   font-weight: 500;
@@ -205,7 +214,7 @@ window#waybar.hidden {
 #custom-swaync:hover,
 #custom-updater:hover,
 #custom-weather:hover {
-  background-color: alpha(@accent, 0.16);
+  background-color: @ui-hover;
 }
 
 /* The blank separators are spacing only - never let them take a hover fill. */
@@ -342,8 +351,8 @@ window#waybar.hidden {
 
 #workspaces button:hover {
   color: @wb-text-glass;
-  background-color: alpha(@accent, 0.16);
-  border-bottom: 2px solid alpha(@accent, 0.45);
+  background-color: @ui-hover;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
   padding: 0px 4px;
 }
 
@@ -353,9 +362,9 @@ window#waybar.hidden {
 }
 
 #workspaces button.active {
-  color: @accent;
-  background-color: alpha(@accent, 0.14);
-  border-bottom: 2px solid @accent;
+  color: @sel;
+  background-color: alpha(@sel, 0.14);
+  border-bottom: 2px solid @sel;
   padding: 0px 8px;
 }
 
@@ -374,12 +383,12 @@ window#waybar.hidden {
 }
 
 #taskbar button.active {
-  background-color: alpha(@accent, 0.14);
+  background-color: alpha(@sel, 0.14);
   padding: 0px 8px;
 }
 
 #taskbar button:hover {
-  background-color: alpha(@accent, 0.16);
+  background-color: @ui-hover;
   padding: 0px 4px;
 }
 
@@ -409,7 +418,7 @@ window#waybar.hidden {
 
 /* ---- Audio ---- */
 #pulseaudio.bluetooth {
-  color: @accent;
+  color: @sel;
 }
 
 #pulseaudio.muted {
@@ -446,7 +455,7 @@ window#waybar.hidden {
 #pulseaudio-slider highlight {
   min-height: 10px;
   border-radius: 5px;
-  background-color: @accent;
+  background-color: @sel;
 }
 
 #backlight-slider slider {
@@ -468,7 +477,7 @@ window#waybar.hidden {
 #backlight-slider highlight {
   min-width: 10px;
   border-radius: 5px;
-  background-color: @accent;
+  background-color: @sel;
 }
 
 /* ==========================================================================

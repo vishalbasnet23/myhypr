@@ -44,6 +44,11 @@
 @define-color glass-border   rgba(255, 255, 255, 0.22);
 @define-color glass-raised   rgba(255, 255, 255, 0.06);
 
+/* Same two tokens as waybar's style/Glass.css - keep them in step.
+   @ui-hover is colourless on purpose; @sel is the system selection accent. */
+@define-color ui-hover       rgba(255, 255, 255, 0.10);
+@define-color sel            #2979ff;
+
 /* ---- Global ---- */
 * {
   font-family: "Maple Mono NF CN";
@@ -80,7 +85,7 @@
 .control-center .notification-row:focus,
 .control-center .notification-row:hover {
   opacity: 1;
-  background: alpha(@blue, 0.16);
+  background: @ui-hover;
   border-radius: 10px;
 }
 
@@ -92,7 +97,8 @@
 .notification.low {
   background: @glass-raised;
   color: @wb-text-glass;
-  padding: 8px 8px 8px 0px;
+  padding: 12px 14px;
+  margin: 4px 2px;
   border-radius: 10px;
   border: none;
   border-left: 2px solid @teal;
@@ -102,17 +108,19 @@
 .notification.normal {
   background: @glass-raised;
   color: @wb-text-glass;
-  padding: 8px 8px 8px 0px;
+  padding: 12px 14px;
+  margin: 4px 2px;
   border-radius: 10px;
   border: none;
-  border-left: 2px solid @blue;
+  border-left: 2px solid @sel;
 }
 
 /* Critical urgency → red strip + tinted bg */
 .notification.critical {
   background: alpha(@red, 0.12);
   color: @wb-text-glass;
-  padding: 8px 8px 8px 0px;
+  padding: 12px 14px;
+  margin: 4px 2px;
   border-radius: 10px;
   border: none;
   border-left: 2px solid @red;
@@ -122,7 +130,8 @@
 .notification {
   background: @glass-raised;
   color: @wb-text-glass;
-  padding: 8px 8px 8px 0px;
+  padding: 12px 14px;
+  margin: 4px 2px;
   border-radius: 10px;
   border: none;
   border-left: 2px solid @sky;
@@ -136,7 +145,7 @@
 /* ---- Image ---- */
 .image {
   margin-right: 12px;
-  margin-left: 15px;
+  margin-left: 0px;
   border-radius: 8px;
   padding: 0;
 }
@@ -190,7 +199,7 @@
 .notification-default-action:hover,
 .notification-action:hover {
   color: @wb-text-glass;
-  background: alpha(@blue, 0.26);
+  background: @ui-hover;
 }
 
 .notification-action:first-child {
@@ -211,9 +220,9 @@
 .inline-reply-entry {
   background: @glass-raised;
   color: @wb-text-glass;
-  caret-color: @blue;
+  caret-color: @sel;
   border: none;
-  border-bottom: 2px solid alpha(@blue, 0.6);
+  border-bottom: 2px solid alpha(@sel, 0.6);
   border-radius: 8px;
 }
 
@@ -222,7 +231,7 @@
   margin-left: 4px;
   background: @glass-raised;
   border: none;
-  border-bottom: 2px solid alpha(@blue, 0.45);
+  border-bottom: 2px solid alpha(@sel, 0.45);
   border-radius: 8px;
   color: @wb-text-glass;
 }
@@ -234,7 +243,7 @@
 }
 
 .inline-reply-button:hover {
-  background: alpha(@blue, 0.25);
+  background: @ui-hover;
 }
 
 /* ---- Body Image ---- */
@@ -306,7 +315,7 @@
 }
 
 .widget-title > button:hover {
-  background: alpha(@blue, 0.26);
+  background: @ui-hover;
   color: @wb-text-glass;
 }
 
@@ -327,8 +336,8 @@
 }
 
 .widget-dnd > switch:checked {
-  background: alpha(@blue, 0.7);
-  border-color: alpha(@blue, 0.6);
+  background: alpha(@sel, 0.7);
+  border-color: alpha(@sel, 0.6);
 }
 
 .widget-dnd > switch slider {
@@ -368,7 +377,7 @@
 }
 
 .widget-mpris > box > button:hover {
-  background: alpha(@blue, 0.26);
+  background: @ui-hover;
   color: @wb-text-glass;
 }
 
@@ -428,7 +437,7 @@
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
-  background: alpha(@blue, 0.26);
+  background: @ui-hover;
   color: @wb-text-glass;
 }
 
@@ -452,7 +461,7 @@
 }
 
 .notification.normal progress {
-  background-color: @blue;
+  background-color: @sel;
   border-radius: 6px;
 }
 
