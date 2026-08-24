@@ -47,8 +47,8 @@
 /* Same two tokens as waybar's style/Glass.css - keep them in step.
    @ui-hover is colourless on purpose; @sel is the system selection accent. */
 @define-color ui-hover       rgba(255, 255, 255, 0.10);
-@define-color sel            #d08a52; /* copper - keep in step with waybar */
-@define-color sel-lite       #e8b48a;
+@define-color sel            #ffffff; /* keep in step with waybar */
+@define-color sel-lite       #ffffff;
 
 /* ---- Global ---- */
 * {

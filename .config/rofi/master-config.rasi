@@ -60,9 +60,9 @@ configuration {
     glass-border:   rgba(255, 255, 255, 22%);
     glass-raised:   rgba(255, 255, 255, 6%);
     ui-hover:       rgba(255, 255, 255, 10%);
-    sel:            #d08a52;
-    sel-lite:       #e8b48a;
-    sel-fill:       rgba(208, 138, 82, 26%);
+    sel:            #ffffff;
+    sel-lite:       #ffffff;
+    sel-fill:       rgba(255, 255, 255, 20%);
 
     /* Semantic roles */
     text-color:                  @wb-text-glass;

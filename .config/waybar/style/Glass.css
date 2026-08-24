@@ -35,9 +35,11 @@
 @define-color accent         @blue;     /* #2979ff - focus, selection       */
 @define-color accent-soft    @lavender; /* #8e5cff - secondary emphasis     */
 @define-color ok             @teal;     /* #00d4a3                          */
-@define-color warn           @yellow;   /* #ffd600 - was @peach #ff9100, moved
-                                         because peach and the copper @sel
-                                         read as the same orange at a glance */
+@define-color warn           @yellow;   /* #ffd600 - was @peach #ff9100. Moved
+                                         while @sel was copper, since the two
+                                         oranges were confusable. @sel is white
+                                         now, so peach is free again if you
+                                         prefer it.                          */
 @define-color critical       @red;      /* #ff3d00                          */
 
 /* ---- Neutral text ramp - WAYBAR ONLY ----
@@ -61,10 +63,12 @@
    rofi's selected row. Change it here and in swaync/style.css to retheme the
    whole system's selection colour in two lines. */
 @define-color ui-hover       rgba(255, 255, 255, 0.10);
-@define-color sel            #d08a52; /* copper - strips, underlines, fills   */
-@define-color sel-lite       #e8b48a; /* copper, lighter: for GLYPHS sitting
-                                         on a transparent/glass background,
-                                         where the darker copper goes muddy   */
+@define-color sel            #ffffff; /* strips, underlines, fills            */
+@define-color sel-lite       #ffffff; /* glyphs on a transparent background.
+                                         Same value as @sel here: white needs
+                                         no lighter variant, but the token is
+                                         kept so a coloured accent can be
+                                         dropped back in at one line.         */
 
 * {
   font-family: "Maple Mono NF CN";
@@ -368,7 +372,7 @@ window#waybar.hidden {
 
 #workspaces button.active {
   color: @sel-lite;
-  background-color: alpha(@sel, 0.14);
+  background-color: alpha(@sel, 0.20);
   border-bottom: 2px solid @sel;
   padding: 0px 8px;
 }
@@ -388,7 +392,7 @@ window#waybar.hidden {
 }
 
 #taskbar button.active {
-  background-color: alpha(@sel, 0.14);
+  background-color: alpha(@sel, 0.20);
   padding: 0px 8px;
 }
 
