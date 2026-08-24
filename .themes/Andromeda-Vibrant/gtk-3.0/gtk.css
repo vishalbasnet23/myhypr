@@ -6595,3 +6595,56 @@ entry,
 .entry {
   background-color: rgba(255, 255, 255, 0.06);
 }
+
+
+/* ---- Title bar / window controls ----
+   GTK draws its own title bar (CSD headerbar); it is already transparent above
+   so it reads as the top of the window's glass. What was left were the close /
+   maximise / minimise buttons, which the compiled theme paints as solid chips.
+   They become colourless like every other control in the system, and only the
+   close button takes a colour, on hover, because it is the destructive one. */
+windowcontrols button,
+headerbar windowcontrols button,
+.titlebar windowcontrols button {
+  background-color: rgba(255, 255, 255, 0.06);
+  background-image: none;
+  color: #eef2f6;
+  border: none;
+  border-radius: 10px;
+  box-shadow: none;
+  margin: 0px 2px;
+}
+
+windowcontrols button:hover,
+headerbar windowcontrols button:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #eef2f6;
+}
+
+windowcontrols button:active,
+windowcontrols button:checked {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+windowcontrols button.close:hover,
+windowcontrols button.close:active {
+  background-color: rgba(255, 61, 0, 0.85);
+  color: #ffffff;
+}
+
+/* The title itself sits on glass, so it gets the same legibility shadow the
+   waybar modules use. */
+headerbar .title,
+.titlebar .title,
+headerbar windowtitle,
+windowtitle > label {
+  color: #eef2f6;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+
+headerbar .subtitle,
+windowtitle > label.subtitle {
+  color: rgba(223, 228, 234, 0.55);
+  text-shadow: none;
+}
