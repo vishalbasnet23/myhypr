@@ -38,12 +38,27 @@
 @define-color warn           @peach;    /* #ff9100                          */
 @define-color critical       @red;      /* #ff3d00                          */
 
+/* ---- Neutral text ramp - WAYBAR ONLY ----
+   Vibrant's @text (#f1f3ff) and @subtext0 (#a9b0d6) are blue-tinted and run
+   slightly hot on a glass surface. These are neutral and sit back. They cover
+   text and icons ONLY - every semantic and per-module accent below still comes
+   from the Vibrant palette. */
+@define-color wb-text        #dfe4ea;                   /* primary text + icons     */
+@define-color wb-text-glass  #eef2f6;                   /* same role, but ON glass:
+                                                           a 13% surface over a pale
+                                                           wallpaper eats contrast,
+                                                           so this runs brighter    */
+@define-color wb-dim         rgba(223, 228, 234, 0.55); /* dates, units, inactive
+                                                           drawer children, seps    */
+@define-color wb-faint       rgba(255, 255, 255, 0.28); /* inactive ws, disabled    */
+
 * {
   font-family: "Maple Mono NF CN";
   font-weight: 500;
   min-height: 0;
   font-size: 12px;
   font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+  color: @wb-text-glass;
 }
 
 /* The bar surface itself must stay fully transparent: the layerrule sets
@@ -75,12 +90,26 @@ window#waybar.hidden {
   margin: 0px 8px;
   margin-top: 4px;
   padding: 2px 6px;
-  background: alpha(@surface, 0.42);
-  border: 1px solid alpha(@border-hair, 0.28);
+  background: rgba(232, 238, 245, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 14px;
-  box-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.9);
+}
+
+/* Drawer group containers sit INSIDE the pill - they must not paint a second
+   surface on top of it. Transparent, so they inherit the glass they are on.
+   Swap to rgba(255, 255, 255, 0.06) if you want them to read as raised. */
+#time,
+#notify,
+#audio,
+#mobo_drawer,
+#motherboard,
+#app_drawer,
+#connections,
+#status,
+#laptop,
+#power {
+  background-color: transparent;
 }
 
 /* ---- All Modules Base ----
@@ -139,6 +168,11 @@ window#waybar.hidden {
   padding: 3px 8px;
   border-radius: 10px;
   background-color: transparent;
+  /* LEGIBILITY - not optional. These modules sit directly on the glass, with
+     no filled pill of their own. Without this the bar is unreadable the moment
+     the wallpaper goes pale. Anything that gains its own opaque fill turns it
+     back off (see the .critical / .disconnected rules). */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
   transition:
     background-color 0.18s ease-out,
     color 0.18s ease-out,
@@ -178,22 +212,52 @@ window#waybar.hidden {
 #custom-separator {
   padding: 0px 2px;
   background-color: transparent;
+  color: @wb-dim;
 }
 
 /* ---- Module Colors ----
-   Hues carried over from New.css unchanged, except where a solid fill would
-   have punched an opaque hole through the glass - those became alpha fills. */
-#idle_inhibitor {
-  color: @accent;
-}
-
+   RESTING STATE IS NEUTRAL. Every module's idle colour is the text ramp - the
+   icons are text, and text is @wb-text-glass. Colour in this bar means STATE
+   and nothing else, so a glance at a coloured glyph is always meaningful.
+   The Vibrant palette is still what supplies those state colours below. */
+#idle_inhibitor,
 #bluetooth,
-#backlight {
-  color: @accent;
+#backlight,
+#battery,
+#cpu,
+#custom-keyboard,
+#memory,
+#disk,
+#temperature,
+#keyboard-state,
+#custom-cava_mviz,
+#custom-menu,
+#custom-mousebattery,
+#custom-power,
+#custom-swaync,
+#custom-cycle_wall,
+#custom-light_dark,
+#custom-weather,
+#custom-lock,
+#custom-wscount,
+#custom-wsapps,
+#custom-wsddev,
+#custom-wsfocus,
+#pulseaudio,
+#window,
+#mpris,
+#custom-waybar-mpris,
+#network {
+  color: @wb-text-glass;
 }
 
-#battery {
-  color: @green;
+/* ---- State colours - the only colour left in the bar ---- */
+
+/* The power button is a destructive action, not a state. It stays neutral
+   until you are actually pointing at it. */
+#custom-power:hover {
+  color: @critical;
+  background-color: alpha(@critical, 0.16);
 }
 
 #battery.warning:not(.charging) {
@@ -208,7 +272,8 @@ window#waybar.hidden {
 
 #battery.critical:not(.charging) {
   background-color: alpha(@critical, 0.85);
-  color: @text-primary;
+  color: @wb-text;
+  text-shadow: none;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;
@@ -218,31 +283,24 @@ window#waybar.hidden {
 }
 
 #clock {
-  color: @text-primary;
+  color: @wb-text-glass;
   font-weight: 600;
   font-size: 13px;
 }
 
-#cpu {
-  color: @green;
-}
-
-#custom-keyboard,
-#memory {
-  color: @sky;
-}
-
-#disk {
-  color: @sapphire;
-}
-
-#temperature {
-  color: @ok;
+/* The collapsed/secondary half of group/time - dates and units sit back. */
+#clock.2,
+#clock.3,
+#clock.5,
+#clock.6 {
+  color: @wb-dim;
+  font-weight: 500;
 }
 
 #temperature.critical {
   background-color: alpha(@critical, 0.85);
-  color: @text-primary;
+  color: @wb-text;
+  text-shadow: none;
 }
 
 #tray {
@@ -251,13 +309,10 @@ window#waybar.hidden {
 
 #tray > .passive {
   -gtk-icon-effect: dim;
+  color: @wb-dim;
 }
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-}
-
-#keyboard-state {
-  color: @flamingo;
 }
 
 /* ---- Workspaces ----
@@ -274,9 +329,10 @@ window#waybar.hidden {
   padding: 0px 4px;
   margin: 0px 1px;
   border-radius: 8px;
-  color: @text-dim;
+  color: @wb-faint;
   background-color: transparent;
   border-bottom: 2px solid transparent;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
   transition:
     background-color 0.18s ease-out,
     color 0.18s ease-out,
@@ -285,14 +341,14 @@ window#waybar.hidden {
 }
 
 #workspaces button:hover {
-  color: @text-primary;
+  color: @wb-text-glass;
   background-color: alpha(@accent, 0.16);
   border-bottom: 2px solid alpha(@accent, 0.45);
   padding: 0px 4px;
 }
 
 #workspaces button.persistent {
-  color: @text-dim;
+  color: @wb-faint;
   border-bottom: 2px solid transparent;
 }
 
@@ -328,18 +384,6 @@ window#waybar.hidden {
 }
 
 /* ---- Custom Modules ---- */
-#custom-cava_mviz {
-  color: @pink;
-}
-
-#custom-menu {
-  color: @ok;
-}
-
-#custom-mousebattery {
-  color: @sky;
-}
-
 #custom-mousebattery.warning {
   color: @warn;
 }
@@ -348,41 +392,13 @@ window#waybar.hidden {
   color: @critical;
 }
 
-#custom-power {
-  color: @critical;
-}
-
-#custom-swaync {
-  color: @accent-soft;
-}
-
 #custom-pacupdate,
 #custom-updater {
   color: @warn;
 }
 
-#custom-cycle_wall {
-  color: @sapphire;
-}
-
 /* ---- Group D: workspace-info modules ----
    Inert until the matching name is added to a modules array in configs/VB23. */
-#custom-wscount {
-  color: @sky;
-}
-
-#custom-wsapps {
-  color: @accent-soft;
-}
-
-#custom-wsddev {
-  color: @green;
-}
-
-#custom-wsfocus {
-  color: @ok;
-}
-
 #custom-wsfocus.warning {
   color: @warn;
 }
@@ -391,25 +407,9 @@ window#waybar.hidden {
   color: @critical;
 }
 
-#custom-light_dark {
-  color: @accent;
-}
-
-#custom-weather {
-  color: @accent-soft;
-}
-
-#custom-lock {
-  color: @maroon;
-}
-
 /* ---- Audio ---- */
-#pulseaudio {
-  color: @green;
-}
-
 #pulseaudio.bluetooth {
-  color: @pink;
+  color: @accent;
 }
 
 #pulseaudio.muted {
@@ -417,28 +417,13 @@ window#waybar.hidden {
 }
 
 /* ---- Window Title ---- */
-#window {
-  color: @mauve;
-}
-
 /* ---- MPRIS ---- */
-#mpris {
-  color: @accent-soft;
-}
-
-#custom-waybar-mpris {
-  color: @accent-soft;
-}
-
 /* ---- Network ---- */
-#network {
-  color: @ok;
-}
-
 #network.disconnected,
 #network.disabled {
   background-color: alpha(@surface-raised, 0.55);
   color: @critical;
+  text-shadow: none;
 }
 
 /* ---- Sliders ---- */
