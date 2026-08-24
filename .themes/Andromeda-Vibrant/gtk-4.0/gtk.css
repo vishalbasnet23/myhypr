@@ -6723,3 +6723,206 @@ windowtitle > label.subtitle {
   color: rgba(223, 228, 234, 0.55);
   text-shadow: none;
 }
+
+
+/* ==========================================================================
+   Headerbar — Vibrant Glass
+
+   The bar itself is already transparent so it reads as the top of the window's
+   glass. What was missing was DEFINITION: with no fill and no separator it ran
+   straight into the content, and its buttons at 6% were too faint to find.
+   ========================================================================== */
+
+/* A hairline instead of a fill. Same 1px rgba(255,255,255,0.22) edge every
+   other surface uses, drawn as an inset shadow so it does not add height. */
+headerbar,
+headerbar.titlebar,
+.titlebar,
+window.background headerbar {
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  min-height: 44px;
+  padding: 0px 8px;
+}
+
+/* The split-view header is two bars side by side; keep the seam consistent
+   with the sidebar/content divider below it. */
+.sidebar-pane headerbar,
+.sidebar-pane .titlebar {
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    inset -1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ---- Buttons in the bar ----
+   8% at rest rather than 6%: on glass over a bright wallpaper the lower value
+   disappeared entirely. Radius 10, matching every other chip in the system. */
+headerbar button,
+headerbar menubutton > button,
+.titlebar button,
+headerbar .linked > button {
+  background-color: rgba(255, 255, 255, 0.08);
+  background-image: none;
+  border: none;
+  border-radius: 10px;
+  color: #eef2f6;
+  box-shadow: none;
+  margin: 4px 2px;
+  min-height: 28px;
+  min-width: 28px;
+}
+
+headerbar button:hover,
+headerbar menubutton > button:hover,
+.titlebar button:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #eef2f6;
+}
+
+headerbar button:active,
+headerbar button:checked,
+headerbar menubutton > button:checked {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #eef2f6;
+}
+
+/* Flat buttons - back/forward and similar - carry no chip until you touch
+   them, so the bar does not turn into a row of boxes. */
+headerbar button.flat,
+headerbar button.image-button.flat,
+headerbar .linked > button.flat {
+  background-color: transparent;
+  color: rgba(223, 228, 234, 0.55);
+}
+
+headerbar button.flat:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+  color: #eef2f6;
+}
+
+/* Insensitive really should look insensitive - back/forward at the start of
+   history were rendering at almost the same weight as active ones. */
+headerbar button:disabled,
+headerbar button.flat:disabled,
+headerbar menubutton > button:disabled {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.28);
+}
+
+/* Linked groups (the path bar) read as one chip, not several. */
+headerbar .linked > button:not(:first-child):not(:last-child) {
+  border-radius: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+headerbar .linked > button:first-child {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin-right: 0px;
+}
+headerbar .linked > button:last-child {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin-left: 0px;
+}
+
+/* Search / entries living in the bar match the chip treatment. */
+headerbar entry,
+headerbar .entry,
+.titlebar entry {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 10px;
+  color: #eef2f6;
+  min-height: 28px;
+  margin: 4px 2px;
+}
+
+headerbar entry:focus-within,
+headerbar entry:focus {
+  background-color: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+/* Window controls keep their own chip - the close button was ending up bare
+   because the generic headerbar rule above is more specific than the earlier
+   windowcontrols one. */
+headerbar windowcontrols button,
+.titlebar windowcontrols button {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  margin: 4px 2px;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+headerbar windowcontrols button:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+headerbar windowcontrols button.close:hover,
+headerbar windowcontrols button.close:active {
+  background-color: rgba(255, 61, 0, 0.85);
+  color: #ffffff;
+}
+
+/* Unfocused window: the whole bar steps back rather than staying at full
+   strength, matching how the window border fades to the slate hairline. */
+headerbar:backdrop,
+.titlebar:backdrop {
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+headerbar:backdrop button,
+headerbar:backdrop .title,
+headerbar:backdrop windowtitle > label {
+  color: rgba(223, 228, 234, 0.55);
+  text-shadow: none;
+}
+
+/* The bar was still carrying --headerbar-bg-color at 55%, set before it was
+   made transparent. Against a 4% content pane it read as a separate dark slab
+   rather than the top of the same pane of glass. The hairline below it is what
+   separates the two now, not a fill. */
+:root {
+  --headerbar-bg-color: transparent;
+  --headerbar-backdrop-color: transparent;
+}
+
+headerbar,
+headerbar.titlebar,
+.titlebar,
+window.background headerbar,
+headerbar:backdrop {
+  background-color: transparent;
+  background-image: none;
+}
+
+/* AdwToolbarView paints .top-bar, not headerbar - it was still on the 55% fill
+   from the first translucency pass, which is what was making the bar read as a
+   separate dark slab. */
+.top-bar,
+toolbarview > .top-bar,
+.toolbar-view > .top-bar,
+.top-bar:backdrop,
+.bottom-bar,
+toolbarview > .bottom-bar {
+  background-color: transparent;
+  background-image: none;
+}
+
+/* ==========================================================================
+   The two widgets that were actually painting the opaque backgrounds.
+
+   Identified by probe, not by guesswork: colouring each candidate in turn
+   showed `windowhandle` painting the whole header strip and `toolbarview`
+   painting the content area. Neither is a headerbar or a .top-bar, which is
+   why three rounds of overriding those changed nothing.
+   ========================================================================== */
+windowhandle,
+headerbar > windowhandle,
+.titlebar > windowhandle,
+toolbarview,
+.toolbar-view {
+  background-color: transparent;
+  background-image: none;
+}
