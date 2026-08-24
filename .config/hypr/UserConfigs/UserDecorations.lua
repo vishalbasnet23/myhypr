@@ -62,7 +62,10 @@ hl.config({
 			ignore_opacity = true,
 			new_optimizations = true,
 			special = true,
-			popups = false,
+			-- GLASS: swaync notification popups are a layer surface Hyprland
+			-- treats as a popup, so blur on their namespace does nothing while
+			-- this is false.
+			popups = true,
 			xray = true,
 		},
 	},
