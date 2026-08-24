@@ -243,10 +243,31 @@ hl.window_rule({ match = { tag = "games" }, fullscreen = true })
 -- LAYER RULES
 -- MIGRATION NOTE: `layerrule = match:namespace foo, blur on` becomes hl.layer_rule()
 -- with the same match/effect split as window rules.
+-- GLASS: the rules below are what turn CSS translucency into actual glass.
+-- Namespaces are the ones `hyprctl layers` reports, not guesses.
+--   ignore_alpha 0.10 = skip blurring pixels under 10% alpha. That is what stops
+--     the milky halo in the transparent gutters between waybar's three pills.
+--     rofi keeps 0 because its fill covers the whole surface - no gutters.
+--   xray = false overrides the GLOBAL decoration:blur:xray = true for these
+--     layers only, so they sample the WINDOWS beneath rather than only the
+--     wallpaper. Flip any of these to true for the constant-wallpaper look.
 hl.layer_rule({ match = { namespace = "rofi" }, blur = true })
 hl.layer_rule({ match = { namespace = "rofi" }, ignore_alpha = 0 })
-hl.layer_rule({ match = { namespace = "notifications" }, blur = true })
-hl.layer_rule({ match = { namespace = "notifications" }, ignore_alpha = 0 })
+hl.layer_rule({ match = { namespace = "rofi" }, xray = false })
+hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+hl.layer_rule({ match = { namespace = "waybar" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "waybar" }, xray = false })
+-- FIXED: was namespace "notifications", which no layer on this system ever uses,
+-- so swaync had no blur at all. swaync exposes two separate layers.
+hl.layer_rule({ match = { namespace = "swaync-control-center" }, blur = true })
+hl.layer_rule({ match = { namespace = "swaync-control-center" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "swaync-control-center" }, xray = false })
+hl.layer_rule({ match = { namespace = "swaync-notification-window" }, blur = true })
+hl.layer_rule({ match = { namespace = "swaync-notification-window" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "swaync-notification-window" }, xray = false })
+hl.layer_rule({ match = { namespace = "logout_dialog" }, blur = true })
+hl.layer_rule({ match = { namespace = "logout_dialog" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "logout_dialog" }, xray = false })
 hl.layer_rule({ match = { namespace = "quickshell:overview" }, blur = true })
 -- NOTE (pre-existing in your config, preserved as-is): ignore_alpha is set twice for
 -- quickshell:overview; the later rule wins, so the effective value is 0.5.

@@ -1,0 +1,721 @@
+/*
+*
+* Vibrant Glass - waybar
+* Maintainer: Vishalbasnet23
+*
+* Derived from style/New.css. Same modules, same selectors, same opt-in blocks
+* at the bottom - only the SURFACE treatment changed:
+*   - the three module groups are floating glass pills, not solid #0e0e16 boxes
+*   - one uniform hairline border everywhere (was: blue/teal/lavender per group)
+*   - colour now means STATE (ok / warn / critical / accent), never position
+*
+* Translucency here does nothing on its own. The blur comes from Hyprland
+* layerrules on namespace "waybar" in UserConfigs/WindowRules.lua. Without
+* those this file looks like a muddy grey slab - that is expected.
+*
+* GTK3 CSS: no transform, so no scale()/rotate()/translate(). Motion is
+* transitions on padding, min-width, opacity, colour, background and font-size.
+*
+*/
+
+/* Absolute, deliberately. The relative form used by New.css
+   ("../waybar/style/custom/vibrant.css") only resolves when the file is loaded
+   through the ~/.config/waybar/style.css symlink - it breaks if the file is
+   ever loaded by its real path, e.g. `waybar -s style/Glass.css`. */
+@import "/home/vishalbasnet23/.config/waybar/style/custom/vibrant.css";
+
+/* ---- Glass roles ----
+   Seven roles mapped onto the Vibrant palette imported above. Nothing new is
+   invented here - every value is an existing Vibrant colour given a job. */
+@define-color surface        @crust;    /* #0f1120 - the glass itself       */
+@define-color surface-raised @base;     /* #1a1c2c - chips sitting on glass */
+@define-color border-hair    @surface2; /* #4a4f75 - hairline edge          */
+@define-color text-primary   @text;     /* #f1f3ff                          */
+@define-color text-dim       @overlay1; /* #7a80b2                          */
+@define-color accent         @blue;     /* #2979ff - focus, selection       */
+@define-color accent-soft    @lavender; /* #8e5cff - secondary emphasis     */
+@define-color ok             @teal;     /* #00d4a3                          */
+@define-color warn           @yellow;   /* #ffd600 - was @peach #ff9100. Moved
+                                         while @sel was copper, since the two
+                                         oranges were confusable. @sel is white
+                                         now, so peach is free again if you
+                                         prefer it.                          */
+@define-color critical       @red;      /* #ff3d00                          */
+
+/* ---- Neutral text ramp - WAYBAR ONLY ----
+   Vibrant's @text (#f1f3ff) and @subtext0 (#a9b0d6) are blue-tinted and run
+   slightly hot on a glass surface. These are neutral and sit back. They cover
+   text and icons ONLY - every semantic and per-module accent below still comes
+   from the Vibrant palette. */
+@define-color wb-text        #dfe4ea;                   /* primary text + icons     */
+@define-color wb-text-glass  #eef2f6;                   /* same role, but ON glass:
+                                                           a 13% surface over a pale
+                                                           wallpaper eats contrast,
+                                                           so this runs brighter    */
+@define-color wb-dim         rgba(223, 228, 234, 0.55); /* dates, units, inactive
+                                                           drawer children, seps    */
+@define-color wb-faint       rgba(255, 255, 255, 0.28); /* inactive ws, disabled    */
+
+/* ---- Interaction ----
+   @ui-hover is deliberately COLOURLESS: hover is a lift, not a meaning, so it
+   must not compete with the state colours. @sel is the ONE selection accent for
+   the whole system - waybar's active workspace, swaync's normal-urgency strip,
+   rofi's selected row. Change it here and in swaync/style.css to retheme the
+   whole system's selection colour in two lines. */
+@define-color ui-hover       rgba(255, 255, 255, 0.10);
+@define-color sel            #ffffff; /* strips, underlines, fills            */
+@define-color sel-lite       #ffffff; /* glyphs on a transparent background.
+                                         Same value as @sel here: white needs
+                                         no lighter variant, but the token is
+                                         kept so a coloured accent can be
+                                         dropped back in at one line.         */
+
+* {
+  font-family: "Maple Mono NF CN";
+  font-weight: 500;
+  min-height: 0;
+  font-size: 12px;
+  font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+  color: @wb-text-glass;
+}
+
+/* The bar surface itself must stay fully transparent: the layerrule sets
+   ignore_alpha 0.10, so these gutters are skipped by the blur and the milky
+   halo around the pills never appears. */
+window#waybar {
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  background: transparent;
+  border-radius: 0px;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+#waybar.empty #window {
+  background: none;
+}
+
+/* ---- Module Groups - the glass pills ----
+   Uniform treatment: same fill, same hairline, same radius on all three.
+   box-shadow carries two layers - the drop shadow, then the inset top "lip"
+   that reads as the lit edge of a pane of glass. */
+.modules-left,
+.modules-center,
+.modules-right {
+  font-weight: 500;
+  margin: 0px 8px;
+  margin-top: 4px;
+  padding: 2px 6px;
+  background: rgba(232, 238, 245, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
+  box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.9);
+}
+
+/* Drawer group containers sit INSIDE the pill - they must not paint a second
+   surface on top of it. Transparent, so they inherit the glass they are on.
+   Swap to rgba(255, 255, 255, 0.06) if you want them to read as raised. */
+#time,
+#notify,
+#audio,
+#mobo_drawer,
+#motherboard,
+#app_drawer,
+#connections,
+#status,
+#laptop,
+#power {
+  background-color: transparent;
+}
+
+/* ---- All Modules Base ----
+   Modules are unfilled by default - the pill behind them is the surface.
+   Fill only appears on hover and on state. */
+#backlight,
+#backlight-slider,
+#battery,
+#bluetooth,
+#clock,
+#cpu,
+#disk,
+#idle_inhibitor,
+#keyboard-state,
+#memory,
+#mode,
+#mpris,
+#network,
+#pulseaudio,
+#pulseaudio-slider,
+#taskbar button,
+#taskbar,
+#temperature,
+#tray,
+#window,
+#wireplumber,
+#workspaces,
+#custom-backlight,
+#custom-cycle_wall,
+#custom-keybinds,
+#custom-keyboard,
+#custom-light_dark,
+#custom-lock,
+#custom-menu,
+#custom-mousebattery,
+#custom-pacupdate,
+#custom-power_vertical,
+#custom-power,
+#custom-swaync,
+#custom-updater,
+#custom-wsapps,
+#custom-wscount,
+#custom-wsddev,
+#custom-wsfocus,
+#custom-weather,
+#custom-weather.clearNight,
+#custom-weather.cloudyFoggyDay,
+#custom-weather.cloudyFoggyNight,
+#custom-weather.default,
+#custom-weather.rainyDay,
+#custom-weather.rainyNight,
+#custom-weather.severe,
+#custom-weather.showyIcyDay,
+#custom-weather.snowyIcyNight,
+#custom-weather.sunnyDay {
+  padding: 3px 8px;
+  border-radius: 10px;
+  background-color: transparent;
+  /* LEGIBILITY - not optional. These modules sit directly on the glass, with
+     no filled pill of their own. Without this the bar is unreadable the moment
+     the wallpaper goes pale. Anything that gains its own opaque fill turns it
+     back off (see the .critical / .disconnected rules). */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  transition:
+    background-color 0.18s ease-out,
+    color 0.18s ease-out,
+    padding 0.18s ease-out;
+}
+
+/* Hover lift - the one interaction shared by every module in the bar. */
+#backlight:hover,
+#battery:hover,
+#bluetooth:hover,
+#clock:hover,
+#cpu:hover,
+#disk:hover,
+#idle_inhibitor:hover,
+#keyboard-state:hover,
+#memory:hover,
+#mpris:hover,
+#network:hover,
+#pulseaudio:hover,
+#temperature:hover,
+#tray:hover,
+#custom-cycle_wall:hover,
+#custom-keyboard:hover,
+#custom-light_dark:hover,
+#custom-lock:hover,
+#custom-menu:hover,
+#custom-mousebattery:hover,
+#custom-pacupdate:hover,
+#custom-power:hover,
+#custom-swaync:hover,
+#custom-updater:hover,
+#custom-weather:hover {
+  background-color: @ui-hover;
+}
+
+/* The blank separators are spacing only - never let them take a hover fill. */
+#custom-separator {
+  padding: 0px 2px;
+  background-color: transparent;
+  color: @wb-dim;
+}
+
+/* ---- Module Colors ----
+   RESTING STATE IS NEUTRAL. Every module's idle colour is the text ramp - the
+   icons are text, and text is @wb-text-glass. Colour in this bar means STATE
+   and nothing else, so a glance at a coloured glyph is always meaningful.
+   The Vibrant palette is still what supplies those state colours below. */
+#idle_inhibitor,
+#bluetooth,
+#backlight,
+#battery,
+#cpu,
+#custom-keyboard,
+#memory,
+#disk,
+#temperature,
+#keyboard-state,
+#custom-cava_mviz,
+#custom-menu,
+#custom-mousebattery,
+#custom-power,
+#custom-swaync,
+#custom-cycle_wall,
+#custom-light_dark,
+#custom-weather,
+#custom-lock,
+#custom-wscount,
+#custom-wsapps,
+#custom-wsddev,
+#custom-wsfocus,
+#pulseaudio,
+#window,
+#mpris,
+#custom-waybar-mpris,
+#network {
+  color: @wb-text-glass;
+}
+
+/* ---- State colours - the only colour left in the bar ---- */
+
+/* The power button is a destructive action, not a state. It stays neutral
+   until you are actually pointing at it. */
+#custom-power:hover {
+  color: @critical;
+  background-color: alpha(@critical, 0.16);
+}
+
+#battery.warning:not(.charging) {
+  color: @warn;
+}
+
+@keyframes blink {
+  to {
+    color: @surface0;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background-color: alpha(@critical, 0.85);
+  color: @wb-text;
+  text-shadow: none;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  box-shadow: inset 0 -3px transparent;
+}
+
+#clock {
+  color: @wb-text-glass;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* The collapsed/secondary half of group/time - dates and units sit back. */
+#clock.2,
+#clock.3,
+#clock.5,
+#clock.6 {
+  color: @wb-dim;
+  font-weight: 500;
+}
+
+#temperature.critical {
+  background-color: alpha(@critical, 0.85);
+  color: @wb-text;
+  text-shadow: none;
+}
+
+#tray {
+  padding: 3px 6px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+  color: @wb-dim;
+}
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}
+
+/* ---- Workspaces ----
+   Active state is accent text plus wider padding - a filled box would fight
+   the pill it sits inside. The underline is the only chrome. */
+#workspaces {
+  padding: 0px 2px;
+  background-color: transparent;
+}
+
+#workspaces button {
+  box-shadow: none;
+  text-shadow: none;
+  padding: 0px 4px;
+  margin: 0px 1px;
+  border-radius: 8px;
+  color: @wb-faint;
+  background-color: transparent;
+  border-bottom: 2px solid transparent;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  transition:
+    background-color 0.18s ease-out,
+    color 0.18s ease-out,
+    padding 0.24s cubic-bezier(0.55, 0, 0.28, 1.2),
+    border-color 0.18s ease-out;
+}
+
+#workspaces button:hover {
+  color: @wb-text-glass;
+  background-color: @ui-hover;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+  padding: 0px 4px;
+}
+
+#workspaces button.persistent {
+  color: @wb-faint;
+  border-bottom: 2px solid transparent;
+}
+
+#workspaces button.active {
+  color: @sel-lite;
+  background-color: alpha(@sel, 0.20);
+  border-bottom: 2px solid @sel;
+  padding: 0px 8px;
+}
+
+#workspaces button.urgent {
+  color: @critical;
+  border-bottom: 2px solid @critical;
+}
+
+/* ---- Taskbar ---- */
+#taskbar button {
+  border-radius: 8px;
+  padding: 0px 4px;
+  transition:
+    background-color 0.18s ease-out,
+    padding 0.24s cubic-bezier(0.55, 0, 0.28, 1.2);
+}
+
+#taskbar button.active {
+  background-color: alpha(@sel, 0.20);
+  padding: 0px 8px;
+}
+
+#taskbar button:hover {
+  background-color: @ui-hover;
+  padding: 0px 4px;
+}
+
+/* ---- Custom Modules ---- */
+#custom-mousebattery.warning {
+  color: @warn;
+}
+
+#custom-mousebattery.critical {
+  color: @critical;
+}
+
+#custom-pacupdate,
+#custom-updater {
+  color: @warn;
+}
+
+/* ---- Group D: workspace-info modules ----
+   Inert until the matching name is added to a modules array in configs/VB23. */
+#custom-wsfocus.warning {
+  color: @warn;
+}
+
+#custom-wsfocus.critical {
+  color: @critical;
+}
+
+/* ---- Audio ---- */
+#pulseaudio.bluetooth {
+  color: @sapphire;
+}
+
+#pulseaudio.muted {
+  color: @critical;
+}
+
+/* ---- Window Title ---- */
+/* ---- MPRIS ---- */
+/* ---- Network ---- */
+#network.disconnected,
+#network.disabled {
+  background-color: alpha(@surface-raised, 0.55);
+  color: @critical;
+  text-shadow: none;
+}
+
+/* ---- Sliders ---- */
+#pulseaudio-slider slider {
+  min-width: 0px;
+  min-height: 0px;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+#pulseaudio-slider trough {
+  min-width: 80px;
+  min-height: 5px;
+  border-radius: 5px;
+  background-color: alpha(@surface-raised, 0.55);
+}
+
+#pulseaudio-slider highlight {
+  min-height: 10px;
+  border-radius: 5px;
+  background-color: @sel;
+}
+
+#backlight-slider slider {
+  min-width: 0px;
+  min-height: 0px;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+#backlight-slider trough {
+  min-width: 80px;
+  min-height: 10px;
+  border-radius: 5px;
+  background-color: alpha(@surface-raised, 0.55);
+}
+
+#backlight-slider highlight {
+  min-width: 10px;
+  border-radius: 5px;
+  background-color: @sel;
+}
+
+/* ==========================================================================
+   OPT-IN WORKSPACE BLOCKS
+   Nothing below is live. Each block is wrapped in one comment: to enable it,
+   delete the opening slash-star line and the closing star-slash line of that
+   block only. Nothing here changes which workspace variant the bar uses -
+   that is "hyprland/workspaces#roman" in configs/VB23.
+
+   GTK3 CSS has no transform, so there is no scale(), rotate() or translate().
+   Motion here comes from transitions on color, background, min-width, padding,
+   opacity, border and font-size, plus keyframes. GTK3 also ignores plain
+   width/height on a button - use min-width / min-height.
+   ========================================================================== */
+
+/* ---- OPT-IN 1: urgent blink ----------------------------------------------
+   This is the one functional gap in the current setup. Every variant in
+   ModulesWorkspaces sets show-special: false and defines no urgent glyph, so
+   a window demanding attention on another workspace shows nothing at all -
+   no glyph change, and the .urgent rule above only fires if the module ever
+   emits the class. Pair this with "hyprland/workspaces#states", which is the
+   only variant that actually defines urgent.
+
+@keyframes ws_urgent {
+  to {
+    color: @text;
+    background-color: @red;
+  }
+}
+
+#workspaces button.urgent {
+  color: @red;
+  border-bottom: 2px solid @red;
+  animation-name: ws_urgent;
+  animation-duration: 0.6s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+   ---- end opt-in 1 ---- */
+
+/* ---- OPT-IN 2: font-size grow on active ---------------------------------
+   The GTK3-compatible substitute for transform: scale(1.2). font-size is an
+   animatable property here; transform is not implemented and fails silently.
+   Keep the change modest - the bar height is fixed, so a large jump clips.
+
+#workspaces button {
+  font-size: 100%;
+  transition: font-size 0.25s ease, color 0.25s ease;
+}
+
+#workspaces button.active {
+  font-size: 128%;
+}
+
+   ---- end opt-in 2 ---- */
+
+/* ---- OPT-IN 3: expanding pill -------------------------------------------
+   Buttons are small circles; the active one grows into a wide rounded bar.
+   min-width is what GTK3 honours, and it is transitionable. Needs a variant
+   whose glyph is a single space so the circle stays a circle - add this to
+   UserModules and put "hyprland/workspaces#pill" in modules-left:
+
+     // PILL  blank glyphs, all shape from CSS opt-in 3 in style/New.css
+     "hyprland/workspaces#pill": {
+       "active-only": false,
+       "all-outputs": true,
+       "format": " ",
+       "show-special": false,
+       "on-click": "activate",
+       "persistent-workspaces": { "*": 5 },
+     },
+
+#workspaces button {
+  min-width: 10px;
+  min-height: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 3px;
+  margin-right: 3px;
+  border-bottom: none;
+  border-radius: 10px;
+  background-color: @surface1;
+  transition: min-width 0.3s ease, background-color 0.3s ease;
+}
+
+#workspaces button.active {
+  min-width: 34px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-bottom: none;
+  border-radius: 10px;
+  background-color: @teal;
+}
+
+#workspaces button:hover {
+  background-color: @overlay0;
+  border-bottom: none;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+   ---- end opt-in 3 ---- */
+
+/* ---- OPT-IN 4: per-workspace hue ----------------------------------------
+   A different accent per position when focused. nth-child tracks the button's
+   POSITION in the bar, not the workspace id - so if workspaces appear and
+   disappear the colours shift under you. Keep "persistent-workspaces" at a
+   fixed count (all the variants use 5) so position and id stay in step.
+   Colours are the existing palette tokens from style/custom/vibrant.css.
+
+#workspaces button:nth-child(1).active {
+  color: @teal;
+  border-bottom-color: @teal;
+}
+
+#workspaces button:nth-child(2).active {
+  color: @blue;
+  border-bottom-color: @blue;
+}
+
+#workspaces button:nth-child(3).active {
+  color: @mauve;
+  border-bottom-color: @mauve;
+}
+
+#workspaces button:nth-child(4).active {
+  color: @peach;
+  border-bottom-color: @peach;
+}
+
+#workspaces button:nth-child(5).active {
+  color: @green;
+  border-bottom-color: @green;
+}
+
+   ---- end opt-in 4 ---- */
+
+/* ---- OPT-IN 5: special / scratchpad colour ------------------------------
+   Only ever renders with a variant that sets show-special: true - today that
+   is "hyprland/workspaces#states" alone. The special workspace in use is
+   special:nyx (SUPER+U in configs/Keybinds.lua; WindowRules.lua sends
+   Discord, Vesktop and Spotify there).
+
+#workspaces button.special {
+  color: @mauve;
+  border-bottom: 2px solid @mauve;
+}
+
+#workspaces button.special.active {
+  color: @pink;
+  border-bottom: 2px solid @pink;
+}
+
+   ---- end opt-in 5 ---- */
+
+/* ---- OPT-IN 6 (structural): chevron opacity states ----------------------
+   Companion to "hyprland/workspaces#chevron", where every workspace draws the
+   same glyph and the state has to come from CSS alone.
+
+#workspaces button {
+  opacity: 0.35;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+#workspaces button.active {
+  opacity: 1;
+  color: @teal;
+}
+
+#workspaces button:hover {
+  opacity: 0.7;
+}
+
+   ---- end opt-in 6 ---- */
+
+/* ---- OPT-IN 7 (structural): merge workspaces and window title -----------
+   Makes #workspaces and #window read as one element: rounded on the outside
+   edges, square and gapless where they meet. Requires "window" to sit
+   immediately after the workspaces module in modules-left in configs/VB23 -
+   it currently does not, the order there is workspaces, tray, mpris.
+
+#workspaces {
+  background-color: @surface0;
+  border-radius: 14px 0px 0px 14px;
+  margin-right: 0px;
+  padding-right: 2px;
+}
+
+#window {
+  background-color: @surface0;
+  border-radius: 0px 14px 14px 0px;
+  margin-left: 0px;
+  padding-left: 8px;
+}
+
+   ---- end opt-in 7 ---- */
+
+/* ---- OPT-IN 8 (structural): per-monitor workspaces ----------------------
+   Not CSS - a one-line module change, noted here so it lives with the rest.
+   Every variant in ModulesWorkspaces sets "all-outputs": true, which is why
+   both bars show the same five workspaces today and mirror each other. Set
+   it to false on the variant in use and each bar shows only its own monitor's
+   workspaces. Worth knowing that workspaces.lua (generated by nwg-displays)
+   already binds odd workspaces to eDP-1 and even ones to DP-2, so with
+   all-outputs: false the laptop bar would show 1/3/5/7/9/10 and the external
+   would show 2/4/6/8.
+
+     "all-outputs": false,
+
+   ---- end opt-in 8 ---- */
+
+/* ---- OPT-IN 9 (structural): hover-expanding drawer ----------------------
+   The bar shows only the active workspace and the rest slide out on hover.
+   The group itself lives in ModulesGroups as "group/workspaces_drawer"
+   (commented out there too); enable that, then swap the workspaces entry in
+   modules-left in configs/VB23 for "group/workspaces_drawer". This block is
+   only the styling that keeps the collapsed state from looking clipped.
+
+#workspaces {
+  background-color: transparent;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#workspaces button.active {
+  background-color: @surface0;
+  border-radius: 10px;
+}
+
+   ---- end opt-in 9 ---- */

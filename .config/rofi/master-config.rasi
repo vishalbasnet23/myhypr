@@ -1,4 +1,4 @@
-/* Master Config — Vibrant Flat Theme */
+/* Master Config — Vibrant Glass */
 
 /* ---- Configuration ---- */
 configuration {
@@ -49,10 +49,25 @@ configuration {
     flamingo:       #ff6e6e;
     rosewater:      #ff8fa3;
 
+    /* ---- Glass roles + neutral text ramp ----
+       Same values as waybar's style/Glass.css and swaync's style.css. rasi has
+       no variable sharing across formats, so they are restated here.
+       NOTE: rasi has no box-shadow, so the glass here is fill + hairline only. */
+    wb-text-glass:  #eef2f6;
+    wb-dim:         rgba(223, 228, 234, 55%);
+    wb-faint:       rgba(255, 255, 255, 28%);
+    glass-fill:     rgba(232, 238, 245, 13%);
+    glass-border:   rgba(255, 255, 255, 22%);
+    glass-raised:   rgba(255, 255, 255, 6%);
+    ui-hover:       rgba(255, 255, 255, 10%);
+    sel:            #ffffff;
+    sel-lite:       #ffffff;
+    sel-fill:       rgba(255, 255, 255, 20%);
+
     /* Semantic roles */
-    text-color:                  @text;
+    text-color:                  @wb-text-glass;
     background-color:            transparent;
-    border-color:                @blue;
+    border-color:                @glass-border;
 }
 
 /* ---- Window ---- */
@@ -63,28 +78,30 @@ window {
     cursor:                     "default";
     spacing:                    0px;
 
-    /* Flat — left accent border only, like swaync */
-    border:                     0px;
-    border-radius:              0px;
+    /* Glass — the pane itself. Hyprland blurs namespace "rofi"; without that
+       layerrule this is a flat translucent slab. */
+    border:                     1px;
+    border-color:               @glass-border;
+    border-radius:              14px;
 
     location:                   center;
     anchor:                     center;
     width:                      42%;
-    background-color:           rgba(15, 17, 32, 0.60);
+    background-color:           @glass-fill;
 }
 
 /* ---- Mainbox ---- */
 mainbox {
-    padding:                    14px;
+    padding:                    16px;
     enabled:                    true;
     orientation:                vertical;
     spacing:                    10px;
     children:                   [ "inputbar", "listbox" ];
     background-color:           transparent;
 
-    /* Blue left accent strip — mirrors swaync control center */
-    border:                     2px 2px 2px 2px;
-    border-color:               @lavender;
+    /* The window carries the hairline now — a second border here would
+       double it up. */
+    border:                     0px;
     border-radius:              0px;
 }
 
@@ -93,12 +110,11 @@ inputbar {
     enabled:                    true;
     padding:                    10px 14px;
     margin:                     0px 0px 4px 0px;
-    border-radius:              0px;
+    border-radius:              10px;
 
-    /* Subtle bottom divider in teal */
-    border:                     0px 0px 1px 0px;
-    border-color:               rgba(0, 212, 163, 0.35);
-    background-color:           rgba(44, 47, 72, 0.45);
+    /* Raised chip on the glass — same treatment as a swaync notification. */
+    border:                     0px;
+    background-color:           @glass-raised;
     orientation:                horizontal;
     children:                   [ "entry", "dummy", "mode-switcher" ];
 }
@@ -106,6 +122,7 @@ inputbar {
 /* ---- Entry ---- */
 entry {
     font:                       "Maple Mono NF CN 13";
+    text-color:                 @wb-text-glass;
     enabled:                    true;
     expand:                     false;
     width:                      100%;
@@ -114,7 +131,7 @@ entry {
     text-color:                 @text;
     cursor:                     text;
     placeholder:                "  Search ";
-    placeholder-color:          @overlay1;
+    placeholder-color:          @wb-dim;
 }
 
 /* ---- Listbox ---- */
@@ -157,44 +174,45 @@ mode-switcher {
     background-color:           transparent;
 }
 
-/* Each button gets a different accent — blue, teal, lavender */
+/* Uniform chips — the mode you are IN is the only one that carries colour. */
 button {
     padding:                    2px 12px;
-    border-radius:              0px;
-    background-color:           rgba(44, 47, 72, 0.55);
-    text-color:                 @subtext1;
+    border-radius:              8px;
+    background-color:           @glass-raised;
+    text-color:                 @wb-dim;
     cursor:                     pointer;
     font:                       "Maple Mono NF CN 11";
-    border:                     0px 0px 0px 2px;
-    border-color:               @blue;
+    border:                     0px;
 }
 
 button selected {
-    background-color:           rgba(41, 121, 255, 0.25);
-    text-color:                 @sky;
-    border-color:               @sky;
+    background-color:           @sel-fill;
+    text-color:                 @sel-lite;
+    border:                     0px 0px 0px 2px;
+    border-color:               @sel;
 }
 
 /* ---- Scrollbar ---- */
 scrollbar {
     width:                      3px;
     border:                     0;
-    handle-color:               rgba(41, 121, 255, 0.6);
+    handle-color:               rgba(255, 255, 255, 25%);
     handle-width:               6px;
     padding:                    0;
-    border-radius:              0px;
+    border-radius:              8px;
 }
 
 /* ---- Elements ---- */
 element {
     enabled:                    true;
     spacing:                    10px;
-    padding:                    7px 10px;
-    border-radius:              0px;
+    padding:                    8px 12px;
+    border-radius:              10px;
     background-color:           transparent;
     cursor:                     pointer;
 
-    /* Left accent strip — default blue */
+    /* 2px left strip, painted only by state — the same motif as a swaync
+       notification card. */
     border:                     0px 0px 0px 2px;
     border-color:               transparent;
 }
@@ -206,42 +224,43 @@ element normal.normal {
     border-color:               transparent;
 }
 element normal.urgent {
-    background-color:           rgba(255, 64, 129, 0.10);
-    text-color:                 @pink;
-    border-color:               @pink;
+    background-color:           rgba(255, 61, 0, 12%);
+    text-color:                 @red;
+    border-color:               @red;
 }
 element normal.active {
-    background-color:           rgba(0, 212, 163, 0.10);
+    background-color:           rgba(0, 212, 163, 10%);
     text-color:                 @teal;
     border-color:               @teal;
 }
 
-/* Selected — blue strip + tinted bg */
+/* Selected — copper strip + tinted bg */
 element selected.normal {
-    background-color:           rgba(41, 121, 255, 0.18);
-    text-color:                 @text;
-    border-color:               @blue;
+    background-color:           @sel-fill;
+    text-color:                 @wb-text-glass;
+    border-color:               @sel;
 }
 element selected.urgent {
-    background-color:           rgba(255, 64, 129, 0.25);
-    text-color:                 @text;
-    border-color:               @pink;
+    background-color:           rgba(255, 61, 0, 25%);
+    text-color:                 @wb-text-glass;
+    border-color:               @red;
 }
 element selected.active {
-    background-color:           rgba(0, 212, 163, 0.20);
-    text-color:                 @text;
+    background-color:           rgba(0, 212, 163, 20%);
+    text-color:                 @wb-text-glass;
     border-color:               @teal;
 }
 
-/* Alternating rows — very subtle lavender strip */
+/* Alternating rows — colourless, just a faint lift so long lists stay
+   scannable without introducing a second accent. */
 element alternate.normal {
-    background-color:           rgba(44, 47, 72, 0.20);
-    text-color:                 @subtext1;
+    background-color:           rgba(255, 255, 255, 3%);
+    text-color:                 @wb-text-glass;
     border-color:               transparent;
 }
 element alternate.urgent {
     background-color:           transparent;
-    text-color:                 @pink;
+    text-color:                 @red;
     border-color:               transparent;
 }
 element alternate.active {
@@ -273,21 +292,20 @@ message {
 }
 
 textbox {
-    padding:                    6px 10px;
-    border-radius:              0px;
-    border:                     0px 0px 0px 2px;
-    border-color:               @sapphire;
-    background-color:           rgba(44, 47, 72, 0.50);
-    text-color:                 @subtext1;
+    padding:                    8px 12px;
+    border-radius:              10px;
+    border:                     0px;
+    background-color:           @glass-raised;
+    text-color:                 @wb-dim;
     vertical-align:             0.5;
     horizontal-align:           0.0;
 }
 
 error-message {
     padding:                    14px;
-    border-radius:              0px;
-    border:                     0px 0px 0px 3px;
-    border-color:               @pink;
-    background-color:           rgba(255, 64, 129, 0.12);
-    text-color:                 @pink;
+    border-radius:              10px;
+    border:                     0px 0px 0px 2px;
+    border-color:               @red;
+    background-color:           rgba(255, 61, 0, 12%);
+    text-color:                 @red;
 }

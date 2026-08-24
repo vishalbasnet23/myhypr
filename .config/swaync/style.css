@@ -1,4 +1,4 @@
-/* SwayNC — Vibrant Flat Theme */
+/* SwayNC — Vibrant Glass */
 
 /* ---- Color Palette ---- */
 @define-color base       #1a1c2c;
@@ -32,17 +32,46 @@
 @define-color flamingo   #ff6e6e;
 @define-color rosewater  #ff8fa3;
 
+/* ---- Glass roles + neutral text ramp ----
+   Shared with waybar's style/Glass.css so the two surfaces read as one system.
+   The ramp replaces @text / @subtext0 / @subtext1 for TEXT ONLY - urgency and
+   semantic colours below still come from the Vibrant palette above. */
+@define-color wb-text        #dfe4ea;
+@define-color wb-text-glass  #eef2f6;
+@define-color wb-dim         rgba(223, 228, 234, 0.55);
+@define-color wb-faint       rgba(255, 255, 255, 0.28);
+@define-color glass-fill     rgba(232, 238, 245, 0.13);
+@define-color glass-border   rgba(255, 255, 255, 0.22);
+@define-color glass-raised   rgba(255, 255, 255, 0.06);
+
+/* Same two tokens as waybar's style/Glass.css - keep them in step.
+   @ui-hover is colourless on purpose; @sel is the system selection accent. */
+@define-color ui-hover       rgba(255, 255, 255, 0.10);
+@define-color sel            #ffffff; /* keep in step with waybar */
+@define-color sel-lite       #ffffff;
+
 /* ---- Global ---- */
 * {
   font-family: "Maple Mono NF CN";
-  font-weight: 400;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 12px;
   border-radius: 0px;
+  color: @wb-text-glass;
 }
 
 /* ---- Floating Notifications ---- */
 .floating-notifications {
   background: transparent;
+}
+
+/* A popup has no control-center panel behind it, so it carries the glass
+   itself - fill, hairline and shadow, exactly like a waybar pill. */
+.floating-notifications .notification {
+  background: @glass-fill;
+  border: 1px solid @glass-border;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.9);
+  margin: 8px;
 }
 
 .blank-window {
@@ -57,49 +86,56 @@
 .control-center .notification-row:focus,
 .control-center .notification-row:hover {
   opacity: 1;
-  background: alpha(@blue, 0.08);
-  border-radius: 0px;
+  background: @ui-hover;
+  border-radius: 10px;
 }
 
 /* ---- Notification Card ---- */
+/* Urgency is a 2px LEFT strip - the same motif as a selected rofi row.
+   The card itself is a raised chip sitting on the panel's glass. */
+
 /* Low urgency → teal strip */
 .notification.low {
-  background: alpha(@crust, 0.6);
-  color: @text;
-  padding: 8px 8px 8px 0px;
-  border-radius: 0px;
+  background: @glass-raised;
+  color: @wb-text-glass;
+  padding: 12px 14px;
+  margin: 4px 2px;
+  border-radius: 10px;
   border: none;
-  border-bottom: 3px solid @teal;
+  border-left: 2px solid @teal;
 }
 
 /* Normal urgency → blue strip */
 .notification.normal {
-  background: alpha(@crust, 0.6);
-  color: @text;
-  padding: 8px 8px 8px 0px;
-  border-radius: 0px;
+  background: @glass-raised;
+  color: @wb-text-glass;
+  padding: 12px 14px;
+  margin: 4px 2px;
+  border-radius: 10px;
   border: none;
-  border-bottom: 3px solid @blue;
+  border-left: 2px solid @sel;
 }
 
-/* Critical urgency → pink strip + tinted bg */
+/* Critical urgency → red strip + tinted bg */
 .notification.critical {
-  background: alpha(@pink, 0.07);
-  color: @text;
-  padding: 8px 8px 8px 0px;
-  border-radius: 0px;
+  background: alpha(@red, 0.12);
+  color: @wb-text-glass;
+  padding: 12px 14px;
+  margin: 4px 2px;
+  border-radius: 10px;
   border: none;
-  border-bottom: 3px solid @pink;
+  border-left: 2px solid @red;
 }
 
 /* Fallback */
 .notification {
-  background: alpha(@crust, 0.6);
-  color: @text;
-  padding: 8px 8px 8px 0px;
-  border-radius: 0px;
+  background: @glass-raised;
+  color: @wb-text-glass;
+  padding: 12px 14px;
+  margin: 4px 2px;
+  border-radius: 10px;
   border: none;
-  border-bottom: 3px solid @sky;
+  border-left: 2px solid @sky;
 }
 
 .notification-group {
@@ -110,25 +146,26 @@
 /* ---- Image ---- */
 .image {
   margin-right: 12px;
-  margin-left: 15px;
-  border-radius: 0px;
+  margin-left: 0px;
+  border-radius: 8px;
   padding: 0;
 }
 
 /* ---- Close Button ---- */
 .close-button {
-  background: @pink;
-  color: @crust;
+  background: @glass-raised;
+  color: @wb-dim;
   text-shadow: none;
   padding: 0;
-  border-radius: 0px;
+  border-radius: 8px;
   margin-top: 5px;
   margin-right: 5px;
   border: none;
 }
 
 .close-button:hover {
-  background: @flamingo;
+  background: alpha(@red, 0.25);
+  color: @wb-text-glass;
   box-shadow: none;
   border: none;
   transition: all 0.15s ease-in-out;
@@ -137,9 +174,9 @@
 /* ---- Actions ---- */
 .notification-action {
   border-top: none;
-  border-radius: 0px;
-  background: alpha(@surface0, 0.5);
-  color: @sky;
+  border-radius: 8px;
+  background: @glass-raised;
+  color: @wb-text-glass;
   padding: 0px;
   min-height: 0px;
   min-width: 0px;
@@ -148,8 +185,8 @@
 .notification-action label {
   padding: 0px;
   margin: 0;
-  font-size: 0.8rem;
-  color: @sky;
+  font-size: 11px;
+  color: @wb-text-glass;
 }
 
 .notification-default-action {
@@ -160,20 +197,27 @@
   background: transparent;
 }
 
-.notification-default-action:hover,
+/* The body is not a button: .notification-row already lifts the whole card on
+   hover, so a second fill here just double-highlights the same thing. */
+.notification-default-action:hover {
+  color: @wb-text-glass;
+  background: transparent;
+}
+
+/* Action buttons ARE buttons and keep their own hover. */
 .notification-action:hover {
-  color: @text;
-  background: alpha(@blue, 0.2);
+  color: @wb-text-glass;
+  background: @ui-hover;
 }
 
 .notification-action:first-child {
-  border-bottom-left-radius: 0px;
-  background: alpha(@surface0, 0.5);
+  border-bottom-left-radius: 10px;
+  background: @glass-raised;
 }
 
 .notification-action:last-child {
-  border-bottom-right-radius: 0px;
-  background: alpha(@surface0, 0.5);
+  border-bottom-right-radius: 10px;
+  background: @glass-raised;
 }
 
 /* ---- Inline Reply ---- */
@@ -182,69 +226,72 @@
 }
 
 .inline-reply-entry {
-  background: alpha(@surface0, 0.55);
-  color: @text;
-  caret-color: @blue;
+  background: @glass-raised;
+  color: @wb-text-glass;
+  caret-color: @sel;
   border: none;
-  border-bottom: 2px solid alpha(@blue, 0.6);
-  border-radius: 0px;
+  border-bottom: 2px solid alpha(@sel, 0.6);
+  border-radius: 8px;
 }
 
 .inline-reply-button {
   font-size: 0.5rem;
   margin-left: 4px;
-  background: alpha(@surface1, 0.55);
+  background: @glass-raised;
   border: none;
-  border-bottom: 2px solid alpha(@sky, 0.4);
-  border-radius: 0px;
-  color: @text;
+  border-bottom: 2px solid alpha(@sel, 0.45);
+  border-radius: 8px;
+  color: @wb-text-glass;
 }
 
 .inline-reply-button:disabled {
   background: initial;
-  color: @overlay1;
+  color: @wb-faint;
   border: 1px solid transparent;
 }
 
 .inline-reply-button:hover {
-  background: alpha(@blue, 0.25);
+  background: @ui-hover;
 }
 
 /* ---- Body Image ---- */
 .body-image {
   margin-top: 6px;
-  border-radius: 0px;
+  border-radius: 8px;
 }
 
 /* ---- Text ---- */
 .summary {
-  font-size: 0.9rem;
+  font-size: 13px;
+  font-weight: 600;
   background: transparent;
-  color: @text;
-  text-shadow: none;
+  color: @wb-text-glass;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
 .time {
-  font-size: 0.8rem;
+  font-size: 11px;
   background: transparent;
-  color: @subtext0;
+  color: @wb-dim;
   text-shadow: none;
   margin-right: 18px;
 }
 
 .body {
-  font-size: 0.8rem;
+  font-size: 12px;
   background: transparent;
-  color: @subtext1;
+  color: @wb-dim;
   text-shadow: none;
 }
 
 /* ---- Control Center ---- */
 .control-center {
-  background: alpha(@crust, 0.65);
-  border: 2px solid alpha(@teal, 1);
-  color: @text;
-  border-radius: 0px;
+  background: @glass-fill;
+  border: 1px solid @glass-border;
+  color: @wb-text-glass;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.9);
+  padding: 4px;
 }
 
 .control-center-list {
@@ -257,28 +304,27 @@
 
 /* ---- Widget Title ---- */
 .widget-title {
-  color: @text;
+  color: @wb-text-glass;
   background: transparent;
   padding: 3px 6px;
   margin: 5px;
-  font-size: 1rem;
+  font-size: 16px;
+  font-weight: 600;
   border-radius: 0px;
-  border-bottom: 1px solid alpha(@lavender, 0.3);
+  border-bottom: 1px solid @glass-border;
 }
 
 .widget-title > button {
-  font-size: 0.75rem;
-  color: @subtext1;
-  border-radius: 0px;
-  background: alpha(@surface0, 0.5);
+  font-size: 11px;
+  color: @wb-dim;
+  border-radius: 8px;
+  background: @glass-raised;
   border: none;
-  border-bottom: 2px solid alpha(@teal, 0.6);
 }
 
 .widget-title > button:hover {
-  background: alpha(@pink, 0.2);
-  color: @pink;
-  border-bottom-color: @pink;
+  background: @ui-hover;
+  color: @wb-text-glass;
 }
 
 /* ---- DND Widget ---- */
@@ -287,29 +333,29 @@
   padding: 3px 6px;
   margin: 5px;
   border-radius: 0px;
-  font-size: 0.5rem;
-  border-bottom: 1px solid alpha(@overlay0, 0.2);
+  font-size: 12px;
+  border-bottom: 1px solid @glass-border;
 }
 
 .widget-dnd > switch {
-  border-radius: 0px;
-  background: @surface1;
-  border: 1px solid alpha(@blue, 0.25);
+  border-radius: 8px;
+  background: @glass-raised;
+  border: 1px solid @glass-border;
 }
 
 .widget-dnd > switch:checked {
-  background: alpha(@blue, 0.7);
-  border-color: alpha(@blue, 0.6);
+  background: alpha(@sel, 0.7);
+  border-color: alpha(@sel, 0.6);
 }
 
 .widget-dnd > switch slider {
-  background: @subtext1;
-  border-radius: 0px;
+  background: @wb-dim;
+  border-radius: 6px;
 }
 
 .widget-dnd > switch:checked slider {
-  background: @text;
-  border-radius: 0px;
+  background: @wb-text-glass;
+  border-radius: 6px;
 }
 
 /* ---- Label Widget ---- */
@@ -318,30 +364,29 @@
 }
 
 .widget-label > label {
-  font-size: 1rem;
-  color: @text;
+  font-size: 13px;
+  color: @wb-text-glass;
 }
 
 /* ---- MPRIS Widget ---- */
 .widget-mpris {
-  color: @text;
-  background: alpha(@surface0, 0.45);
+  color: @wb-text-glass;
+  background: @glass-raised;
   border: none;
-  border-bottom: 3px solid @sapphire;
   padding: 6px;
   margin: 5px;
-  border-radius: 0px;
+  border-radius: 10px;
 }
 
 .widget-mpris > box > button {
-  border-radius: 0px;
-  color: @sky;
+  border-radius: 8px;
+  color: @wb-text-glass;
   background: transparent;
 }
 
 .widget-mpris > box > button:hover {
-  background: alpha(@blue, 0.2);
-  color: @text;
+  background: @ui-hover;
+  color: @wb-text-glass;
 }
 
 .widget-mpris-player {
@@ -350,25 +395,29 @@
 
 .widget-mpris-title {
   font-weight: 600;
-  font-size: 1rem;
-  color: @text;
+  font-size: 13px;
+  color: @wb-text-glass;
 }
 
 .widget-mpris-subtitle {
-  font-size: 0.75rem;
-  color: @subtext0;
+  font-size: 11px;
+  color: @wb-dim;
 }
 
 /* ---- Buttons Grid ---- */
 .widget-buttons-grid {
-  font-size: large;
+  font-size: 16px;
   padding: 2px;
   margin: 5px;
   border-radius: 0px;
   background: transparent;
 }
 
-/* Cycle accent colors per button */
+/* The five buttons are ACTIONS, not states, so they are uniform chips - same
+   call as the waybar power button. To put the per-button accents back, drop
+   the comment markers around the block below; the five actions in
+   config.json are unchanged either way.
+
 .widget-buttons-grid > flowbox > flowboxchild:nth-child(1) > button {
   border-bottom: 3px solid @blue;
 }
@@ -385,46 +434,46 @@
   border-bottom: 3px solid @pink;
 }
 
+*/
+
 .widget-buttons-grid > flowbox > flowboxchild > button {
   margin: 3px;
-  background: alpha(@surface0, 0.55);
-  border-radius: 0px;
-  color: @subtext1;
-  border-top: none;
-  border-right: none;
-  border-bottom: none;
+  background: @glass-raised;
+  border-radius: 10px;
+  color: @wb-text-glass;
+  border: 1px solid @glass-border;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
-  background: alpha(@blue, 0.25);
-  color: @text;
+  background: @ui-hover;
+  color: @wb-text-glass;
 }
 
 /* ---- Menubar ---- */
 .widget-menubar > box > .menu-button-bar > button {
   border: none;
   background: transparent;
-  color: @subtext1;
+  color: @wb-text-glass;
 }
 
 .topbar-buttons > button {
   border: none;
   background: transparent;
-  color: @subtext1;
+  color: @wb-text-glass;
 }
 
 /* ---- Progress Bar ---- */
 .notification.low progress {
   background-color: @teal;
-  border-radius: 0px;
+  border-radius: 6px;
 }
 
 .notification.normal progress {
-  background-color: @blue;
-  border-radius: 0px;
+  background-color: @sel;
+  border-radius: 6px;
 }
 
 .notification.critical progress {
-  background-color: @pink;
-  border-radius: 0px;
+  background-color: @red;
+  border-radius: 6px;
 }

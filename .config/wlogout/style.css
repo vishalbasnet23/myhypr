@@ -1,23 +1,35 @@
-/* wlogout — Vibrant Theme */
+/* wlogout — Vibrant Glass */
+/*
+ * The blur comes from the Hyprland layerrule on namespace "logout_dialog"
+ * (UserConfigs/WindowRules.lua). Without it this is a flat dim, not glass.
+ * Tiles use radius 18 - deliberately the softest corner in the system, since
+ * this is the one surface that is nothing but tiles.
+ * layout is untouched: same six buttons, same actions, same keybinds.
+ */
 
 window {
   font-family: "Maple Mono NF CN";
   font-size: 11pt;
   font-weight: 600;
-  color: #f1f3ff;
-  background-color: rgba(15, 17, 32, 0.75);
+  color: #eef2f6;
+  /* Lighter than the old 0.75: the layerrule blurs what is behind, so the
+     dim only has to carry contrast, not hide the desktop. */
+  background-color: rgba(15, 17, 32, 0.45);
 }
 
 /* ---- Base Button ---- */
+/* Every tile is the same glass chip at rest. Colour arrives only on hover,
+   and only to say how far the action goes - see the two groups below. */
 button {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 35%;
-  background-color: transparent;
-  border-radius: 16px;
-  border: 1px solid rgba(97, 104, 154, 0.25);
-  color: #7a80b2;
-  margin: 8px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: rgba(223, 228, 234, 0.55);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  margin: 12px;
   min-width: 120px;
   min-height: 120px;
   transition:
@@ -27,104 +39,77 @@ button {
     color 0.2s ease-in-out;
 }
 
+/* GTK3 has no transform, so the "grow" is margin shrinking, as everywhere
+   else in this system. */
+button:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+  border-color: #ffffff;
+  color: #eef2f6;
+  margin: 8px;
+}
+
 button:focus {
   outline: none;
   background-size: 37%;
-  border-color: rgba(97, 104, 154, 0.5);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
-/* ---- Lock — blue ---- */
+/* ---- Lock — recoverable ---- */
 #lock {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/lock.png");
-  border-color: rgba(41, 121, 255, 0.25);
 }
 #lock:hover {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/lock-hover.png");
-  background-color: rgba(41, 121, 255, 0.15);
-  border-color: #2979ff;
-  color: #2979ff;
-  margin: 4px;
-}
-#lock:focus {
-  border-color: rgba(41, 121, 255, 0.5);
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
-/* ---- Logout — teal ---- */
+/* ---- Logout — ends the session ---- */
 #logout {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/logout.png");
-  border-color: rgba(0, 212, 163, 0.25);
 }
 #logout:hover {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/logout-hover.png");
-  background-color: rgba(0, 212, 163, 0.15);
-  border-color: #00d4a3;
-  color: #00d4a3;
-  margin: 4px;
-}
-#logout:focus {
-  border-color: rgba(0, 212, 163, 0.5);
+  border-color: #ff3d00;
+  color: #ff3d00;
 }
 
-/* ---- Suspend — sky ---- */
+/* ---- Suspend — recoverable ---- */
 #suspend {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/sleep.png");
-  border-color: rgba(0, 229, 255, 0.25);
 }
 #suspend:hover {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/sleep-hover.png");
-  background-color: rgba(0, 229, 255, 0.12);
-  border-color: #00e5ff;
-  color: #00e5ff;
-  margin: 4px;
-}
-#suspend:focus {
-  border-color: rgba(0, 229, 255, 0.5);
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
-/* ---- Hibernate — lavender ---- */
+/* ---- Hibernate — recoverable ---- */
 #hibernate {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/hibernate.png");
-  border-color: rgba(142, 92, 255, 0.25);
 }
 #hibernate:hover {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/hibernate-hover.png");
-  background-color: rgba(142, 92, 255, 0.15);
-  border-color: #8e5cff;
-  color: #8e5cff;
-  margin: 4px;
-}
-#hibernate:focus {
-  border-color: rgba(142, 92, 255, 0.5);
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
-/* ---- Reboot — peach ---- */
+/* ---- Reboot — ends the session ---- */
 #reboot {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/restart.png");
-  border-color: rgba(255, 145, 0, 0.25);
 }
 #reboot:hover {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/restart-hover.png");
-  background-color: rgba(255, 145, 0, 0.15);
-  border-color: #ff9100;
-  color: #ff9100;
-  margin: 4px;
-}
-#reboot:focus {
-  border-color: rgba(255, 145, 0, 0.5);
+  border-color: #ff3d00;
+  color: #ff3d00;
 }
 
-/* ---- Shutdown — pink ---- */
+/* ---- Shutdown — ends the session ---- */
 #shutdown {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/power.png");
-  border-color: rgba(255, 64, 129, 0.25);
 }
 #shutdown:hover {
   background-image: url("/home/vishalbasnet23/.config/wlogout/icons/power-hover.png");
-  background-color: rgba(255, 64, 129, 0.15);
-  border-color: #ff4081;
-  color: #ff4081;
-  margin: 4px;
-}
-#shutdown:focus {
-  border-color: rgba(255, 64, 129, 0.5);
+  border-color: #ff3d00;
+  color: #ff3d00;
 }
