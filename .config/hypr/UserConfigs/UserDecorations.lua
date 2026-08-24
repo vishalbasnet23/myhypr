@@ -21,6 +21,12 @@ local surface0 = "rgba(2c2f4855)"
 local surface1 = "rgba(3a3e5c55)"
 local overlay0 = "rgba(62689a88)"
 
+-- Vibrant Glass neutrals. Everywhere else in the system, colour means STATE and
+-- selection/focus is neutral white; these bring window borders onto that rule.
+local focus_border = "rgba(ffffffcc)"
+local idle_border = "rgba(3a3e5c88)"
+local shadow_neutral = "rgba(00000073)"
+
 -- Only teal, sky, blue, surface0 and surface1 are used below; the rest of the palette
 -- is kept for future use, exactly as in the original.
 
@@ -32,14 +38,18 @@ hl.config({
 
 		-- MIGRATION NOTE: `col.active_border = $teal $teal 45deg` -> nested `col` table
 		-- with a gradient value. `45deg` becomes `angle = 45`.
+		-- Was: active flamingo/flamingo, inactive yellow->teal. The unfocused
+		-- window carried the two-colour gradient while the focused one was flat,
+		-- so the wrong window drew the eye. Focus is the loud state now.
 		col = {
-			active_border = { colors = { flamingo, flamingo }, angle = 45 },
-			inactive_border = { colors = { yellow, teal }, angle = 45 },
+			active_border = { colors = { focus_border, focus_border }, angle = 45 },
+			inactive_border = { colors = { idle_border, idle_border }, angle = 45 },
 		},
 	},
 
 	decoration = {
-		rounding = 4,
+		-- 4 -> 10, so windows agree with the chips in waybar, swaync and rofi.
+		rounding = 10,
 		active_opacity = 1.0,
 		inactive_opacity = 0.8,
 		fullscreen_opacity = 1.0,
@@ -51,7 +61,7 @@ hl.config({
 			enabled = true,
 			range = 5,
 			render_power = 4,
-			color = flamingo,
+			color = shadow_neutral,
 			color_inactive = surface0,
 		},
 
