@@ -47,7 +47,8 @@
 /* Same two tokens as waybar's style/Glass.css - keep them in step.
    @ui-hover is colourless on purpose; @sel is the system selection accent. */
 @define-color ui-hover       rgba(255, 255, 255, 0.10);
-@define-color sel            #2979ff;
+@define-color sel            #d08a52; /* copper - keep in step with waybar */
+@define-color sel-lite       #e8b48a;
 
 /* ---- Global ---- */
 * {
@@ -196,7 +197,14 @@
   background: transparent;
 }
 
-.notification-default-action:hover,
+/* The body is not a button: .notification-row already lifts the whole card on
+   hover, so a second fill here just double-highlights the same thing. */
+.notification-default-action:hover {
+  color: @wb-text-glass;
+  background: transparent;
+}
+
+/* Action buttons ARE buttons and keep their own hover. */
 .notification-action:hover {
   color: @wb-text-glass;
   background: @ui-hover;
