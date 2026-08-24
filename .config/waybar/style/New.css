@@ -6,8 +6,8 @@
   font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
 }
 
-@import "../waybar/style/custom/cyberpunk.css";
-/** @import "../waybar/style/custom/vibrant.css"; **/
+/* @import "../waybar/style/custom/modern.css"; */
+@import "../waybar/style/custom/vibrant.css";
 
 window#waybar {
   transition-property: background-color;
@@ -94,10 +94,15 @@ window#waybar.hidden {
 #custom-light_dark,
 #custom-lock,
 #custom-menu,
+#custom-mousebattery,
 #custom-power_vertical,
 #custom-power,
 #custom-swaync,
 #custom-updater,
+#custom-wsapps,
+#custom-wscount,
+#custom-wsddev,
+#custom-wsfocus,
 #custom-weather,
 #custom-weather.clearNight,
 #custom-weather.cloudyFoggyDay,
@@ -208,7 +213,7 @@ window#waybar.hidden {
 }
 
 #workspaces button.persistent {
-  color: @surface1;
+  color: @subtext0;
   border-radius: 0px;
   border-bottom: 2px solid transparent;
 }
@@ -253,12 +258,50 @@ window#waybar.hidden {
   color: @teal;
 }
 
+#custom-mousebattery {
+  color: @sky;
+}
+
+#custom-mousebattery.warning {
+  color: @peach;
+}
+
+#custom-mousebattery.critical {
+  color: @red;
+}
+
 #custom-power {
   color: @red;
 }
 
 #custom-updater {
   color: @peach;
+}
+
+/* ---- Group D: workspace-info modules ----
+   Inert until the matching name is added to a modules array in configs/VB23. */
+#custom-wscount {
+  color: @sky;
+}
+
+#custom-wsapps {
+  color: @lavender;
+}
+
+#custom-wsddev {
+  color: @green;
+}
+
+#custom-wsfocus {
+  color: @teal;
+}
+
+#custom-wsfocus.warning {
+  color: @peach;
+}
+
+#custom-wsfocus.critical {
+  color: @red;
 }
 
 #custom-light_dark {
@@ -347,3 +390,234 @@ window#waybar.hidden {
   min-width: 10px;
   border-radius: 5px;
 }
+
+/* ==========================================================================
+   OPT-IN WORKSPACE BLOCKS
+   Nothing below is live. Each block is wrapped in one comment: to enable it,
+   delete the opening slash-star line and the closing star-slash line of that
+   block only. Nothing here changes which workspace variant the bar uses -
+   that is "hyprland/workspaces#roman" in configs/VB23.
+
+   GTK3 CSS has no transform, so there is no scale(), rotate() or translate().
+   Motion here comes from transitions on color, background, min-width, padding,
+   opacity, border and font-size, plus keyframes. GTK3 also ignores plain
+   width/height on a button - use min-width / min-height.
+   ========================================================================== */
+
+/* ---- OPT-IN 1: urgent blink ----------------------------------------------
+   This is the one functional gap in the current setup. Every variant in
+   ModulesWorkspaces sets show-special: false and defines no urgent glyph, so
+   a window demanding attention on another workspace shows nothing at all -
+   no glyph change, and the .urgent rule above only fires if the module ever
+   emits the class. Pair this with "hyprland/workspaces#states", which is the
+   only variant that actually defines urgent.
+
+@keyframes ws_urgent {
+  to {
+    color: @text;
+    background-color: @red;
+  }
+}
+
+#workspaces button.urgent {
+  color: @red;
+  border-bottom: 2px solid @red;
+  animation-name: ws_urgent;
+  animation-duration: 0.6s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+   ---- end opt-in 1 ---- */
+
+/* ---- OPT-IN 2: font-size grow on active ---------------------------------
+   The GTK3-compatible substitute for transform: scale(1.2). font-size is an
+   animatable property here; transform is not implemented and fails silently.
+   Keep the change modest - the bar height is fixed, so a large jump clips.
+
+#workspaces button {
+  font-size: 100%;
+  transition: font-size 0.25s ease, color 0.25s ease;
+}
+
+#workspaces button.active {
+  font-size: 128%;
+}
+
+   ---- end opt-in 2 ---- */
+
+/* ---- OPT-IN 3: expanding pill -------------------------------------------
+   Buttons are small circles; the active one grows into a wide rounded bar.
+   min-width is what GTK3 honours, and it is transitionable. Needs a variant
+   whose glyph is a single space so the circle stays a circle - add this to
+   UserModules and put "hyprland/workspaces#pill" in modules-left:
+
+     // PILL  blank glyphs, all shape from CSS opt-in 3 in style/New.css
+     "hyprland/workspaces#pill": {
+       "active-only": false,
+       "all-outputs": true,
+       "format": " ",
+       "show-special": false,
+       "on-click": "activate",
+       "persistent-workspaces": { "*": 5 },
+     },
+
+#workspaces button {
+  min-width: 10px;
+  min-height: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 3px;
+  margin-right: 3px;
+  border-bottom: none;
+  border-radius: 10px;
+  background-color: @surface1;
+  transition: min-width 0.3s ease, background-color 0.3s ease;
+}
+
+#workspaces button.active {
+  min-width: 34px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-bottom: none;
+  border-radius: 10px;
+  background-color: @teal;
+}
+
+#workspaces button:hover {
+  background-color: @overlay0;
+  border-bottom: none;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+   ---- end opt-in 3 ---- */
+
+/* ---- OPT-IN 4: per-workspace hue ----------------------------------------
+   A different accent per position when focused. nth-child tracks the button's
+   POSITION in the bar, not the workspace id - so if workspaces appear and
+   disappear the colours shift under you. Keep "persistent-workspaces" at a
+   fixed count (all the variants use 5) so position and id stay in step.
+   Colours are the existing palette tokens from style/custom/vibrant.css.
+
+#workspaces button:nth-child(1).active {
+  color: @teal;
+  border-bottom-color: @teal;
+}
+
+#workspaces button:nth-child(2).active {
+  color: @blue;
+  border-bottom-color: @blue;
+}
+
+#workspaces button:nth-child(3).active {
+  color: @mauve;
+  border-bottom-color: @mauve;
+}
+
+#workspaces button:nth-child(4).active {
+  color: @peach;
+  border-bottom-color: @peach;
+}
+
+#workspaces button:nth-child(5).active {
+  color: @green;
+  border-bottom-color: @green;
+}
+
+   ---- end opt-in 4 ---- */
+
+/* ---- OPT-IN 5: special / scratchpad colour ------------------------------
+   Only ever renders with a variant that sets show-special: true - today that
+   is "hyprland/workspaces#states" alone. The special workspace in use is
+   special:nyx (SUPER+U in configs/Keybinds.lua; WindowRules.lua sends
+   Discord, Vesktop and Spotify there).
+
+#workspaces button.special {
+  color: @mauve;
+  border-bottom: 2px solid @mauve;
+}
+
+#workspaces button.special.active {
+  color: @pink;
+  border-bottom: 2px solid @pink;
+}
+
+   ---- end opt-in 5 ---- */
+
+/* ---- OPT-IN 6 (structural): chevron opacity states ----------------------
+   Companion to "hyprland/workspaces#chevron", where every workspace draws the
+   same glyph and the state has to come from CSS alone.
+
+#workspaces button {
+  opacity: 0.35;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+#workspaces button.active {
+  opacity: 1;
+  color: @teal;
+}
+
+#workspaces button:hover {
+  opacity: 0.7;
+}
+
+   ---- end opt-in 6 ---- */
+
+/* ---- OPT-IN 7 (structural): merge workspaces and window title -----------
+   Makes #workspaces and #window read as one element: rounded on the outside
+   edges, square and gapless where they meet. Requires "window" to sit
+   immediately after the workspaces module in modules-left in configs/VB23 -
+   it currently does not, the order there is workspaces, tray, mpris.
+
+#workspaces {
+  background-color: @surface0;
+  border-radius: 14px 0px 0px 14px;
+  margin-right: 0px;
+  padding-right: 2px;
+}
+
+#window {
+  background-color: @surface0;
+  border-radius: 0px 14px 14px 0px;
+  margin-left: 0px;
+  padding-left: 8px;
+}
+
+   ---- end opt-in 7 ---- */
+
+/* ---- OPT-IN 8 (structural): per-monitor workspaces ----------------------
+   Not CSS - a one-line module change, noted here so it lives with the rest.
+   Every variant in ModulesWorkspaces sets "all-outputs": true, which is why
+   both bars show the same five workspaces today and mirror each other. Set
+   it to false on the variant in use and each bar shows only its own monitor's
+   workspaces. Worth knowing that workspaces.lua (generated by nwg-displays)
+   already binds odd workspaces to eDP-1 and even ones to DP-2, so with
+   all-outputs: false the laptop bar would show 1/3/5/7/9/10 and the external
+   would show 2/4/6/8.
+
+     "all-outputs": false,
+
+   ---- end opt-in 8 ---- */
+
+/* ---- OPT-IN 9 (structural): hover-expanding drawer ----------------------
+   The bar shows only the active workspace and the rest slide out on hover.
+   The group itself lives in ModulesGroups as "group/workspaces_drawer"
+   (commented out there too); enable that, then swap the workspaces entry in
+   modules-left in configs/VB23 for "group/workspaces_drawer". This block is
+   only the styling that keeps the collapsed state from looking clipped.
+
+#workspaces {
+  background-color: transparent;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#workspaces button.active {
+  background-color: @surface0;
+  border-radius: 10px;
+}
+
+   ---- end opt-in 9 ---- */

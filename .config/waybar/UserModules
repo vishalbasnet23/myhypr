@@ -6,5 +6,56 @@
 /* IMPORTANT, be mindful with , or ". else waybar will not start */
 
 {
+"custom/mousebattery": {
+	"format": "{}",
+	"return-type": "json",
+	"interval": 60,
+	"exec": "$HOME/.config/hypr/UserScripts/MouseBattery.sh",
+	"hide-empty-text": true,
+	"tooltip": true,
+},
 
+/* ---- Group D: workspace-info modules (script-backed) ----
+   All four are defined but placed in no modules array, so none of them render
+   until you add the name to modules-left / modules-right in configs/VB23.
+   Each script is long-running: it prints one JSON line at startup and one on
+   every relevant Hyprland event, so there is deliberately no "interval". */
+
+// Window count per workspace: 1●  2●●●  3●
+// Enable: add "custom/wscount" to modules-left in configs/VB23.
+"custom/wscount": {
+	"format": "{}",
+	"return-type": "json",
+	"exec": "$HOME/.config/hypr/UserScripts/WaybarWsWindowCount.sh",
+	"tooltip": true,
+},
+
+// Dominant app per workspace: one icon for the workspace's main window.
+// Quieter than "hyprland/workspaces#rw", which lists every window.
+// Enable: add "custom/wsapps" to modules-left in configs/VB23.
+"custom/wsapps": {
+	"format": "{}",
+	"return-type": "json",
+	"exec": "$HOME/.config/hypr/UserScripts/WaybarWsApps.sh",
+	"tooltip": true,
+},
+
+// ddev project name per workspace, read from ~/.config/ddev/project_list.yaml
+// and matched against each window's process-tree cwd.
+// Enable: add "custom/wsddev" to modules-right in configs/VB23.
+"custom/wsddev": {
+	"format": "{}",
+	"return-type": "json",
+	"exec": "$HOME/.config/hypr/UserScripts/WaybarWsDdev.sh",
+	"tooltip": true,
+},
+
+// How long the current workspace has been focused.
+// Enable: add "custom/wsfocus" to modules-right in configs/VB23.
+"custom/wsfocus": {
+	"format": "{}",
+	"return-type": "json",
+	"exec": "$HOME/.config/hypr/UserScripts/WaybarWsFocusTimer.sh",
+	"tooltip": true,
+},
 }

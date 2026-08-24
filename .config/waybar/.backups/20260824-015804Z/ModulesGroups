@@ -1,0 +1,169 @@
+{
+// GROUPS
+"group/app_drawer": {
+	"orientation": "inherit",
+	"drawer": {
+		"transition-duration": 500,
+		"children-class": "custom/menu",
+		"transition-left-to-right": true
+        },
+	"modules": [
+		"custom/menu",
+		"custom/light_dark",
+		"custom/file_manager",
+		"custom/tty",
+		"custom/browser",
+		"custom/settings",
+	]
+},
+"group/motherboard": {
+	"orientation": "horizontal",
+	"modules": [
+		"cpu",
+		"power-profiles-daemon",
+		"memory",
+		"temperature",
+		"disk",
+	]
+},
+
+"group/mobo_drawer": {
+	"orientation": "inherit",
+	"drawer": {
+		"transition-duration": 500,
+		"children-class": "cpu",
+		"transition-left-to-right": true
+        },
+	"modules": [
+    "temperature",		
+    "custom/mousebattery",
+		"cpu",
+		"power-profiles-daemon",	
+		"memory",
+		"disk",
+	]
+},
+"group/laptop": {
+	"orientation": "inherit",
+	"modules": [
+		"backlight",
+		"battery",
+	]
+},
+"group/audio": {
+	"orientation": "inherit",
+	"drawer": {
+		"transition-duration": 500,
+		"children-class": "pulseaudio",
+		"transition-left-to-right": true
+        },
+	"modules": [
+		"pulseaudio",
+		"pulseaudio#microphone",
+	]
+},
+
+"group/connections": {
+	"orientation": "inherit",
+	"drawer": {
+		"transition-duration": 500,
+		"children-class": "bluetooth",
+		"transition-left-to-right": true
+        },
+	"modules": [
+		"network",
+		"bluetooth",
+	]
+},
+
+"group/status": {
+	"orientation": "inherit",
+	"drawer": {
+		"transition-duration": 500,
+		"children-class": "custom/power",
+		"transition-left-to-right": false
+        },
+	"modules": [
+		"custom/power",
+		"custom/lock",
+		"keyboard-state",
+		"custom/keyboard",
+	]
+},
+"group/notify": {
+	"orientation": "inherit",
+	"drawer": {
+		"transition-duration": 500,
+		"children-class": "custom/swaync",
+		"transition-left-to-right": false
+        },
+	"modules": [
+		"custom/swaync",
+    "custom/pacupdate",
+    "custom/cycle_wall"
+	]
+},
+
+"group/power": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 500,
+        "children-class": "drawer-child",
+        "transition-left-to-right": false
+      },
+    "modules": [
+        "custom/power",
+        "custom/quit",
+        "custom/lock",
+        "custom/reboot"
+      ]
+},
+// groups for vertical
+"group/power#vert": {
+     "orientation": "inherit",
+     "drawer": {
+        "transition-duration": 300,
+        "children-class": "not-memory",
+        "transition-left-to-right": false
+       },
+     "modules": [
+        "custom/power",
+        "custom/lock",
+        "custom/logout",
+        "custom/reboot"
+      ]
+},
+"group/time": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 300,
+        "children-class": "custom/time",
+        "transition-left-to-right": false,
+      },
+      "modules": [
+        "clock#4",
+        "clock#6"
+      ]
+  }
+
+// ---- OPT-IN: workspaces hover drawer -------------------------------------
+// Collapsed the bar shows only the focused workspace; hovering slides the rest
+// out. A group/drawer hides sibling MODULES, not the buttons inside one module,
+// so this needs two workspace modules: an active-only head ("#solo", already in
+// ModulesWorkspaces) and the full list behind it.
+// To enable: uncomment this block, then replace "hyprland/workspaces#roman"
+// with "group/workspaces_drawer" in modules-left in configs/VB23.
+// Note this applies to both bars - configs/VB23 has no per-output block.
+// "group/workspaces_drawer": {
+// 	"orientation": "inherit",
+// 	"drawer": {
+// 		"transition-duration": 400,
+// 		"children-class": "workspaces",
+// 		"transition-left-to-right": true
+// 		},
+// 	"modules": [
+// 		"hyprland/workspaces#solo",
+// 		"hyprland/workspaces#numbers",
+// 	]
+// },
+}

@@ -40,7 +40,8 @@
 		"transition-left-to-right": true
         },
 	"modules": [
-		"temperature",		
+    "temperature",		
+    "custom/mousebattery",
 		"cpu",
 		"power-profiles-daemon",	
 		"memory",
@@ -149,4 +150,25 @@
         "clock#6"
       ]
   }
+
+// ---- OPT-IN: workspaces hover drawer -------------------------------------
+// Collapsed the bar shows only the focused workspace; hovering slides the rest
+// out. A group/drawer hides sibling MODULES, not the buttons inside one module,
+// so this needs two workspace modules: an active-only head ("#solo", already in
+// ModulesWorkspaces) and the full list behind it.
+// To enable: uncomment this block, then replace "hyprland/workspaces#roman"
+// with "group/workspaces_drawer" in modules-left in configs/VB23.
+// Note this applies to both bars - configs/VB23 has no per-output block.
+// "group/workspaces_drawer": {
+// 	"orientation": "inherit",
+// 	"drawer": {
+// 		"transition-duration": 400,
+// 		"children-class": "workspaces",
+// 		"transition-left-to-right": true
+// 		},
+// 	"modules": [
+// 		"hyprland/workspaces#solo",
+// 		"hyprland/workspaces#numbers",
+// 	]
+// },
 }

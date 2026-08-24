@@ -3,7 +3,6 @@
 
 /* Generally, this is a potential expanding of choices for hyprland/workspace */
 // HYPRLAND WORKSPACES. CHOOSE as desired and place on waybar configs
-
 {
 // CIRCLES Style
 "hyprland/workspaces": {
@@ -12,8 +11,8 @@
 	"format": "{icon}",
 	"show-special": false,
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
     "persistent-workspaces": {
       "*": 5
 	},
@@ -29,8 +28,8 @@
 	"format": "{icon}",
 	"show-special": false,
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
     "persistent-workspaces": {
       "*": 5
 	},
@@ -53,8 +52,8 @@
 	"all-outputs": true,
 	"format": "{icon}",
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
 	"show-special": false,
     "persistent-workspaces": {
       "*": 5
@@ -95,8 +94,8 @@
 	"format": "{icon}",
 	"show-special": false,
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
     "persistent-workspaces": {
       "*": 5
 	},
@@ -121,8 +120,8 @@
 	//"format": " {icon} ",
 	"show-special": false,
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
 	"all-outputs": true,
 	"sort-by-number": true,
 	"format-icons": {
@@ -147,8 +146,8 @@
 	"format": "{icon}",
 	"show-special": false,
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
     "persistent-workspaces": {
       "*": 5
 	},
@@ -173,8 +172,8 @@
 	"sort-by-number": true,
 	"show-special": false,
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
 	"persistent-workspaces": {
 		"*": 5
 	  },
@@ -265,4 +264,289 @@
 		"class<PrusaSlicer|UltiMaker-Cura|OrcaSlicer>": "󰹛",
 		}
 	},
+
+// DEVANAGARI numerals
+"hyprland/workspaces#devanagari": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"1": "१",
+		"2": "२",
+		"3": "३",
+		"4": "४",
+		"5": "५",
+		"6": "६",
+		"7": "७",
+		"8": "८",
+		"9": "९",
+		"10": "१०",
+	},
+},
+// NEPALI words
+"hyprland/workspaces#nepali": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"1": "एक",
+		"2": "दुई",
+		"3": "तीन",
+		"4": "चार",
+		"5": "पाँच",
+		"6": "छ",
+		"7": "सात",
+		"8": "आठ",
+		"9": "नौ",
+		"10": "दश",
+	},
+},
+// HEXAGON  outline idle / filled active
+"hyprland/workspaces#hexagon": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"active": "⬢",
+		"default": "⬡",
+	},
+},
+// BRAILLE progressive fill (1 dot per workspace)
+// 6 glyphs, so persistent-workspaces is 6 here rather than 5.
+"hyprland/workspaces#braille": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 6
+	},
+	"format-icons": {
+		"1": "⠁",
+		"2": "⠉",
+		"3": "⠋",
+		"4": "⠛",
+		"5": "⠟",
+		"6": "⠿",
+	},
+	// Per-number glyphs only: active/empty state comes from CSS.
+},
+// MOON phases
+"hyprland/workspaces#moon": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 8
+	},
+	"format-icons": {
+		"1": "🌑",
+		"2": "🌒",
+		"3": "🌓",
+		"4": "🌔",
+		"5": "🌕",
+		"6": "🌖",
+		"7": "🌗",
+		"8": "🌘",
+		"active": "🌕",
+	},
+	// CAVEAT: the "active" key outranks the per-number keys, so the focused
+	// workspace always shows 🌕 and loses its own phase. Delete the
+	// "active" line to keep phases everywhere and let CSS mark the focus.
+},
+// METER block heights
+"hyprland/workspaces#meter": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 8
+	},
+	"format-icons": {
+		"1": "▁",
+		"2": "▂",
+		"3": "▃",
+		"4": "▄",
+		"5": "▅",
+		"6": "▆",
+		"7": "▇",
+		"8": "█",
+		"active": "█",
+		"empty": "·",
+	},
+	// Same caveat as #moon: "active"/"empty" outrank the numbers, so a
+	// focused or empty workspace shows █ / · instead of its own height.
+},
+// CIRCLED numerals
+"hyprland/workspaces#circled": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"1": "➀",
+		"2": "➁",
+		"3": "➂",
+		"4": "➃",
+		"5": "➄",
+		"active": "➊",
+	},
+	// CAVEAT: "active" outranks the numbers, so the focused workspace shows
+	// ➊ whichever workspace it is. Delete that line for correct numbers.
+},
+// CHEVRON  one glyph, state carried entirely by CSS
+"hyprland/workspaces#chevron": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"default": "❯",
+	},
+	// Pair with the opt-in opacity block in style/New.css: every button is
+	// identical, so #workspaces button.active is the only thing that reads.
+},
+// CARD SUITS  four-workspace layout
+"hyprland/workspaces#suits": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 4
+	},
+	"format-icons": {
+		"1": "♠",
+		"2": "♥",
+		"3": "♦",
+		"4": "♣",
+	},
+},
+// SEMANTIC  named roles instead of numbers
+// Pairs with Hyprland window rules pinning apps to fixed workspaces, so
+// the label always matches what is actually there. In the Lua config
+// format this version runs (UserConfigs/WindowRules.lua) a pin reads:
+//   hl.window_rule({ match = { class = "^(kitty)$" }, workspace = "1" })
+//   hl.window_rule({ match = { tag = "browser" },     workspace = "2" })
+//   hl.window_rule({ match = { tag = "im" },          workspace = "3" })
+// Append ' silent' to the workspace string to pin without following:
+//   hl.window_rule({ match = { tag = "multimedia" }, workspace = "4 silent" })
+// WindowRules.lua already pins 1/2/3/4/5/8/9/10 - reconcile before use.
+"hyprland/workspaces#semantic": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"1": "󰅩 code",
+		"2": " web",
+		"3": "󰭹 chat",
+		"4": " media",
+		"5": "󰋁 misc",
+	},
+},
+// STATES  the only variant that defines urgent and special
+// Every other variant sets show-special: false and defines no urgent
+// glyph, so an attention-demanding window on another workspace is
+// currently invisible. This one shows it.
+"hyprland/workspaces#states": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": true,
+	"on-click": "activate",
+	"on-click-right": "hyprctl dispatch 'hl.dsp.workspace.toggle_special([[nyx]])'",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"active": "",
+		"default": "",
+		"empty": "",
+		"urgent": "",
+		"special": "◆",
+	},
+	// Right click toggles the special:nyx workspace that SUPER+U already
+	// uses (configs/Keybinds.lua) and WindowRules.lua sends Discord/Spotify to.
+},
+
+// SOLO  only the focused workspace, for the hover drawer in ModulesGroups
+"hyprland/workspaces#solo": {
+	"active-only": true,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e+1]] })'",
+	"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = [[e-1]] })'",
+	"format-icons": {
+		"1": "1",
+		"2": "2",
+		"3": "3",
+		"4": "4",
+		"5": "5",
+		"6": "6",
+		"7": "7",
+		"8": "8",
+		"9": "9",
+		"10": "10",
+	},
+	// No persistent-workspaces on purpose: active-only means one button, and a
+	// persistent list would put the other four back.
+},
 }

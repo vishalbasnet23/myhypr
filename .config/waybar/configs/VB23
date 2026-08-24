@@ -27,7 +27,7 @@
 "width": 1444,
 
 "modules-left": [
-  "hyprland/workspaces#roman", 
+  "hyprland/workspaces#nepali", 
   "tray",
   "mpris", 
 ],
@@ -40,6 +40,7 @@
 
 "modules-right": [
   "battery",
+  "custom/separator#blank",
   "custom/separator#blank",
   "backlight",
   "custom/separator#blank",
