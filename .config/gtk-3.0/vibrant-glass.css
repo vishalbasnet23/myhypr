@@ -1,0 +1,106 @@
+/*
+ * Vibrant Glass — GTK 3
+ * Maintainer: Vishalbasnet23
+ *
+ * Hand-written. gtk.css imports THIS file, not colors.css.
+ * colors.css is a matugen output (see ~/.config/matugen/config.toml) and would
+ * be overwritten the moment matugen runs, so nothing hand-made lives there.
+ * It is left on disk, just no longer imported.
+ *
+ * WHAT THIS FILE CANNOT DO
+ * GTK windows are ordinary windows, not layer surfaces, so the Hyprland
+ * layerrules that give waybar/rofi/swaync/wlogout their blur cannot reach
+ * them. There is no glass here - only the palette and the geometry, so GTK
+ * apps sit next to the glass surfaces without looking foreign.
+ */
+
+/* ---- Surfaces ---- */
+@define-color surface        #151726;  /* window background            */
+@define-color surface_raised #1a1c2c;  /* views, cards, popovers       */
+@define-color surface_deep   #0f1120;  /* headerbars, sidebars         */
+@define-color hairline       #3a3e5c;  /* borders                      */
+
+/* ---- Text ---- */
+@define-color fg             #eef2f6;
+@define-color fg_dim         #7a80b2;
+
+/* ---- Selection ----
+   The system accent is white. On the translucent surfaces that reads as a
+   bright strip; on an opaque GTK surface the equivalent is a light fill with
+   dark text, which is why accent_fg is nearly black here. */
+@define-color accent_light   #dfe4ea;  /* links, focus text            */
+@define-color accent_on      #eef2f6;
+@define-color selection      #3a3e5c;  /* selection FILL. The system accent
+                                          is white, which works as a strip on
+                                          translucent glass but is unreadable
+                                          as an opaque fill behind text, so
+                                          GTK gets the neutral slate instead. */
+
+/* ---- Semantic - same roles as waybar and swaync ---- */
+@define-color ok             #00d4a3;
+@define-color warn           #ffd600;
+@define-color critical       #ff3d00;
+
+/* ---- GTK3 named colours ---- */
+@define-color theme_fg_color            @fg;
+@define-color theme_text_color          @fg;
+@define-color theme_bg_color            @surface;
+@define-color theme_base_color          @surface_raised;
+@define-color theme_selected_bg_color   @selection;
+@define-color theme_selected_fg_color   @accent_on;
+@define-color insensitive_fg_color      @fg_dim;
+@define-color insensitive_bg_color      @surface;
+@define-color insensitive_base_color    @surface_raised;
+@define-color theme_unfocused_fg_color  @fg_dim;
+@define-color theme_unfocused_text_color @fg;
+@define-color theme_unfocused_bg_color  @surface;
+@define-color theme_unfocused_base_color @surface_raised;
+@define-color theme_unfocused_selected_bg_color @hairline;
+@define-color theme_unfocused_selected_fg_color @fg;
+@define-color borders                   @hairline;
+@define-color unfocused_borders         @hairline;
+@define-color warning_color             @warn;
+@define-color error_color               @critical;
+@define-color success_color             @ok;
+@define-color wm_bg                     @surface_deep;
+@define-color wm_border_focused         @hairline;
+@define-color wm_border_unfocused       @hairline;
+
+/* ---- Geometry ----
+   Deliberately small. Every rule here is one GTK3 honours on every widget of
+   that type; anything more ambitious fights the theme and loses in one app
+   out of five. */
+button,
+entry,
+.entry {
+  border-radius: 10px;
+}
+
+popover,
+popover.background,
+menu,
+.menu,
+.context-menu {
+  border-radius: 10px;
+  border: 1px solid @hairline;
+}
+
+headerbar {
+  border-radius: 0px;
+  background-color: @surface_deep;
+  color: @fg;
+}
+
+scrollbar slider {
+  border-radius: 8px;
+  min-width: 8px;
+  min-height: 8px;
+}
+
+tooltip,
+tooltip.background {
+  background-color: @surface_deep;
+  color: @fg;
+  border: 1px solid @hairline;
+  border-radius: 10px;
+}
