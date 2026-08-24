@@ -104,3 +104,82 @@ tooltip.background {
   border: 1px solid @hairline;
   border-radius: 10px;
 }
+
+
+/* ==========================================================================
+   Translucency — the part that makes GTK windows actual glass.
+
+   Layer-shell rules (namespace waybar/rofi/...) cannot touch GTK, but
+   decoration:blur applies to WINDOWS too: Hyprland blurs behind anything that
+   renders with alpha. So the glass has to come from the app's own paint.
+
+   Alpha lives on the background paint only, NOT on the window opacity - a
+   Hyprland `opacity` windowrule would fade the TEXT as well and read as a
+   dimmed window rather than a pane of glass.
+   ========================================================================== */
+
+@define-color window_bg_color rgba(21, 23, 38, 0.72);
+@define-color view_bg_color   rgba(26, 28, 44, 0.60);
+@define-color card_bg_color   rgba(255, 255, 255, 0.06);
+@define-color sidebar_bg_color rgba(15, 17, 32, 0.55);
+@define-color headerbar_bg_color rgba(15, 17, 32, 0.55);
+@define-color popover_bg_color rgba(26, 28, 44, 0.92);
+@define-color dialog_bg_color rgba(21, 23, 38, 0.92);
+
+window.background,
+window.background.csd,
+.background {
+  background-color: rgba(21, 23, 38, 0.72);
+}
+
+headerbar,
+.top-bar,
+headerbar.titlebar {
+  background-color: rgba(15, 17, 32, 0.55);
+}
+
+.sidebar,
+placessidebar,
+.navigation-sidebar {
+  background-color: rgba(15, 17, 32, 0.55);
+}
+
+/* Anything that must stay readable over arbitrary content keeps a near-opaque
+   backing: menus, dialogs and tooltips are transient and float over text. */
+popover > contents,
+popover.background > contents,
+menu,
+.context-menu,
+tooltip.background {
+  background-color: rgba(26, 28, 44, 0.94);
+}
+
+/* The window paints glass, but the widgets stacked on top of it paint their
+   own opaque literals (.view / gridview / listview are compiled with a solid
+   background). They have to become transparent or the glass never shows. */
+.view,
+iconview,
+gridview,
+listview,
+columnview,
+columnview > listview,
+scrolledwindow,
+scrolledwindow > viewport,
+textview,
+textview > text,
+stack,
+paned,
+box,
+.navigation-sidebar,
+placessidebar,
+placessidebar list,
+.sidebar,
+.content-view {
+  background-color: transparent;
+}
+
+/* Entries and buttons keep a raised chip so they stay findable on glass. */
+entry,
+.entry {
+  background-color: rgba(255, 255, 255, 0.06);
+}
