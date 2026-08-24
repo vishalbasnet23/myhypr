@@ -183,3 +183,112 @@ entry,
 .entry {
   background-color: rgba(255, 255, 255, 0.06);
 }
+
+
+/* ==========================================================================
+   Sidebar depth + selection/hover, matched to the rest of the system.
+
+   Depth order, same as everywhere else: the WINDOW is the glass, the sidebar
+   is bare glass (most translucent), the content pane is a faint raised layer
+   on top of it. Previously the window, sidebar and content all resolved to the
+   same value and read as one flat slab.
+
+   Interaction is the shared vocabulary from waybar / swaync / rofi:
+     hover     = rgba(255,255,255,0.10), colourless, no meaning
+     selected  = rgba(255,255,255,0.20) + a 2px white LEFT strip, radius 10
+   The strip is drawn with inset box-shadow rather than border-left so the row
+   does not shift by 2px when it becomes selected.
+   ========================================================================== */
+:root {
+  --window-bg-color: rgba(21, 23, 38, 0.55);
+  --sidebar-bg-color: rgba(15, 17, 32, 0.18);
+  --secondary-sidebar-bg-color: rgba(15, 17, 32, 0.18);
+  --sidebar-backdrop-color: rgba(15, 17, 32, 0.12);
+  --view-bg-color: rgba(255, 255, 255, 0.04);
+}
+
+window.background,
+window.background.csd,
+.background {
+  background-color: rgba(21, 23, 38, 0.55);
+}
+
+/* Bare glass - the most see-through surface in the window. */
+.sidebar-pane,
+navigationsplitview > .sidebar-pane,
+overlaysplitview > .sidebar-pane,
+.sidebar-pane .navigation-sidebar,
+placessidebar,
+placessidebar list {
+  background-color: transparent;
+}
+
+/* One step up from the sidebar, so the two panes read as separate depths. */
+.content-pane,
+.content-pane > .view,
+.content-pane gridview,
+.content-pane listview {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* ---- Hover: colourless lift ---- */
+.navigation-sidebar > row:hover,
+placessidebar row:hover,
+listview > row:hover,
+gridview > child:hover,
+columnview > listview > row:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+}
+
+/* ---- Selected: white strip + 20% fill ---- */
+.navigation-sidebar > row:selected,
+.navigation-sidebar > row.activatable:selected,
+placessidebar row:selected,
+listview > row:selected,
+columnview > listview > row:selected {
+  background-color: rgba(255, 255, 255, 0.20);
+  color: #eef2f6;
+  border-radius: 10px;
+  box-shadow: inset 2px 0 0 0 #ffffff;
+}
+
+/* Grid items are tiles, not rows - they get the fill and the radius but no
+   strip, since a vertical strip on a square thumbnail reads as an artifact. */
+gridview > child:selected,
+.view.content-view > child:selected,
+flowbox > flowboxchild:selected {
+  background-color: rgba(255, 255, 255, 0.20);
+  color: #eef2f6;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+
+/* ---- Row inset ----
+   The selected chip was running flush into the window edge, so its 2px strip
+   sat on the very first column of pixels. Rows get an inset the same way a
+   rofi row sits inside the rofi mainbox: padding on the list, margin on the
+   row, so the chip floats clear of both edges. */
+.navigation-sidebar,
+placessidebar list,
+.sidebar-pane listview {
+  padding: 6px 8px;
+}
+
+.navigation-sidebar > row,
+placessidebar row,
+.sidebar-pane listview > row {
+  margin: 2px 0px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  min-height: 0px;
+}
+
+/* The strip is inset shadow, so it follows the chip's rounded edge rather than
+   the window edge. */
+.navigation-sidebar > row:selected,
+placessidebar row:selected,
+.sidebar-pane listview > row:selected {
+  box-shadow: inset 2px 0 0 0 #ffffff;
+}
