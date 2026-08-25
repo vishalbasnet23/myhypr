@@ -27,7 +27,7 @@
 "width": 1444,
 
 "modules-left": [
-  "hyprland/workspaces#devanagari", 
+  "hyprland/workspaces#pacman", 
   "tray",
   "mpris", 
 ],

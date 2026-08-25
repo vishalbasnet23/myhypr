@@ -33,8 +33,8 @@ local shadow_neutral = "rgba(00000073)"
 hl.config({
 	general = {
 		border_size = 1,
-		gaps_in = 3,
-		gaps_out = 4,
+		gaps_in = 1,
+		gaps_out = 5,
 
 		-- MIGRATION NOTE: `col.active_border = $teal $teal 45deg` -> nested `col` table
 		-- with a gradient value. `45deg` becomes `angle = 45`.
