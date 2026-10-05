@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Caelestia.Config
 import qs.components
+import qs.services
 import qs.utils
 import qs.modules.bar.popouts as BarPopouts
 
@@ -73,6 +74,13 @@ Item {
             }
         }
     ]
+
+    StyledRect {
+        anchors.fill: content
+        visible: Config.bar.floating
+        color: Colours.tPalette.m3surfaceContainer
+        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.large : 0
+    }
 
     Loader {
         id: content
