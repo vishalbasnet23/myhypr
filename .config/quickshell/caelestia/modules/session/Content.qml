@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Caelestia
 import Caelestia.Config
+import Caelestia.I18n
 import Caelestia.Services
 import qs.components
 import qs.components.controls
@@ -22,6 +23,7 @@ Column {
     SessionButton {
         id: logout
 
+        label: Tr.tr("Log out")
         icon: Config.session.icons.logout
         command: Config.session.commands.logout
 
@@ -42,6 +44,7 @@ Column {
     SessionButton {
         id: shutdown
 
+        label: Tr.tr("Shut down")
         icon: Config.session.icons.shutdown
         command: Config.session.commands.shutdown
 
@@ -64,6 +67,7 @@ Column {
     SessionButton {
         id: hibernate
 
+        label: Tr.tr("Suspend")
         icon: Config.session.icons.hibernate
         command: Config.session.commands.hibernate
 
@@ -74,6 +78,7 @@ Column {
     SessionButton {
         id: reboot
 
+        label: Tr.tr("Restart")
         icon: Config.session.icons.reboot
         command: Config.session.commands.reboot
 
@@ -84,6 +89,7 @@ Column {
         id: button
 
         required property list<string> command
+        required property string label
 
         function exec(): void {
             if (!SessionManager.exec(command))
@@ -92,6 +98,11 @@ Column {
 
         implicitWidth: Tokens.sizes.session.button
         implicitHeight: Tokens.sizes.session.button
+
+        StyledToolTip {
+            text: button.label
+            show: button.hovered
+        }
 
         inactiveColour: activeFocus ? Colours.palette.m3secondaryContainer : Colours.tPalette.m3surfaceContainer
         inactiveOnColour: activeFocus ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurface
