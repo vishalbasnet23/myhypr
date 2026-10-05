@@ -104,7 +104,7 @@ Item {
                     visible: !art.visible
                     text: "" // nf-fa-music
                     font.family: root.iconFont
-                    font.pixelSize: 28
+                    font.pixelSize: Glass.fontBig
                     color: Appearance.colors.colSubtext
                 }
             }

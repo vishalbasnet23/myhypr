@@ -33,7 +33,14 @@ hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("spotify-launcher"))       -- Spotify
 
 -- FEATURES / EXTRAS
 hl.bind(mainMod .. " + ALT + H", hl.dsp.exec_cmd(scriptsDir .. "/KeyHints.sh"))   -- help / cheat sheet
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(scriptsDir .. "/Refresh.sh"))  -- Refresh waybar, swaync, rofi
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(scriptsDir .. "/Refresh.sh"))  -- Refresh rofi (waybar/swaync retired)
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("qs ipc call notifs dnd"))     -- Toggle do-not-disturb
+
+-- Drawer panels. SHIFT variants are temporary while they are tested next to
+-- the existing rofi launcher and wlogout session menu.
+hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("qs ipc call panels launcher"))    -- launcher (trial; rofi still on SUPER+D)
+hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("qs ipc call panels session"))     -- session (trial; wlogout still on SUPER+X)
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("caelestia shell drawers toggle dashboard")) -- dashboard drawer
 hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd(scriptsDir .. "/ChangeBlur.sh")) -- Toggle blur settings
 -- hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd(scriptsDir .. "/GameMode.sh")) -- Toggle animations ON/OFF
 -- hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd(UserScripts .. "/MountGdrive.sh")) -- Mount Gdrive on loccal machine
@@ -78,7 +85,8 @@ hl.bind(mainMod .. " + ALT + mouse_up",   zoomBy(0.5))
 -- misc:cursor_zoom_factor was the pre-0.40 name for cursor:zoom_factor; not applicable here.
 
 -- Waybar / Bar related
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))            -- Toggle hide/show waybar
+-- waybar is retired; the quickshell bar is toggled through its own IPC.
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("qs ipc call bar toggle"))          -- Toggle hide/show bar
 hl.bind(mainMod .. " + CTRL + B", hl.dsp.exec_cmd(scriptsDir .. "/WaybarStyles.sh"))    -- Waybar Styles Menu
 hl.bind(mainMod .. " + ALT + B", hl.dsp.exec_cmd(scriptsDir .. "/WaybarLayout.sh"))     -- Waybar Layout Menu
 

@@ -44,6 +44,10 @@
 @define-color glass-border   rgba(255, 255, 255, 0.22);
 @define-color glass-raised   rgba(255, 255, 255, 0.06);
 
+/* Popup notifications float over the bare wallpaper with no panel behind
+   them, so they get a darker, mostly-opaque fill instead of @glass-fill. */
+@define-color popup-fill     rgba(26, 28, 44, 0.78);
+
 /* Same two tokens as waybar's style/Glass.css - keep them in step.
    @ui-hover is colourless on purpose; @sel is the system selection accent. */
 @define-color ui-hover       rgba(255, 255, 255, 0.10);
@@ -67,7 +71,7 @@
 /* A popup has no control-center panel behind it, so it carries the glass
    itself - fill, hairline and shadow, exactly like a waybar pill. */
 .floating-notifications .notification {
-  background: @glass-fill;
+  background: @popup-fill;
   border: 1px solid @glass-border;
   border-radius: 14px;
   box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.9);

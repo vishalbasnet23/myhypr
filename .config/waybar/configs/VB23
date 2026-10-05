@@ -1,12 +1,5 @@
 
-//* ----------- 💫 https://github.com/JaKooLit 💫 -------- */
-//* ............................................*/
-//* ................PEONY.......................*/
-//* ............................................*/
-//* --- 👍 designed by https://github.com/Krautt  👍 --- */
-
 {
- 
 "include": [
   "$HOME/.config/waybar/Modules",
   "$HOME/.config/waybar/ModulesWorkspaces",
@@ -25,11 +18,10 @@
 "margin-top": 5,
 //"margin-bottom": 5,
 "width": 1444,
-
 "modules-left": [
   "hyprland/workspaces#pacman", 
-  "tray",
-  "mpris", 
+  "custom/separator#dot-line",
+  "network#speed-alt"
 ],
 
 "modules-center": [
@@ -48,8 +40,8 @@
   "custom/separator#blank",
   "group/mobo_drawer",
   "custom/separator#blank",	
-  "network",
   "custom/separator#blank",	
+  "tray",
   "custom/power",
   ],
 }

@@ -1,4 +1,4 @@
-/* Master Config — Vibrant Glass */
+/* Master Config — Caelestia Flat (matches quickshell/caelestia's live M3 scheme) */
 
 /* ---- Configuration ---- */
 configuration {
@@ -16,53 +16,57 @@ configuration {
     dpi:                        1;
 }
 
-/* ---- Vibrant Color Palette ---- */
+/* ---- Caelestia M3 Color Palette ----
+   Pulled from ~/.local/state/caelestia/scheme.json (catppuccin mocha / expressive).
+   This is the SAME palette the quickshell bar, dashboard, notifications and
+   session menu read live — rofi can't subscribe to the JSON directly (rasi has
+   no variable sharing across formats), so these are restated here. Re-copy the
+   relevant hex values from scheme.json if you change wallpaper/scheme. */
 * {
-    base:           #1a1c2c;
-    mantle:         #151726;
-    crust:          #0f1120;
+    base:           #131317;
+    mantle:         #0e0e12;
+    crust:          #121216;
 
-    text:           #f1f3ff;
-    subtext0:       #a9b0d6;
-    subtext1:       #c5cbff;
+    text:           #e5e1e7;
+    subtext0:       #918f9a;
+    subtext1:       #c8c5d1;
 
-    surface0:       #2c2f48;
-    surface1:       #3a3e5c;
-    surface2:       #4a4f75;
+    surface0:       #25252a;
+    surface1:       #37373d;
+    surface2:       #48474e;
 
-    overlay0:       #62689a;
-    overlay1:       #7a80b2;
-    overlay2:       #969dd1;
+    overlay0:       #595860;
+    overlay1:       #6b6972;
+    overlay2:       #7e7c86;
 
-    blue:           #2979ff;
-    lavender:       #8e5cff;
-    sapphire:       #00bcd4;
-    sky:            #00e5ff;
-    teal:           #00d4a3;
-    green:          #00e676;
-    yellow:         #ffd600;
-    peach:          #ff9100;
-    maroon:         #ff1744;
-    red:            #ff3d00;
-    mauve:          #d500f9;
-    pink:           #ff4081;
-    flamingo:       #ff6e6e;
-    rosewater:      #ff8fa3;
+    blue:           #b0b8ff;
+    lavender:       #c7c8ff;
+    sapphire:       #b7c5ff;
+    sky:            #d0daff;
+    teal:           #d3dfff;
+    green:          #c8e3ff;
+    yellow:         #ffecf3;
+    peach:          #e0c2f9;
+    maroon:         #c9b5ed;
+    red:            #ffb4ab;
+    mauve:          #bfb8ff;
+    pink:           #e2d7ff;
+    flamingo:       #e9def3;
+    rosewater:      #f7eff9;
 
-    /* ---- Glass roles + neutral text ramp ----
-       Same values as waybar's style/Glass.css and swaync's style.css. rasi has
-       no variable sharing across formats, so they are restated here.
-       NOTE: rasi has no box-shadow, so the glass here is fill + hairline only. */
-    wb-text-glass:  #eef2f6;
-    wb-dim:         rgba(223, 228, 234, 55%);
-    wb-faint:       rgba(255, 255, 255, 28%);
-    glass-fill:     rgba(232, 238, 245, 13%);
-    glass-border:   rgba(255, 255, 255, 22%);
-    glass-raised:   rgba(255, 255, 255, 6%);
-    ui-hover:       rgba(255, 255, 255, 10%);
-    sel:            #ffffff;
-    sel-lite:       #ffffff;
-    sel-fill:       rgba(255, 255, 255, 20%);
+    /* ---- Flat surface roles + neutral text ramp ----
+       No blur/glass treatment — flat fills only, matching the shell's
+       rounding.scale: 0 / deformScale: 0 flat-design pass. */
+    wb-text-glass:  #e5e1e7;
+    wb-dim:         rgba(200, 197, 209, 55%);
+    wb-faint:       rgba(229, 225, 231, 28%);
+    glass-fill:     rgba(19, 19, 23, 92%);
+    glass-border:   rgba(145, 143, 154, 30%);
+    glass-raised:   rgba(229, 225, 231, 6%);
+    ui-hover:       rgba(229, 225, 231, 10%);
+    sel:            #c2c1ff;
+    sel-lite:       #e2dfff;
+    sel-fill:       rgba(194, 193, 255, 20%);
 
     /* Semantic roles */
     text-color:                  @wb-text-glass;
@@ -82,7 +86,7 @@ window {
        layerrule this is a flat translucent slab. */
     border:                     1px;
     border-color:               @glass-border;
-    border-radius:              14px;
+    border-radius:              0px;
 
     location:                   center;
     anchor:                     center;
@@ -110,7 +114,7 @@ inputbar {
     enabled:                    true;
     padding:                    10px 14px;
     margin:                     0px 0px 4px 0px;
-    border-radius:              10px;
+    border-radius:              0px;
 
     /* Raised chip on the glass — same treatment as a swaync notification. */
     border:                     0px;
@@ -177,7 +181,7 @@ mode-switcher {
 /* Uniform chips — the mode you are IN is the only one that carries colour. */
 button {
     padding:                    2px 12px;
-    border-radius:              8px;
+    border-radius:              0px;
     background-color:           @glass-raised;
     text-color:                 @wb-dim;
     cursor:                     pointer;
@@ -199,7 +203,7 @@ scrollbar {
     handle-color:               rgba(255, 255, 255, 25%);
     handle-width:               6px;
     padding:                    0;
-    border-radius:              8px;
+    border-radius:              0px;
 }
 
 /* ---- Elements ---- */
@@ -207,7 +211,7 @@ element {
     enabled:                    true;
     spacing:                    10px;
     padding:                    8px 12px;
-    border-radius:              10px;
+    border-radius:              0px;
     background-color:           transparent;
     cursor:                     pointer;
 
@@ -293,7 +297,7 @@ message {
 
 textbox {
     padding:                    8px 12px;
-    border-radius:              10px;
+    border-radius:              0px;
     border:                     0px;
     background-color:           @glass-raised;
     text-color:                 @wb-dim;
@@ -303,7 +307,7 @@ textbox {
 
 error-message {
     padding:                    14px;
-    border-radius:              10px;
+    border-radius:              0px;
     border:                     0px 0px 0px 2px;
     border-color:               @red;
     background-color:           rgba(255, 61, 0, 12%);

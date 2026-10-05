@@ -269,6 +269,40 @@ hl.layer_rule({ match = { namespace = "logout_dialog" }, blur = true })
 hl.layer_rule({ match = { namespace = "logout_dialog" }, ignore_alpha = 0.10 })
 hl.layer_rule({ match = { namespace = "logout_dialog" }, xray = false })
 hl.layer_rule({ match = { namespace = "quickshell:overview" }, blur = true })
+
+-- The Vibrant Glass quickshell bar. Same treatment as waybar above: the pill
+-- fill is only 13% opaque, so without blur it reads flat. ignore_alpha 0.10
+-- skips the transparent gutter around the pills, which is what stops the milky
+-- halo; xray = false overrides the global decoration:blur:xray so the bar
+-- blurs the windows behind it rather than the wallpaper.
+hl.layer_rule({ match = { namespace = "quickshell:bar" }, blur = true })
+hl.layer_rule({ match = { namespace = "quickshell:bar" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "quickshell:bar" }, xray = false })
+-- The popouts are xdg-popups parented to the bar layer, and a layer's blur
+-- rule does not extend to its popups - they need this or the glass fill reads
+-- flat grey. (hyprlang: `layerrule = blurpopups, quickshell:bar`)
+hl.layer_rule({ match = { namespace = "quickshell:bar" }, blur_popups = true })
+
+-- The quickshell notification surfaces, mirroring what swaync-notification-window
+-- and swaync-control-center got above. Same ignore_alpha 0.10 so the transparent
+-- gutter around the cards is skipped by the blur.
+hl.layer_rule({ match = { namespace = "quickshell:notifications" }, blur = true })
+hl.layer_rule({ match = { namespace = "quickshell:notifications" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "quickshell:notifications" }, xray = false })
+hl.layer_rule({ match = { namespace = "quickshell:notification-centre" }, blur = true })
+hl.layer_rule({ match = { namespace = "quickshell:notification-centre" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "quickshell:notification-centre" }, xray = false })
+
+-- Drawer panels (dashboard, launcher, sidebar, session, osd). Lives here in
+-- the Lua config rather than being applied with `hyprctl eval`, so it survives
+-- a reload. ignore_alpha 0.10 means only the drawn panel is blurred and the
+-- transparent rest of the full-screen overlay is skipped - which is also why
+-- panel backgrounds slide off rather than fade: a fading background would
+-- cross that threshold and the blur would cut out mid-animation.
+hl.layer_rule({ match = { namespace = "quickshell:panels" }, blur = true })
+hl.layer_rule({ match = { namespace = "quickshell:panels" }, ignore_alpha = 0.10 })
+hl.layer_rule({ match = { namespace = "quickshell:panels" }, xray = false })
+hl.layer_rule({ match = { namespace = "quickshell:panels" }, blur_popups = true })
 -- NOTE (pre-existing in your config, preserved as-is): ignore_alpha is set twice for
 -- quickshell:overview; the later rule wins, so the effective value is 0.5.
 hl.layer_rule({ match = { namespace = "quickshell:overview" }, ignore_alpha = 0 })

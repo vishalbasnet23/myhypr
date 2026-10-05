@@ -39,12 +39,22 @@ hl.on("hyprland.start", function()
 
 	-- starup apps
 	hl.exec_cmd("nm-applet --indicator")
-	hl.exec_cmd("swaync")
+	-- swaync retired in favour of the quickshell notification server
+	-- (modules/notifications/). Its config and styles are untouched; to go
+	-- back, set enableNotifications=false in quickshell/shell.qml, re-enable
+	-- this line and `systemctl --user enable --now swaync.service`.
+	-- hl.exec_cmd("swaync")
 	-- hl.exec_cmd("ags")
 	-- hl.exec_cmd("blueman-applet")
 	-- hl.exec_cmd("rog-control-center")
-	hl.exec_cmd("waybar")
-	hl.exec_cmd("qs") -- quickshell AGS Desktop Overview alternative
+	-- waybar retired in favour of the quickshell bar (modules/bar/). Its
+	-- config and styles are untouched - re-enable this line and set
+	-- Glass.barCompareOffset back to run them side by side again.
+	-- hl.exec_cmd("waybar")
+	-- Caelestia shell is now the default quickshell config, replacing the
+	-- custom bar/notifications/drawers stack under quickshell/modules/. That
+	-- stack is untouched on disk; to go back, change this to `hl.exec_cmd("qs")`.
+	hl.exec_cmd("qs -c caelestia")
 	hl.exec_cmd("/usr/bin/kdeconnectd")
 	hl.exec_cmd("/usr/bin/kdeconnect-indicator")
 

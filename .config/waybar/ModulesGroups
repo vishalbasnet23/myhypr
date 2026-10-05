@@ -147,7 +147,10 @@
       },
       "modules": [
         "clock#4",
-        "clock#6"
+        "clock#6",
+        "custom/separator#dot",
+        "custom/claudebar",
+        "custom/separator#dot",
       ]
   }
 
