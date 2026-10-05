@@ -35,7 +35,7 @@ Item {
             border.color: Qt.alpha(`#${root.modelData?.colours?.outline}`, 0.5)
 
             color: `#${root.modelData?.colours?.surface}`
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
             implicitWidth: parent.height * 0.8
             implicitHeight: parent.height * 0.8
 
@@ -54,7 +54,7 @@ Item {
 
                     implicitWidth: preview.implicitWidth
                     color: `#${root.modelData?.colours?.primary}`
-                    radius: 0
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 }
             }
         }

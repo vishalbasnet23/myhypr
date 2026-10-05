@@ -64,7 +64,7 @@ StyledClippingRect {
     implicitWidth: workspaces.width + Tokens.padding.extraSmall * 2
 
     color: Colours.tPalette.m3surfaceContainer
-    radius: 0
+    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
     Item {
         anchors.fill: parent
@@ -150,7 +150,7 @@ StyledClippingRect {
         sourceComponent: Item {
             StyledRect {
                 anchors.fill: parent
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: Qt.alpha(Colours.palette.m3scrim, Colours.light ? 0 : 0.2)
             }
 

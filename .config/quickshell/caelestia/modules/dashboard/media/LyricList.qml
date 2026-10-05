@@ -167,7 +167,7 @@ Item {
                 implicitWidth: shape.implicitSize + Tokens.padding.medium * 2
                 implicitHeight: shape.implicitSize + Tokens.padding.medium * 2
                 color: Colours.palette.m3primaryContainer
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                 LoadingIndicator {
                     id: shape

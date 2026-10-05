@@ -117,7 +117,7 @@ ColumnLayout {
                 implicitWidth: implicitHeight
                 implicitHeight: wirelessConnectIcon.implicitHeight + Tokens.padding.extraSmall
 
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: Qt.alpha(Colours.palette.m3primary, networkItem.modelData.active ? 1 : 0)
 
                 CircularIndicator {
@@ -174,7 +174,7 @@ ColumnLayout {
         Layout.fillWidth: true
         implicitHeight: rescanBtn.implicitHeight + Tokens.padding.small
 
-        radius: 0
+        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
         color: Colours.palette.m3primaryContainer
 
         StateLayer {
@@ -300,7 +300,7 @@ ColumnLayout {
                 implicitWidth: implicitHeight
                 implicitHeight: connectIcon.implicitHeight + Tokens.padding.extraSmall
 
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: Qt.alpha(Colours.palette.m3primary, ethernetItem.modelData.connected ? 1 : 0)
 
                 CircularIndicator {

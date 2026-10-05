@@ -3,10 +3,27 @@ pragma ComponentBehavior: Bound
 import QtQuick.Layouts
 import Caelestia.Config
 import Caelestia.I18n
+import qs.components.controls
 import qs.modules.nexus.common
 
 PageBase {
     id: root
+
+    // Ordered to match config::BarWorkspaceDisplay (Shapes, Text, Icons)
+    readonly property list<MenuItem> displayTypeItems: [
+        MenuItem {
+            text: Tr.trCtx("Shapes", "bar workspace indicator style")
+            icon: "category"
+        },
+        MenuItem {
+            text: Tr.trCtx("Text", "bar workspace indicator style")
+            icon: "123"
+        },
+        MenuItem {
+            text: Tr.trCtx("Icons", "bar workspace indicator style")
+            icon: "apps"
+        }
+    ]
 
     title: Tr.tr("Workspaces")
     isSubPage: true
@@ -17,8 +34,16 @@ PageBase {
         width: root.cappedWidth
         spacing: Tokens.spacing.extraSmall / 2
 
-        StepperRow {
+        SelectRow {
             first: true
+            label: Tr.trCtx("Indicator style", "bar workspaces")
+            subtext: Tr.tr("How each workspace is shown on the bar")
+            menuItems: root.displayTypeItems
+            active: root.displayTypeItems[Config.bar.workspaces.displayType]
+            onSelected: item => GlobalConfig.bar.workspaces.displayType = root.displayTypeItems.indexOf(item)
+        }
+
+        StepperRow {
             // TRANSLATORS: the number of workspaces shown on the bar
             label: Tr.trCtx("Shown", "bar workspaces")
             subtext: Tr.tr("Number of workspaces displayed")

@@ -92,7 +92,7 @@ PageBase {
                         implicitHeight: wallLoadingIndicator.implicitSize + Tokens.padding.largeIncreased * 2
 
                         color: Colours.palette.m3primaryContainer
-                        radius: 0
+                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                         LoadingIndicator {
                             id: wallLoadingIndicator
@@ -191,10 +191,23 @@ PageBase {
         ToggleRow {
             Layout.topMargin: Tokens.spacing.extraSmall / 2 - parent.spacing
 
-            last: true
             text: Tr.tr("Dark theme")
             checked: !Colours.light
             onToggled: Colours.setMode(checked ? "dark" : "light")
+        }
+
+        ToggleRow {
+            Layout.topMargin: Tokens.spacing.extraSmall / 2 - parent.spacing
+
+            last: true
+            text: Tr.tr("Rounded corners")
+            subtext: Tr.tr("Flat turns off corner rounding and the blob-wobble panel effect")
+            checked: Config.appearance.rounding.scale > 0
+            onToggled: {
+                GlobalConfig.appearance.rounding.scale = checked ? 1 : 0;
+                GlobalConfig.appearance.deformScale = checked ? 1 : 0;
+                GlobalConfig.border.rounding = checked ? 25 : 0;
+            }
         }
     }
 }

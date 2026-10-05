@@ -87,7 +87,7 @@ VerticalFadeFlickable {
                         Layout.bottomMargin: -1
                         implicitWidth: height
 
-                        radius: 0
+                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                         color: item.isCurrentPage ? Colours.palette.m3primary : Colours.palette.m3secondaryContainer
 
                         MaterialIcon {

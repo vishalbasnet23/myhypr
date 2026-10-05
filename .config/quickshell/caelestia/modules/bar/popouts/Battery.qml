@@ -155,13 +155,13 @@ Column {
         implicitHeight: Math.max(saver.implicitHeight, balance.implicitHeight, perf.implicitHeight) + Tokens.padding.small
 
         color: Colours.tPalette.m3surfaceContainer
-        radius: 0
+        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
         StyledRect {
             id: indicator
 
             color: Colours.palette.m3primary
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
             state: profiles.current
 
             states: [
@@ -243,7 +243,7 @@ Column {
         implicitHeight: icon.implicitHeight + Tokens.padding.small
 
         StateLayer {
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
             color: profiles.current === parent.icon ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
             onClicked: PowerProfiles.profile = parent.profile
         }

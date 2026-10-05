@@ -86,7 +86,7 @@ Item {
             implicitHeight: parent.implicitHeight * 2
 
             color: Colours.palette.m3primary
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
         }
 
         Behavior on x {

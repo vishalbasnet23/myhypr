@@ -120,7 +120,7 @@ ColumnLayout {
                 StyledRect {
                     implicitWidth: implicitHeight
                     implicitHeight: ethIcon.implicitHeight + Tokens.padding.small * 2
-                    radius: 0
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                     color: ethRow.isConnected ? Colours.palette.m3primaryContainer : Colours.palette.m3surfaceContainerHighest
 
                     MaterialIcon {

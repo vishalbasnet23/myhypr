@@ -90,7 +90,7 @@ PageBase {
                     StyledRect {
                         implicitWidth: implicitHeight
                         implicitHeight: deviceIcon.implicitHeight + Tokens.padding.small * 2
-                        radius: 0
+                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                         color: device.connected ? Colours.palette.m3primary : Colours.palette.m3secondaryContainer
 
                         MaterialIcon {

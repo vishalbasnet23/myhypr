@@ -121,7 +121,7 @@ Item {
                 Layout.preferredWidth: 4 * root.clockScale
                 Layout.topMargin: Tokens.spacing.large * root.clockScale
                 Layout.bottomMargin: Tokens.spacing.large * root.clockScale
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: root.safePrimary
                 opacity: 0.8
             }

@@ -105,7 +105,7 @@ ColumnLayout {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 implicitHeight: parent.height - 4
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 enabled: !kbDelegate.isDisabled
             }
 

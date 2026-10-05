@@ -30,7 +30,7 @@ StyledRect {
             implicitWidth: implicitHeight
             implicitHeight: icon.implicitHeight + Tokens.padding.large
 
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
             color: IdleInhibitor.enabled ? Colours.palette.m3secondary : Colours.palette.m3secondaryContainer
 
             MaterialIcon {
@@ -88,7 +88,7 @@ StyledRect {
             implicitWidth: activeText.implicitWidth + Tokens.padding.medium * 2
             implicitHeight: activeText.implicitHeight + Tokens.padding.small
 
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
             color: Colours.palette.m3primary
 
             StyledText {

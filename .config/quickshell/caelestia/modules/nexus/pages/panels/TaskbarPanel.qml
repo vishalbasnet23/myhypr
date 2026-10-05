@@ -1,12 +1,33 @@
 pragma ComponentBehavior: Bound
 
+import QtQuick
 import QtQuick.Layouts
+import Quickshell
+import Quickshell.Io
 import Caelestia.Config
 import Caelestia.I18n
+import qs.components.controls
 import qs.modules.nexus.common
 
 PageBase {
     id: root
+
+    // "top" (bar at top, dashboard on the left) or "left" (upstream default:
+    // bar on the left, dashboard dropping from the top). Swapping position is
+    // a file-profile swap + shell restart, not a live property, so it's read
+    // from a marker file the switch script writes rather than Config.
+    readonly property list<MenuItem> positionItems: [
+        MenuItem {
+            text: Tr.trCtx("Top", "bar position")
+            icon: "dock_to_bottom"
+        },
+        MenuItem {
+            text: Tr.trCtx("Left", "bar position")
+            icon: "dock_to_right"
+        }
+    ]
+    readonly property var positionValues: ["top", "left"]
+    property string currentPosition: "top"
 
     title: Tr.tr("Taskbar")
     isSubPage: true
@@ -17,9 +38,34 @@ PageBase {
         width: root.cappedWidth
         spacing: Tokens.spacing.extraSmall / 2
 
-        // Behaviour
+        FileView {
+            id: positionFile
+
+            path: Quickshell.shellPath("profiles/current")
+            onLoaded: root.currentPosition = text().trim()
+        }
+
+        // Position
         SectionHeader {
             first: true
+            text: Tr.tr("Position")
+        }
+
+        SelectRow {
+            first: true
+            last: true
+            label: Tr.tr("Bar position")
+            subtext: Tr.tr("Restarts the shell to apply - a handful of seconds of a blank screen is normal")
+            menuItems: root.positionItems
+            active: root.positionItems[Math.max(0, root.positionValues.indexOf(root.currentPosition))]
+            onSelected: item => {
+                const value = root.positionValues[root.positionItems.indexOf(item)];
+                Quickshell.execDetached(["bash", Quickshell.shellPath("profiles/switch.sh"), value]);
+            }
+        }
+
+        // Behaviour
+        SectionHeader {
             text: Tr.tr("Behaviour")
         }
 

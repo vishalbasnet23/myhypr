@@ -120,7 +120,7 @@ StyledRect {
             StyledClippingRect {
                 anchors.fill: parent
                 color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.urgency === NotificationUrgency.Low ? Colours.layer(Colours.palette.m3surfaceContainerHigh, 3) : Colours.palette.m3secondaryContainer
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                 Loader {
                     asynchronous: true
@@ -141,7 +141,7 @@ StyledRect {
                     implicitHeight: Tokens.sizes.notifs.badge
 
                     color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.urgency === NotificationUrgency.Low ? Colours.palette.m3surfaceContainerHigh : Colours.palette.m3secondaryContainer
-                    radius: 0
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                     ColouredIcon {
                         anchors.centerIn: parent
@@ -191,7 +191,7 @@ StyledRect {
                     implicitHeight: groupCount.implicitHeight + Tokens.padding.extraSmall
 
                     color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : Colours.layer(Colours.palette.m3surfaceContainerHigh, 3)
-                    radius: 0
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                     StateLayer {
                         color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : Colours.palette.m3onSurface

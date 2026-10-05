@@ -118,7 +118,7 @@ ColumnLayout {
                 implicitWidth: implicitHeight
                 implicitHeight: connectIcon.implicitHeight + Tokens.padding.extraSmall
 
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: Qt.alpha(Colours.palette.m3primary, device.modelData.state === BluetoothDeviceState.Connected ? 1 : 0) // qmllint disable unresolved-type
 
                 CircularIndicator {
@@ -159,7 +159,7 @@ ColumnLayout {
                     implicitHeight: connectBtn.implicitHeight
 
                     StateLayer {
-                        radius: 0
+                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                         onClicked: device.modelData.forget()
                     }
 

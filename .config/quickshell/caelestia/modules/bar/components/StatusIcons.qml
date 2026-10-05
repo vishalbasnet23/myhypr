@@ -41,7 +41,7 @@ StyledRect {
     }
 
     color: Colours.tPalette.m3surfaceContainer
-    radius: 0
+    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
     clip: true
     implicitHeight: Tokens.sizes.bar.innerWidth

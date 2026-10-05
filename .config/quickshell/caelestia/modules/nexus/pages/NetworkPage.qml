@@ -183,7 +183,7 @@ PageBase {
                     StyledRect {
                         implicitWidth: implicitHeight
                         implicitHeight: providerIcon.implicitHeight + Tokens.padding.small * 2
-                        radius: 0
+                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                         color: provider.isConnected ? Colours.palette.m3primaryContainer : provider.isSelected ? Colours.palette.m3secondaryContainer : Colours.palette.m3surfaceContainerHighest
 
                         MaterialIcon {
@@ -310,7 +310,7 @@ PageBase {
                                         Layout.alignment: Qt.AlignVCenter
                                         implicitWidth: Math.round(Tokens.font.body.small.pointSize * 0.7)
                                         implicitHeight: implicitWidth
-                                        radius: 0
+                                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                                         color: VPN.pingMs <= 80 ? Colours.palette.m3primary : VPN.pingMs <= 150 ? Colours.palette.m3tertiary : Colours.palette.m3error
                                     }
 

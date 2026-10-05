@@ -68,7 +68,7 @@ Item {
                         implicitWidth: selectWallText.implicitWidth + Tokens.padding.extraLargeIncreased
                         implicitHeight: selectWallText.implicitHeight + Tokens.padding.small
 
-                        radius: 0
+                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                         color: Colours.palette.m3primary
 
                         FileDialog {

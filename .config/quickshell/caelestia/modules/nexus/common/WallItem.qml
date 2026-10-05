@@ -47,7 +47,7 @@ Item {
                     implicitHeight: loadingIndicator.implicitSize + Tokens.padding.large * 2
 
                     color: Colours.palette.m3primaryContainer
-                    radius: 0
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                     LoadingIndicator {
                         id: loadingIndicator

@@ -2,7 +2,6 @@
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Scripts for volume controls for audio and mic 
 
-iDIR="$HOME/.config/swaync/icons"
 sDIR="$HOME/.config/hypr/scripts"
 
 # Get Volume
@@ -15,17 +14,18 @@ get_volume() {
     fi
 }
 
-# Get icons
+# Get icons (standard freedesktop icon-naming-spec names, resolved from the
+# active system icon theme instead of the custom swaync PNGs)
 get_icon() {
     current=$(get_volume)
     if [[ "$current" == "Muted" ]]; then
-        echo "$iDIR/volume-mute.png"
+        echo "audio-volume-muted"
     elif [[ "${current%\%}" -le 30 ]]; then
-        echo "$iDIR/volume-low.png"
+        echo "audio-volume-low"
     elif [[ "${current%\%}" -le 60 ]]; then
-        echo "$iDIR/volume-mid.png"
+        echo "audio-volume-medium"
     else
-        echo "$iDIR/volume-high.png"
+        echo "audio-volume-high"
     fi
 }
 
@@ -60,7 +60,7 @@ dec_volume() {
 # Toggle Mute
 toggle_mute() {
 	if [ "$(pamixer --get-mute)" == "false" ]; then
-		pamixer -m && notify-send -e -u low -h boolean:SWAYNC_BYPASS_DND:true -i "$iDIR/volume-mute.png" " Mute"
+		pamixer -m && notify-send -e -u low -h boolean:SWAYNC_BYPASS_DND:true -i "audio-volume-muted" " Mute"
 	elif [ "$(pamixer --get-mute)" == "true" ]; then
 		pamixer -u && notify-send -e -u low -h boolean:SWAYNC_BYPASS_DND:true -i "$(get_icon)" " Volume:" " Switched ON"
 	fi
@@ -69,18 +69,18 @@ toggle_mute() {
 # Toggle Mic
 toggle_mic() {
 	if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
-		pamixer --default-source -m && notify-send -e -u low -h boolean:SWAYNC_BYPASS_DND:true -i "$iDIR/microphone-mute.png" " Microphone:" " Switched OFF"
+		pamixer --default-source -m && notify-send -e -u low -h boolean:SWAYNC_BYPASS_DND:true -i "audio-input-microphone-muted" " Microphone:" " Switched OFF"
 	elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-		pamixer -u --default-source u && notify-send -e -u low -h boolean:SWAYNC_BYPASS_DND:true -i "$iDIR/microphone.png" " Microphone:" " Switched ON"
+		pamixer -u --default-source u && notify-send -e -u low -h boolean:SWAYNC_BYPASS_DND:true -i "audio-input-microphone" " Microphone:" " Switched ON"
 	fi
 }
 # Get Mic Icon
 get_mic_icon() {
     current=$(pamixer --default-source --get-volume)
     if [[ "$current" -eq "0" ]]; then
-        echo "$iDIR/microphone-mute.png"
+        echo "audio-input-microphone-muted"
     else
-        echo "$iDIR/microphone.png"
+        echo "audio-input-microphone"
     fi
 }
 

@@ -218,7 +218,7 @@ Item {
 
         implicitWidth: 10
         implicitHeight: 10
-        radius: 0
+        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
         color: Colours.palette.m3secondaryContainer
     }
 
@@ -231,7 +231,7 @@ Item {
 
         implicitWidth: 15
         implicitHeight: 15
-        radius: 0
+        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
         color: Colours.palette.m3secondaryContainer
     }
 

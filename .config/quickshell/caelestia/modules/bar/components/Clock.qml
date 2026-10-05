@@ -24,7 +24,7 @@ StyledRect {
     implicitWidth: layout.implicitWidth + root.padding * 2
 
     color: Qt.alpha(Colours.tPalette.m3surfaceContainer, Config.bar.clock.background ? Colours.tPalette.m3surfaceContainer.a : 0)
-    radius: 0
+    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
     RowLayout {
         id: layout

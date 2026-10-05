@@ -85,7 +85,7 @@ StackView {
                 implicitWidth: Tokens.sizes.bar.trayMenuWidth
                 implicitHeight: modelData.isSeparator ? 1 : children.implicitHeight
 
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: modelData.isSeparator ? Colours.palette.m3outlineVariant : "transparent"
 
                 Loader {
@@ -196,7 +196,7 @@ StackView {
                         anchors.leftMargin: -Tokens.padding.small
                         anchors.rightMargin: -Tokens.padding.large
 
-                        radius: 0
+                        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                         color: Colours.palette.m3secondaryContainer
 
                         StateLayer {

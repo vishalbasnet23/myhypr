@@ -87,7 +87,7 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
             gradient: Gradient {
                 orientation: Gradient.Vertical
@@ -116,7 +116,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
             implicitHeight: parent.height / 2
             opacity: view.y < -Tokens.padding.extraSmall ? 0 : 1
 
@@ -132,7 +132,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            radius: 0
+            radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
             implicitHeight: parent.height / 2
             opacity: view.y > -root.maxViewY + Tokens.padding.extraSmall ? 0 : 1
 

@@ -35,7 +35,7 @@ StyledRect {
     implicitWidth: nonAnimWidth
 
     color: Qt.alpha(Colours.tPalette.m3surfaceContainer, (Config.bar.tray.background && items.count > 0) ? Colours.tPalette.m3surfaceContainer.a : 0)
-    radius: 0
+    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
     Row {
         id: layout

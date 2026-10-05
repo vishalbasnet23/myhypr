@@ -108,7 +108,7 @@ StyledRect {
             ClippingRectangle {
                 anchors.fill: parent
                 color: root.urgency === "critical" ? Colours.palette.m3error : root.urgency === "low" ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 3) : Colours.palette.m3secondaryContainer
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                 Loader {
                     asynchronous: true
@@ -128,7 +128,7 @@ StyledRect {
                     implicitHeight: Tokens.sizes.notifs.badge
 
                     color: root.urgency === "critical" ? Colours.palette.m3error : root.urgency === "low" ? Colours.palette.m3surfaceContainerHighest : Colours.palette.m3secondaryContainer
-                    radius: 0
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                     ColouredIcon {
                         anchors.centerIn: parent
@@ -172,7 +172,7 @@ StyledRect {
                     implicitHeight: groupCount.implicitHeight + Tokens.padding.extraSmall
 
                     color: root.urgency === "critical" ? Colours.palette.m3error : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
-                    radius: 0
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                     opacity: root.notifs.length > Config.notifs.groupPreviewNum ? 1 : 0
                     Layout.preferredWidth: root.notifs.length > Config.notifs.groupPreviewNum ? implicitWidth : 0

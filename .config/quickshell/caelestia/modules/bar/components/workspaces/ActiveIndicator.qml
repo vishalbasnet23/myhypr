@@ -42,7 +42,7 @@ StyledRect {
     clip: true
     y: start + mask.y
     implicitHeight: end - start
-    radius: 0
+    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
     color: Colours.palette.m3primary
 
     Anim on start {

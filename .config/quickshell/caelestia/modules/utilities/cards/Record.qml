@@ -45,7 +45,7 @@ StyledRect {
                     return h - (h % 2);
                 }
 
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: Recorder.running ? Colours.palette.m3secondary : Colours.palette.m3secondaryContainer
 
                 MaterialIcon {
@@ -187,7 +187,7 @@ StyledRect {
             spacing: Tokens.spacing.medium
 
             StyledRect {
-                radius: 0
+                radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
                 color: Recorder.paused ? Colours.palette.m3tertiary : Colours.palette.m3error
 
                 implicitWidth: recText.implicitWidth + Tokens.padding.medium * 2

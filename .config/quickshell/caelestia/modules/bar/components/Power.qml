@@ -17,7 +17,7 @@ Item {
         anchors.centerIn: parent
         implicitWidth: implicitHeight
         implicitHeight: icon.implicitHeight + Tokens.padding.small
-        radius: 0
+        radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
         onClicked: root.screenState.session = !root.screenState.session
     }
 
