@@ -85,7 +85,6 @@ PageBase {
         }
 
         StepperRow {
-            last: true
             label: Tr.tr("Drag threshold")
             subtext: Tr.tr("Pixels dragged before the bar reveals")
             value: Config.bar.dragThreshold
@@ -93,6 +92,25 @@ PageBase {
             to: 200
             stepSize: 5
             onMoved: v => GlobalConfig.bar.dragThreshold = v
+        }
+
+        ToggleRow {
+            text: Tr.tr("Floating")
+            subtext: Tr.tr("Detach the bar from the screen edge with a gap")
+            checked: Config.bar.floating
+            onToggled: GlobalConfig.bar.floating = checked
+        }
+
+        StepperRow {
+            last: true
+            label: Tr.tr("Floating margin")
+            subtext: Tr.tr("Gap between the floating bar and the screen edge")
+            value: Config.bar.floatingMargin
+            from: 0
+            to: 64
+            stepSize: 2
+            enabled: Config.bar.floating
+            onMoved: v => GlobalConfig.bar.floatingMargin = v
         }
 
         // Components

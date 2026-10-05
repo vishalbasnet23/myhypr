@@ -20,7 +20,10 @@ Item {
     readonly property int clampedHeight: Math.max(Config.border.minThickness, implicitHeight)
     readonly property int padding: Math.max(Tokens.padding.small, Config.border.thickness)
     readonly property int contentHeight: Tokens.sizes.bar.innerWidth + padding * 2
-    readonly property int exclusiveZone: !disabled && (Config.bar.persistent || screenState.bar) ? contentHeight : Config.border.thickness
+    // Gap between the bar and the true screen edge when floating - 0 otherwise,
+    // so every offset below just adds this and falls back to today's behaviour.
+    readonly property int margin: Config.bar.floating ? Config.bar.floatingMargin : 0
+    readonly property int exclusiveZone: !disabled && (Config.bar.persistent || screenState.bar) ? contentHeight + margin : Config.border.thickness
     readonly property bool shouldBeVisible: !fullscreen && !disabled && (Config.bar.persistent || screenState.bar || isHovered)
     property bool isHovered
 
@@ -45,7 +48,7 @@ Item {
         when: root.shouldBeVisible
 
         PropertyChanges {
-            root.implicitHeight: root.contentHeight
+            root.implicitHeight: root.contentHeight + root.margin
         }
     }
 
@@ -77,11 +80,14 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
+        anchors.leftMargin: root.margin
+        anchors.rightMargin: root.margin
+        anchors.topMargin: root.margin
 
         active: root.shouldBeVisible
 
         sourceComponent: Bar {
-            width: root.width
+            width: content.width
             height: root.contentHeight
             screen: root.screen
             screenState: root.screenState

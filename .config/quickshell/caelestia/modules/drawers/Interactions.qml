@@ -57,7 +57,7 @@ CustomMouseArea {
     function onWheel(event: WheelEvent): void {
         if (fullscreen)
             return;
-        if (event.y < bar.implicitHeight) {
+        if (event.y >= bar.margin && event.y < bar.implicitHeight) {
             bar.handleWheel(event.x, event.angleDelta);
         }
     }
@@ -241,8 +241,8 @@ CustomMouseArea {
         }
 
         // Show popouts on hover
-        if (y < bar.implicitHeight) {
-            bar.checkPopout(x, y);
+        if (y >= bar.margin && y < bar.implicitHeight) {
+            bar.checkPopout(x, y - bar.margin);
         } else if ((!popouts.currentName.startsWith("traymenu") || ((popouts.current as StackView)?.depth ?? 0) <= 1) && !inTopPanel(panels.popoutsWrapper, x, y)) {
             popouts.hasCurrent = false;
             bar.closeTray();
