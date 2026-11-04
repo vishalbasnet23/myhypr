@@ -56,6 +56,12 @@ QtObject {
             description: Tr.tr("Manage plugins"),
             category: "system"
         },
+        {
+            label: Tr.tr("Power"),
+            icon: "bolt",
+            description: Tr.tr("Idle timeouts, lock behaviour"),
+            category: "system"
+        },
 
         // Shell
         {

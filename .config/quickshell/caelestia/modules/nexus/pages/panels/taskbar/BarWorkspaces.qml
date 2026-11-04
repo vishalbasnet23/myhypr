@@ -5,6 +5,7 @@ import Caelestia.Config
 import Caelestia.I18n
 import qs.components.controls
 import qs.modules.nexus.common
+import qs.services
 
 PageBase {
     id: root
@@ -25,6 +26,60 @@ PageBase {
         }
     ]
 
+    // Order matches WorkspaceExtra.styles exactly - not part of the native
+    // Caelestia.Config schema, so this is read/written straight to
+    // WorkspaceExtra rather than through GlobalConfig.
+    readonly property list<MenuItem> extraStyleItems: [
+        MenuItem {
+            text: Tr.trCtx("Native (above)", "bar workspace extra style")
+            icon: "block"
+        },
+        MenuItem {
+            text: Tr.trCtx("Dots", "bar workspace extra style")
+            icon: "fiber_manual_record"
+        },
+        MenuItem {
+            text: Tr.trCtx("Pill", "bar workspace extra style")
+            icon: "stadia_controller"
+        },
+        MenuItem {
+            text: Tr.trCtx("Segments", "bar workspace extra style")
+            icon: "view_week"
+        },
+        MenuItem {
+            text: Tr.trCtx("Ticks", "bar workspace extra style")
+            icon: "equalizer"
+        },
+        MenuItem {
+            text: Tr.trCtx("Bracket", "bar workspace extra style")
+            icon: "code"
+        },
+        MenuItem {
+            text: Tr.trCtx("Badge", "bar workspace extra style")
+            icon: "notifications"
+        },
+        MenuItem {
+            text: Tr.trCtx("Glow", "bar workspace extra style")
+            icon: "blur_on"
+        },
+        MenuItem {
+            text: Tr.trCtx("Braille", "bar workspace extra style")
+            icon: "braille"
+        },
+        MenuItem {
+            text: Tr.trCtx("Underline", "bar workspace extra style")
+            icon: "format_underlined"
+        },
+        MenuItem {
+            text: Tr.trCtx("Ring", "bar workspace extra style")
+            icon: "donut_large"
+        },
+        MenuItem {
+            text: Tr.trCtx("Trail", "bar workspace extra style")
+            icon: "blur_linear"
+        }
+    ]
+
     title: Tr.tr("Workspaces")
     isSubPage: true
 
@@ -41,6 +96,14 @@ PageBase {
             menuItems: root.displayTypeItems
             active: root.displayTypeItems[Config.bar.workspaces.displayType]
             onSelected: item => GlobalConfig.bar.workspaces.displayType = root.displayTypeItems.indexOf(item)
+        }
+
+        SelectRow {
+            label: Tr.trCtx("Extra style", "bar workspaces")
+            subtext: Tr.tr("Overrides the style above with a QML-only indicator. Underline/Ring/Trail only animate on the top bar; use Active indicator/trail below for the side bar.")
+            menuItems: root.extraStyleItems
+            active: root.extraStyleItems[Math.max(0, WorkspaceExtra.styles.indexOf(WorkspaceExtra.style))]
+            onSelected: item => WorkspaceExtra.style = WorkspaceExtra.styles[root.extraStyleItems.indexOf(item)]
         }
 
         StepperRow {

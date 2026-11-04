@@ -60,6 +60,56 @@ StyledClippingRect {
         return index % shown;
     }
 
+    // -- row-level focus overlays (underline / ring / trail), gated by
+    // WorkspaceExtra.style. Positioned by reading the active delegate's
+    // real geometry from the Row - plain Items have real x/width here
+    // (unlike the LazyListView-driven vertical bar), so no attached
+    // geometry component is needed.
+    Component {
+        id: underlineOverlay
+
+        Item {
+            Rectangle {
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width * 0.7
+                height: 2
+                radius: 1
+                color: Colours.palette.m3primary
+            }
+        }
+    }
+
+    Component {
+        id: ringOverlay
+
+        Rectangle {
+            anchors.fill: parent
+            radius: Tokens.rounding.full
+            color: "transparent"
+            border.width: 2
+            border.color: Colours.palette.m3primary
+        }
+    }
+
+    Component {
+        id: trailOverlay
+
+        Rectangle {
+            anchors.fill: parent
+            radius: Tokens.rounding.full
+            color: Colours.palette.m3primary
+            opacity: 0.35
+
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                blurEnabled: true
+                blur: 0.4
+                blurMax: 24
+            }
+        }
+    }
+
     implicitHeight: Tokens.sizes.bar.innerWidth
     implicitWidth: workspaces.width + Tokens.padding.extraSmall * 2
 
@@ -124,6 +174,77 @@ StyledClippingRect {
                     Hypr.focusWorkspace(ws);
                 else
                     Hypr.toggleSpecial("special");
+            }
+        }
+
+        Loader {
+            id: focusOverlay
+
+            // repeater.itemAt() isn't itself a tracked binding dependency, so a
+            // plain `readonly property: repeater.itemAt(...)` binding only
+            // re-evaluates when activeWsIdx changes - it stays stuck at
+            // whatever it first resolved to (often null, before the Repeater
+            // has finished instantiating) if the user switches style without
+            // switching workspace. Refresh imperatively on every signal that
+            // could change which item is "active" instead.
+            property Item activeItem: null
+
+            function refresh(): void {
+                activeItem = repeater.itemAt(root.activeWsIdx) ?? null;
+            }
+
+            Component.onCompleted: refresh()
+
+            Connections {
+                function onActiveWsIdxChanged(): void {
+                    focusOverlay.refresh();
+                }
+
+                target: root
+            }
+
+            Connections {
+                function onCountChanged(): void {
+                    focusOverlay.refresh();
+                }
+                function onItemAdded(): void {
+                    focusOverlay.refresh();
+                }
+                function onItemRemoved(): void {
+                    focusOverlay.refresh();
+                }
+
+                target: repeater
+            }
+
+            active: !!activeItem && ["underline", "ring", "trail"].includes(WorkspaceExtra.style)
+            z: -1
+
+            x: activeItem ? workspaces.x + activeItem.x : 0
+            y: activeItem ? workspaces.y + activeItem.y : 0
+            width: activeItem ? activeItem.width : 0
+            height: activeItem ? activeItem.height : 0
+
+            sourceComponent: {
+                if (WorkspaceExtra.style === "underline")
+                    return underlineOverlay;
+                if (WorkspaceExtra.style === "ring")
+                    return ringOverlay;
+                if (WorkspaceExtra.style === "trail")
+                    return trailOverlay;
+                return null;
+            }
+
+            Behavior on x {
+                Anim {
+                    type: WorkspaceExtra.style === "trail" ? Anim.SlowSpatial : Anim.DefaultSpatial
+                }
+            }
+
+            Behavior on width {
+                Anim {
+                    type: WorkspaceExtra.style === "trail" ? Anim.SlowSpatial : Anim.DefaultSpatial
+                }
             }
         }
 

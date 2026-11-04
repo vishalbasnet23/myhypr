@@ -67,6 +67,22 @@ Region {
         height: panel.height * (1 - root.panels.utilities.offsetScale) + root.borderThickness
     }
 
+    // Covers the full sidebar+utilities footprint as one unbroken rectangle whenever
+    // either is opening, so the independently-computed sidebarRegion/utilities R above
+    // (which meet at a seam when both are shown merged) can't leave a sub-pixel gap in
+    // the input mask at that boundary for the pointer to fall through.
+    Region {
+        id: mergedSidebarUtilitiesRegion
+
+        readonly property real openAmount: Math.max(1 - root.panels.utilities.offsetScale, 1 - root.panels.sidebar.offsetScale)
+
+        x: root.win.width - Math.max(root.panels.sidebar.width, root.panels.utilities.width) - root.borderThickness
+        y: root.panels.sidebar.y + root.borderThickness + root.bar.implicitHeight
+        width: Math.max(root.panels.sidebar.width, root.panels.utilities.width) + root.borderThickness
+        height: (root.win.height - y) * openAmount
+        intersection: Intersection.Subtract
+    }
+
     R {
         panel: root.panels.popoutsWrapper
         width: panel.width * (1 - root.panels.popoutsWrapper.offsetScale)

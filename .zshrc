@@ -192,3 +192,19 @@ zip_clean () {
   echo "✔ Created: $name"
 }
 export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+
+# lidarlocal: music stack (Lidarr, Prowlarr, qBittorrent, Navidrome)
+alias lidarr="xdg-open http://localhost:8686"
+alias prowlarr="xdg-open http://localhost:9696"
+alias qbittorrent="xdg-open http://localhost:8080"
+alias navidrome="xdg-open http://localhost:4533"
+
+lidarlocal_compose="docker compose -f /home/vishalbasnet23/claude/lidarlocal/docker-compose.yml"
+alias lidarr-logs="$lidarlocal_compose logs -f lidarr"
+alias lidarr-restart="$lidarlocal_compose restart lidarr"
+alias prowlarr-logs="$lidarlocal_compose logs -f prowlarr"
+alias prowlarr-restart="$lidarlocal_compose restart prowlarr"
+alias qbittorrent-logs="$lidarlocal_compose logs -f qbittorrent"
+alias qbittorrent-restart="$lidarlocal_compose restart qbittorrent"
+alias navidrome-logs="$lidarlocal_compose logs -f navidrome"
+alias navidrome-restart="$lidarlocal_compose restart navidrome"

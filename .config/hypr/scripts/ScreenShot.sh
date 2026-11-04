@@ -130,13 +130,20 @@ shotactive() {
 
 shotswappy() {
 	tmpfile=$(mktemp)
-	grim -g "$(slurp)" - >"$tmpfile" 
+	grim -g "$(slurp)" - >"$tmpfile"
 
   # Copy without saving
   if [[ -s "$tmpfile" ]]; then
 		wl-copy <"$tmpfile"
     notify_view "swappy"
   fi
+}
+
+shotsatty() {
+	local region
+	region="$(slurp)" || exit 0
+	grim -g "$region" -t ppm - | satty --filename - --output-filename "${dir}/${file}" --copy-command wl-copy
+	notify_view
 }
 
 if [[ ! -d "$dir" ]]; then
@@ -157,8 +164,10 @@ elif [[ "$1" == "--active" ]]; then
 	shotactive
 elif [[ "$1" == "--swappy" ]]; then
 	shotswappy
+elif [[ "$1" == "--satty" ]]; then
+	shotsatty
 else
-	echo -e "Available Options : --now --in5 --in10 --win --area --active --swappy"
+	echo -e "Available Options : --now --in5 --in10 --win --area --active --swappy --satty"
 fi
 
 exit 0

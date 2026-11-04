@@ -19,7 +19,7 @@ Item {
 
     readonly property int clampedHeight: Math.max(Config.border.minThickness, implicitHeight)
     readonly property int padding: Math.max(Tokens.padding.small, Config.border.thickness)
-    readonly property int contentHeight: Tokens.sizes.bar.innerWidth + padding * 2
+    readonly property int contentHeight: Tokens.sizes.bar.innerWidth + padding * 2 - 2
     readonly property int exclusiveZone: !disabled && (Config.bar.persistent || screenState.bar) ? contentHeight : Config.border.thickness
     readonly property bool shouldBeVisible: !fullscreen && !disabled && (Config.bar.persistent || screenState.bar || isHovered)
     property bool isHovered

@@ -250,7 +250,7 @@ StyledRect {
                 text: root.modelData.appName
                 font: appName.font
                 elide: Text.ElideRight
-                elideWidth: expandBtn.x - time.width - timeSep.width - summary.x - root.Tokens.spacing.small * 3
+                elideWidth: closeBtn.x - time.width - timeSep.width - summary.x - root.Tokens.spacing.small * 3
             }
 
             StyledText {
@@ -304,7 +304,7 @@ StyledRect {
                 text: root.modelData.summary
                 font: summary.font
                 elide: Text.ElideRight
-                elideWidth: expandBtn.x - time.width - timeSep.width - summary.x - root.Tokens.spacing.small * 3
+                elideWidth: closeBtn.x - time.width - timeSep.width - summary.x - root.Tokens.spacing.small * 3
             }
 
             StyledText {
@@ -348,6 +348,32 @@ StyledRect {
             }
 
             Item {
+                id: closeBtn
+
+                anchors.right: expandBtn.left
+                anchors.rightMargin: Tokens.spacing.extraSmall
+                anchors.top: parent.top
+                anchors.topMargin: -Tokens.padding.extraSmall
+
+                implicitWidth: closeIcon.implicitHeight
+                implicitHeight: closeIcon.implicitHeight
+
+                StateLayer {
+                    radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
+                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurface
+                    onClicked: root.modelData.close()
+                }
+
+                MaterialIcon {
+                    id: closeIcon
+
+                    anchors.centerIn: parent
+                    text: "close"
+                    fontStyle: Tokens.font.icon.medium
+                }
+            }
+
+            Item {
                 id: expandBtn
 
                 anchors.right: parent.right
@@ -386,7 +412,7 @@ StyledRect {
                 id: bodyPreview
 
                 anchors.left: summary.left
-                anchors.right: expandBtn.left
+                anchors.right: closeBtn.left
                 anchors.top: summary.bottom
                 anchors.rightMargin: Tokens.spacing.small
 
@@ -418,7 +444,7 @@ StyledRect {
                 id: body
 
                 anchors.left: summary.left
-                anchors.right: expandBtn.left
+                anchors.right: closeBtn.left
                 anchors.top: summary.bottom
                 anchors.rightMargin: Tokens.spacing.small
 

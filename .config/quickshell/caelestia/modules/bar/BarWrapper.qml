@@ -20,7 +20,7 @@ Item {
 
     readonly property int clampedHeight: Math.max(Config.border.minThickness, implicitHeight)
     readonly property int padding: Math.max(Tokens.padding.small, Config.border.thickness)
-    readonly property int contentHeight: Tokens.sizes.bar.innerWidth + padding * 2
+    readonly property int contentHeight: Tokens.sizes.bar.innerWidth + padding * 2 - 2
     // Gap between the bar and the true screen edge when floating - 0 otherwise,
     // so every offset below just adds this and falls back to today's behaviour.
     readonly property int margin: Config.bar.floating ? Config.bar.floatingMargin : 0

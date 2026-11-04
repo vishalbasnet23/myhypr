@@ -21,24 +21,37 @@ Column {
     spacing: Tokens.spacing.large
 
     SessionButton {
-        id: logout
+        id: lock
 
-        label: Tr.tr("Log out")
-        icon: Config.session.icons.logout
-        command: Config.session.commands.logout
+        label: Tr.tr("Lock")
+        icon: "lock"
+        // Caelestia's own lock screen (modules/lock/), not the external hyprlock
+        // binary - same reasoning as hypridle.conf's lock_cmd.
+        command: ["qs", "-c", "caelestia", "ipc", "call", "lock", "lock"]
 
-        KeyNavigation.down: shutdown
+        KeyNavigation.down: logout
 
         Component.onCompleted: forceActiveFocus()
 
         Connections {
             function onLauncherChanged(): void {
                 if (!root.screenState.launcher)
-                    logout.forceActiveFocus();
+                    lock.forceActiveFocus();
             }
 
             target: root.screenState
         }
+    }
+
+    SessionButton {
+        id: logout
+
+        label: Tr.tr("Log out")
+        icon: Config.session.icons.logout
+        command: Config.session.commands.logout
+
+        KeyNavigation.up: lock
+        KeyNavigation.down: shutdown
     }
 
     SessionButton {

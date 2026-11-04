@@ -20,7 +20,7 @@ local files = defaults.files
 
 -- common shortcuts
 -- hl.bind(mainMod .. " + SUPER_L", hl.dsp.exec_cmd("pkill rofi || rofi -show drun -modi drun,filebrowser,run,window"), { release = true }) -- Super Key to Launch rofi menu
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("pkill rofi || true && rofi -show drun -modi drun,filebrowser,run,window")) -- Main Menu (APP Launcher)
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("caelestia shell drawers toggle launcher")) -- Main Menu (APP Launcher, caelestia)
 -- hl.bind(mainMod .. " + B", hl.dsp.exec_cmd('xdg-open "https://"')) -- default browser
 -- hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("pkill rofi || true && ags -t 'overview'")) -- desktop overview (if installed)
 hl.bind(mainMod .. " + A", hl.dsp.global("quickshell:overviewToggle")) -- desktop overview (if installed)
@@ -34,11 +34,11 @@ hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("spotify-launcher"))       -- Spotify
 -- FEATURES / EXTRAS
 hl.bind(mainMod .. " + ALT + H", hl.dsp.exec_cmd(scriptsDir .. "/KeyHints.sh"))   -- help / cheat sheet
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(scriptsDir .. "/Refresh.sh"))  -- Refresh rofi (waybar/swaync retired)
-hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("qs ipc call notifs dnd"))     -- Toggle do-not-disturb
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("qs -c caelestia ipc call notifs toggleDnd")) -- Toggle do-not-disturb
 
--- Drawer panels. SHIFT variants are temporary while they are tested next to
--- the existing rofi launcher and wlogout session menu.
-hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("qs ipc call panels launcher"))    -- launcher (trial; rofi still on SUPER+D)
+-- Drawer panels. SHIFT variant is temporary while it is tested next to the
+-- existing wlogout session menu. SUPER+D now opens the caelestia launcher
+-- directly (above), so its own SHIFT+D trial bind is retired.
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("qs ipc call panels session"))     -- session (trial; wlogout still on SUPER+X)
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("caelestia shell drawers toggle dashboard")) -- dashboard drawer
 hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd(scriptsDir .. "/ChangeBlur.sh")) -- Toggle blur settings

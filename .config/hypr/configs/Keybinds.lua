@@ -43,7 +43,7 @@ hl.bind(mainMod .. " + Q", hl.dsp.window.close())                               
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(scriptsDir .. "/KillActiveProcess.sh"))  -- Kill active process
 hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd(scriptsDir .. "/LockScreen.sh"))                 -- screen lock
 hl.bind("CTRL + ALT + P", hl.dsp.exec_cmd(scriptsDir .. "/Wlogout.sh"))                    -- power menu
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("qs ipc call notifs toggle"))                   -- notification centre (quickshell)
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("caelestia shell drawers toggle sidebar"))      -- notification centre (quickshell)
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(scriptsDir .. "/Kool_Quick_Settings.sh")) -- Settings Menu KooL Hyprland Settings
 
 -- Master Layout
@@ -98,7 +98,7 @@ hl.bind(mainMod .. " + CTRL + Print",       hl.dsp.exec_cmd(scriptsDir .. "/Scre
 hl.bind(mainMod .. " + CTRL + SHIFT + Print", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --in10")) -- screenshot (10 secs delay)
 hl.bind("ALT + Print",                      hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --active")) -- screenshot (active window only)
 
--- screenshot with swappy (another screenshot tool)
+-- screenshot with swappy (annotation tool)
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --swappy")) -- screenshot (swappy)
 
 -- Resize windows

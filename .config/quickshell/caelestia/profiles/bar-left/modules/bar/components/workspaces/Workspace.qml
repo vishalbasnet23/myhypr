@@ -33,6 +33,11 @@ Item {
     readonly property bool focused: activeWsId === ws
     readonly property list<int> focusedShapeList: [MaterialShape.Slanted, MaterialShape.Oval, MaterialShape.Pill, MaterialShape.Triangle, MaterialShape.Arrow, MaterialShape.Diamond, MaterialShape.Pentagon, MaterialShape.Gem, MaterialShape.VerySunny, MaterialShape.Sunny, MaterialShape.Cookie4Sided, MaterialShape.Cookie6Sided, MaterialShape.Cookie7Sided, MaterialShape.Cookie9Sided, MaterialShape.Cookie12Sided, MaterialShape.Clover4Leaf, MaterialShape.SoftBurst, MaterialShape.Ghostish]
 
+    readonly property var brailleDigits: ({
+            1: "⠁", 2: "⠃", 3: "⠉", 4: "⠙", 5: "⠑", 6: "⠋", 7: "⠛", 8: "⠓", 9: "⠊"
+        })
+    readonly property color dimColour: Colours.layer(Colours.palette.m3outlineVariant, 2)
+
     property color offMonitorColour: Colours.palette.m3outlineVariant
     readonly property bool onOtherMonitor: {
         if (Config.bar.workspaces.perMonitor)
@@ -81,6 +86,222 @@ Item {
     Behavior on opacity {
         Anim {
             type: Anim.DefaultEffects
+        }
+    }
+
+    // -- extra (non-native) indicator styles, gated by WorkspaceExtra.style --
+
+    Component {
+        id: extraDotsComponent
+
+        Rectangle {
+            implicitWidth: root.focused ? 10 : 7
+            implicitHeight: implicitWidth
+            radius: implicitWidth / 2
+            color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.fgColour : root.dimColour
+
+            Behavior on implicitWidth {
+                Anim {}
+            }
+
+            Behavior on color {
+                CAnim {}
+            }
+        }
+    }
+
+    Component {
+        id: extraPillComponent
+
+        Rectangle {
+            implicitHeight: Tokens.sizes.bar.innerWidth - Tokens.padding.small
+            implicitWidth: root.focused ? label.implicitWidth + Tokens.padding.small * 2 : implicitHeight * 0.4
+            radius: Tokens.rounding.full
+            color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.dimColour : Colours.layer(Colours.palette.m3outlineVariant, 1)
+
+            Behavior on implicitWidth {
+                Anim {
+                    easing: Tokens.anim.expressiveDefaultSpatial
+                }
+            }
+
+            StyledText {
+                id: label
+
+                anchors.centerIn: parent
+                opacity: root.focused ? 1 : 0
+                text: root.ws
+                color: Colours.palette.m3onPrimary
+                font.family: Tokens.font.workspaces
+
+                Behavior on opacity {
+                    Anim {}
+                }
+            }
+        }
+    }
+
+    Component {
+        id: extraSegmentsComponent
+
+        Row {
+            id: segRow
+
+            spacing: 2
+            readonly property int chips: Math.max(root.toplevels.length, root.focused ? 1 : 0)
+
+            Repeater {
+                model: segRow.chips
+
+                delegate: Rectangle {
+                    id: chip
+
+                    required property int index
+
+                    width: 5
+                    height: Tokens.sizes.bar.innerWidth - Tokens.padding.small
+                    radius: 1
+                    color: Qt.hsla(((root.ws * 47 + chip.index * 29) % 360) / 360, 0.45, root.focused ? 0.62 : 0.38, 1)
+                    opacity: root.onOtherMonitor ? 0.4 : 1
+                }
+            }
+        }
+    }
+
+    Component {
+        id: extraTicksComponent
+
+        Rectangle {
+            readonly property int windows: root.toplevels.length
+
+            implicitWidth: 4
+            implicitHeight: Math.max(6, Math.min(Tokens.sizes.bar.innerWidth - Tokens.padding.small, 6 + windows * 6))
+            radius: 2
+            color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.fgColour : root.dimColour
+
+            Behavior on implicitHeight {
+                Anim {}
+            }
+        }
+    }
+
+    Component {
+        id: extraBracketComponent
+
+        StyledText {
+            animate: true
+            text: root.focused ? `[${root.ws}]` : String(root.ws)
+            color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.fgColour : root.dimColour
+            verticalAlignment: Qt.AlignVCenter
+            font.family: Tokens.font.workspaces
+        }
+    }
+
+    Component {
+        id: extraBadgeComponent
+
+        Item {
+            implicitWidth: Tokens.sizes.bar.innerWidth - Tokens.padding.small
+            implicitHeight: implicitWidth
+
+            Rectangle {
+                anchors.fill: parent
+                radius: Tokens.rounding.small
+                color: root.focused ? Colours.palette.m3primary : root.dimColour
+
+                StyledText {
+                    anchors.centerIn: parent
+                    text: root.ws
+                    color: root.focused ? Colours.palette.m3onPrimary : root.fgColour
+                    font.family: Tokens.font.workspaces
+                }
+            }
+
+            Rectangle {
+                visible: root.toplevels.length > 1
+                width: 11
+                height: 11
+                radius: 5.5
+                color: Colours.palette.m3tertiary
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.topMargin: -3
+                anchors.rightMargin: -3
+
+                StyledText {
+                    anchors.centerIn: parent
+                    text: root.toplevels.length
+                    font.pixelSize: 8
+                    color: Colours.palette.m3onTertiary
+                }
+            }
+        }
+    }
+
+    Component {
+        id: extraGlowComponent
+
+        Item {
+            implicitWidth: Tokens.sizes.bar.innerWidth - Tokens.padding.small
+            implicitHeight: implicitWidth
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.width * 1.8
+                height: width
+                radius: width / 2
+                color: "transparent"
+                border.width: 2
+                border.color: Colours.palette.m3primary
+                opacity: 0
+                visible: root.focused
+
+                SequentialAnimation on opacity {
+                    running: root.focused
+                    loops: Animation.Infinite
+                    NumberAnimation {
+                        from: 0.55
+                        to: 0
+                        duration: 1400
+                        easing.type: Easing.OutQuad
+                    }
+                }
+
+                SequentialAnimation on scale {
+                    running: root.focused
+                    loops: Animation.Infinite
+                    NumberAnimation {
+                        from: 0.6
+                        to: 1
+                        duration: 1400
+                        easing.type: Easing.OutQuad
+                    }
+                }
+            }
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: root.focused ? parent.width * 0.6 : parent.width * 0.35
+                height: width
+                radius: width / 2
+                color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.fgColour : root.dimColour
+
+                Behavior on width {
+                    Anim {}
+                }
+            }
+        }
+    }
+
+    Component {
+        id: extraBrailleComponent
+
+        StyledText {
+            animate: true
+            text: (root.focused ? "⠼" : "") + (root.brailleDigits[root.ws] ?? String(root.ws))
+            color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.fgColour : root.dimColour
+            verticalAlignment: Qt.AlignVCenter
+            font.family: Tokens.font.workspaces
         }
     }
 
@@ -184,6 +405,25 @@ Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             Layout.preferredHeight: Tokens.sizes.bar.innerWidth - Tokens.padding.small
             sourceComponent: {
+                switch (WorkspaceExtra.style) {
+                case "dots":
+                    return extraDotsComponent;
+                case "pill":
+                    return extraPillComponent;
+                case "segments":
+                    return extraSegmentsComponent;
+                case "ticks":
+                    return extraTicksComponent;
+                case "bracket":
+                    return extraBracketComponent;
+                case "badge":
+                    return extraBadgeComponent;
+                case "glow":
+                    return extraGlowComponent;
+                case "braille":
+                    return extraBrailleComponent;
+                }
+
                 if (root.displayType === BarWorkspaceDisplay.Icons)
                     return iconLoaderComponent;
                 if (root.displayType === BarWorkspaceDisplay.Text)

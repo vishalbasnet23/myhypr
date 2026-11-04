@@ -22,6 +22,7 @@ CustomMouseArea {
     property bool dashboardShortcutActive
     property bool osdShortcutActive
     property bool utilitiesShortcutActive
+    property bool sidebarShownByUtilities
 
     function withinPanelHeight(panel: Item, x: real, y: real): bool {
         const panelY = root.borderThickness + bar.implicitHeight + panel.y;
@@ -229,8 +230,23 @@ CustomMouseArea {
                 screenState.dashboard = false;
         }
 
-        // Show utilities on hover
-        const showUtilities = inBottomPanel(panels.utilities, x, y, true);
+        // Show utilities on hover. Opening only triggers from a small fixed corner
+        // (like Dashboard's own hotspot). Once open (or opening), "stay open" is
+        // checked against each panel's TRUE resting geometry (full height/width),
+        // never the live, still-animating offsetScale-scaled size - using the
+        // animating size here let the hitbox lag behind the mouse while the merge
+        // was still opening, so moving fast from the corner toward the notification
+        // list could outrun it and read as "left the panel", dismissing everything.
+        const inUtilitiesCorner = (() => {
+            const cornerSize = Math.max(20, Config.border.minThickness);
+            return y > height - cornerSize && x > width - cornerSize;
+        })();
+
+        const showUtilities = inUtilitiesCorner || ((screenState.utilities || screenState.sidebar) && (() => {
+            const inUtilitiesBox = y > height - panels.utilities.height - Math.max(Config.border.minThickness, Config.border.thickness) - Config.border.rounding && x > width - Tokens.sizes.utilities.width - Config.border.rounding;
+            const inSidebarBox = x > width - panels.sidebar.width - Config.border.rounding && withinPanelHeight(panels.sidebar, x, y);
+            return inUtilitiesBox || inSidebarBox;
+        })());
 
         // Always update visibility based on hover if not in shortcut mode
         if (!utilitiesShortcutActive) {
@@ -238,6 +254,21 @@ CustomMouseArea {
         } else if (showUtilities) {
             // If hovering over utilities area while in shortcut mode, transition to hover control
             utilitiesShortcutActive = false;
+        }
+
+        // Bring the sidebar (notification center) up together with the bottom-right
+        // Utilities hotspot, merging them into one popup. Independent of
+        // Config.sidebar.showOnHover, which only governs the separate top-right
+        // corner trigger. Only auto-close it here if this hotspot is what opened it,
+        // so it doesn't fight a sidebar shown via keybind/drag/top-right hover.
+        if (showUtilities) {
+            if (!screenState.sidebar) {
+                screenState.sidebar = true;
+                sidebarShownByUtilities = true;
+            }
+        } else if (sidebarShownByUtilities) {
+            screenState.sidebar = false;
+            sidebarShownByUtilities = false;
         }
 
         // Show popouts on hover

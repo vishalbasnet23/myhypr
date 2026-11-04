@@ -65,8 +65,11 @@ hl.on("hyprland.start", function()
 	-- Rainbow borders
 	-- hl.exec_cmd(UserScripts .. "/RainbowBorders.sh")
 
-	-- Starting hypridle to start hyprlock
-	hl.exec_cmd("bash -c 'sleep 3 && hyprlock'")
+	-- Lock on startup, via caelestia's own lock screen (modules/lock/) rather than
+	-- hyprlock - see hypridle.conf's lock_cmd for the full reasoning. Polls for the
+	-- "lock" IPC target instead of a fixed sleep, since qs -c caelestia (above) can
+	-- take longer than a couple of seconds to finish loading on a cold start.
+	hl.exec_cmd("bash -c 'for i in $(seq 1 20); do qs -c caelestia ipc call lock isLocked >/dev/null 2>&1 && break; sleep 0.5; done; qs -c caelestia ipc call lock lock'")
 	hl.exec_cmd("hypridle")
 	-- Here are list of features available but disabled by default
 	-- hl.exec_cmd("swww-daemon --format xrgb && swww img " .. HOME .. "/Pictures/wallpapers/mecha-nostalgia.png") -- persistent wallpaper
