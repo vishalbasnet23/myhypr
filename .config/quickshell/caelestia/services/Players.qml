@@ -43,13 +43,28 @@ Singleton {
 
     // Quickshell only emits postTrackChanged when trackid/url/title change, so late
     // artist updates (common with mpv-mpris + yt-dlp player) never retrigger it. Watch
-    // title/artist too and toast once both are usable.
+    // title/artist too. Browser MPRIS (e.g. YouTube SPA nav) also writes title/artist
+    // in separate intermediate steps rather than atomically, so debounce until both
+    // settle instead of toasting on every partial combination.
     function maybeToastNowPlaying(): void {
         if (!GlobalConfig.utilities.toasts.nowPlaying)
             return;
 
         const player = root.active;
-        if (!player)
+        if (!player || !player.isPlaying)
+            return;
+
+        const title = player.trackTitle ?? "";
+        const artist = player.trackArtist ?? "";
+        if (!title || !artist)
+            return;
+
+        nowPlayingDebounce.restart();
+    }
+
+    function sendNowPlayingToast(): void {
+        const player = root.active;
+        if (!player || !player.isPlaying)
             return;
 
         const title = player.trackTitle ?? "";
@@ -66,6 +81,15 @@ Singleton {
     }
 
     onActiveChanged: lastNowPlayingKey = ""
+
+    Timer {
+        id: nowPlayingDebounce
+
+        interval: 500
+        running: false
+        repeat: false
+        onTriggered: root.sendNowPlayingToast()
+    }
 
     Connections {
         function onPostTrackChanged(): void {
