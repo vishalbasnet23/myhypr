@@ -22,6 +22,21 @@ Singleton {
 
     property bool loaded
 
+    // Max notifications kept per app ("stack"); oldest beyond this are closed.
+    // Not exposed in shell.json — Config keys come from the compiled plugin.
+    property int maxPerApp: 10
+
+    // list is newest-first, so entries past the cap are the oldest
+    function trimStack(appName: string): void {
+        let kept = 0;
+        for (const n of root.list) {
+            if (n.closed || n.appName !== appName)
+                continue;
+            if (++kept > root.maxPerApp)
+                n.close();
+        }
+    }
+
     function hasFullscreen(): bool {
         for (const monitor of Hypr.monitors.values) {
             if (monitor?.activeWorkspace?.toplevels.values.some(t => t.lastIpcObject.fullscreen > 1))
@@ -100,6 +115,7 @@ Singleton {
                 notification: notif
             });
             root.list = [comp, ...root.list];
+            root.trimStack(comp.appName);
         }
     }
 
@@ -121,6 +137,8 @@ Singleton {
                 root.list.push(notifComp.createObject(root, properties));
             }
             root.list.sort((a, b) => b.time - a.time);
+            for (const appName of new Set(root.list.map(n => n.appName)))
+                root.trimStack(appName);
             root.loaded = true;
         }
         onLoadFailed: err => {
