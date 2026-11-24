@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Install/restore mydots additions that live outside the repo (pacman-owned
+# paths + system policy dirs). Run with sudo after a caelestia-shell update
+# or on a fresh clone:
+#
+#   sudo bash .config/quickshell/nightwire-light/install.sh
+#
+# Idempotent — safe to re-run any time.
+set -euo pipefail
+
+HERE="$(cd "$(dirname "$0")" && pwd)"
+PKG=/usr/lib/python3.14/site-packages/caelestia
+
+# 1. nightwire light scheme (scheme modes = *.txt stems in the flavour dir)
+cp "$HERE/light.txt" "$PKG/data/schemes/nightwire/neon/light.txt"
+echo "ok: nightwire light.txt installed"
+
+# 2. Stop caelestia blasting OSC colour sequences into every /dev/pts —
+#    that is how kitty (and any terminal) follows scheme changes. Terminals
+#    stay pinned to their own conf colours.
+THEME="$PKG/utils/theme.py"
+if ! grep -q "mydots: terminals pinned" "$THEME"; then
+    sed -i '/^def apply_terms(sequences: str) -> None:$/a\    return  # mydots: terminals pinned dark' "$THEME"
+    echo "ok: apply_terms disabled (kitty no longer follows scheme)"
+else
+    echo "skip: apply_terms already patched"
+fi
+
+# 3. Pin Brave dark via managed policy. apply_gtk flips the global GTK
+#    colour-scheme to prefer-light, which Brave would otherwise follow;
+#    the policy overrides it per-browser. Static dark frame colour matches
+#    the nightwire dark surface.
+mkdir -p /etc/brave/policies/managed
+cat > /etc/brave/policies/managed/mydots-pin-dark.json <<'JSON'
+{
+    "BrowserColorScheme": 2,
+    "BrowserThemeColor": "#0a0a12"
+}
+JSON
+echo "ok: brave pinned dark via /etc/brave/policies/managed/mydots-pin-dark.json"
+
+echo "done — restart brave (or brave --refresh-platform-policy) and reset any"
+echo "already-osc'd terminal (restart kitty, or OSC 104/110/111/112 reset)."
