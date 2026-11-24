@@ -27,7 +27,7 @@ hl.bind(mainMod .. " + A", hl.dsp.global("quickshell:overviewToggle")) -- deskto
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(term))                -- terminal
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(files))                    -- file manager
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))                  -- Launch Firefox
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(scriptsDir .. "/ClipManager.sh")) -- Clipboard Manager
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("caelestia shell drawers toggle clipboard")) -- Clipboard Manager
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("obsidian --ozone-platform=x11")) -- Obsidian
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("spotify-launcher"))       -- Spotify
 

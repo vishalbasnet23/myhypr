@@ -58,9 +58,11 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("/usr/bin/kdeconnectd")
 	hl.exec_cmd("/usr/bin/kdeconnect-indicator")
 
-	-- clipboard manager
-	hl.exec_cmd("wl-paste --type text --watch cliphist store")
-	hl.exec_cmd("wl-paste --type image --watch cliphist store")
+	-- clipboard manager: the caelestia clipboard module (quickshell
+	-- modules/clipboard/) runs its own wl-paste --watch capture pipeline from
+	-- shell start, replacing the cliphist watchers that used to live here.
+	-- SUPER+V toggles its picker. ClipManager.sh (rofi+cliphist) is left in
+	-- the tree, unbound.
 
 	-- Rainbow borders
 	-- hl.exec_cmd(UserScripts .. "/RainbowBorders.sh")
