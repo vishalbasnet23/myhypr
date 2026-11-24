@@ -50,7 +50,7 @@ StyledRect {
 
     clip: true
     radius: Tokens.rounding.large
-    color: root.urgency === "critical" ? Colours.palette.m3secondaryContainer : Colours.layer(Colours.palette.m3surfaceContainerHigh, 2)
+    color: root.urgency === "critical" ? Colours.palette.m3secondaryContainer : Colours.mutedBg
 
     RowLayout {
         id: content
@@ -107,7 +107,7 @@ StyledRect {
 
             ClippingRectangle {
                 anchors.fill: parent
-                color: root.urgency === "critical" ? Colours.palette.m3error : root.urgency === "low" ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 3) : Colours.palette.m3secondaryContainer
+                color: root.urgency === "critical" ? Colours.palette.m3error : root.urgency === "low" ? Colours.mutedBgHigh : Colours.palette.m3secondaryContainer
                 radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                 Loader {
@@ -163,7 +163,7 @@ StyledRect {
                 StyledText {
                     animate: true
                     text: root.notifs[0]?.timeStr ?? ""
-                    color: Colours.palette.m3outline
+                    color: Colours.mutedText
                     font: Tokens.font.body.small
                 }
 
@@ -171,7 +171,7 @@ StyledRect {
                     implicitWidth: expandBtn.implicitWidth + Tokens.padding.large
                     implicitHeight: groupCount.implicitHeight + Tokens.padding.extraSmall
 
-                    color: root.urgency === "critical" ? Colours.palette.m3error : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+                    color: root.urgency === "critical" ? Colours.palette.m3error : Colours.mutedBgHigh
                     radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
 
                     opacity: root.notifs.length > Config.notifs.groupPreviewNum ? 1 : 0
@@ -315,7 +315,7 @@ StyledRect {
         text: {
             const summary = modelData.summary.replace(/\n/g, " ");
             const body = modelData.body.replace(/\n/g, " ");
-            const colour = root.urgency === "critical" ? Colours.palette.m3secondary : Colours.palette.m3outline;
+            const colour = root.urgency === "critical" ? Colours.palette.m3secondary : Colours.mutedText;
 
             if (metrics.text === metrics.elidedText)
                 return `${summary} <span style='color:${colour}'>${body}</span>`;

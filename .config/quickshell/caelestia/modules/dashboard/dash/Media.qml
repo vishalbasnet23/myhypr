@@ -98,7 +98,7 @@ Item {
         animate: true
         horizontalAlignment: Text.AlignHCenter
         text: (Players.active?.trackAlbum ?? Tr.tr("No media")) || Tr.tr("Unknown album")
-        color: Colours.palette.m3outline
+        color: Colours.mutedText
         font: Tokens.font.body.small
 
         width: parent.implicitWidth - Tokens.padding.extraLargeIncreased

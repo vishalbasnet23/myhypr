@@ -211,10 +211,12 @@ CustomMouseArea {
                             const dayOfWeek = dayItem.model.date.getDay();
                             if (dayOfWeek === 0 || dayOfWeek === 6)
                                 return Colours.palette.m3tertiary;
+                            if (!(dayItem.model.today || dayItem.model.month === grid.month))
+                                return Colours.light ? Colours.mutedLine : Colours.palette.m3onSurfaceVariant;
 
                             return Colours.palette.m3onSurfaceVariant;
                         }
-                        opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.4
+                        opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : (Colours.light ? 1 : 0.4)
                         font: Tokens.font.body.small
                     }
                 }

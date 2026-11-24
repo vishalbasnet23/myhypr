@@ -207,12 +207,12 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 text: "sentiment_sad"
                 fontStyle: Tokens.font.icon.builders.large.scale(2).build()
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
             }
 
             StyledText {
                 text: Tr.tr("No lyrics found")
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
                 font: Tokens.font.title.medium
             }
         }
@@ -259,7 +259,7 @@ Item {
             anchors.right: lyrics.contentItem.right
 
             text: modelData || ". . ."
-            color: ListView.isCurrentItem ? Colours.palette.m3primary : mouse.containsMouse ? Colours.palette.m3onSurface : Colours.palette.m3outline
+            color: ListView.isCurrentItem ? Colours.palette.m3primary : mouse.containsMouse ? Colours.palette.m3onSurface : Colours.mutedText
             font: Tokens.font.body.medium
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 

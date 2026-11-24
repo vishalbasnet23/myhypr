@@ -191,7 +191,7 @@ Item {
                         active: root.separateContent
                         sourceComponent: StyledRect {
                             implicitHeight: 1
-                            color: Colours.palette.m3outline
+                            color: Colours.mutedText
                         }
                     }
 
@@ -209,7 +209,7 @@ Item {
                         active: root.separateContent
                         sourceComponent: StyledRect {
                             implicitHeight: 1
-                            color: Colours.palette.m3outline
+                            color: Colours.mutedText
                         }
                     }
 

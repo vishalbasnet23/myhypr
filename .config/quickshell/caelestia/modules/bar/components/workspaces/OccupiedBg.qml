@@ -13,7 +13,9 @@ Item {
     required property var workspaces
     required property int wsSpacing
 
-    readonly property color colour: Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+    // layer() bakes in transparency.layers alpha (0.1) — invisible on light
+    // surfaces. Solid container token in light mode keeps the pill readable.
+    readonly property color colour: Colours.mutedBgHigh
     property color colourAnimated: colour
 
     Behavior on colourAnimated {

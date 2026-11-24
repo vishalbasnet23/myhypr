@@ -132,7 +132,7 @@ ColumnLayout {
 
         implicitHeight: 1
         color: Colours.palette.m3onSurfaceVariant
-        opacity: 0.35
+        opacity: Colours.light ? 0.6 : 0.35
     }
 
     RowLayout {

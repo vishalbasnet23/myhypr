@@ -55,7 +55,7 @@ ConnectedRect {
                 StyledText {
                     id: valueLabel
 
-                    color: Colours.palette.m3outline
+                    color: Colours.mutedText
                     font: Tokens.font.body.small
                 }
             }

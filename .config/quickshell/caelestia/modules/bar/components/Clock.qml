@@ -74,7 +74,7 @@ StyledRect {
                     Layout.leftMargin: 4
                     Layout.rightMargin: Tokens.padding.extraSmall / 2
                     implicitWidth: 1
-                    color: Colours.palette.m3outlineVariant
+                    color: Colours.mutedLine
                 }
             }
         }

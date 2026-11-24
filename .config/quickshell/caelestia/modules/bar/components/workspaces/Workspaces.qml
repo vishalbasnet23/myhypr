@@ -99,7 +99,7 @@ StyledClippingRect {
             anchors.fill: parent
             radius: Tokens.rounding.full
             color: Colours.palette.m3primary
-            opacity: 0.35
+            opacity: Colours.light ? 0.6 : 0.35
 
             layer.enabled: true
             layer.effect: MultiEffect {

@@ -204,7 +204,7 @@ ColumnLayout {
                     }
                     return Tr.tr("Unknown network");
                 }
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
                 font: Tokens.font.body.small
             }
 
@@ -349,7 +349,7 @@ ColumnLayout {
                         if (passwordContainer.activeFocus) {
                             return Colours.palette.m3primary;
                         }
-                        return root.shouldBeVisible ? Colours.palette.m3outline : "transparent";
+                        return root.shouldBeVisible ? Colours.mutedText : "transparent";
                     }
 
                     Behavior on border.color {
@@ -377,7 +377,7 @@ ColumnLayout {
 
                     anchors.centerIn: parent
                     text: Tr.tr("Password")
-                    color: Colours.palette.m3outline
+                    color: Colours.mutedText
                     font: Tokens.font.mono.medium
                     opacity: passwordContainer.passwordBuffer ? 0 : 1
 

@@ -36,9 +36,9 @@ Item {
     readonly property var brailleDigits: ({
             1: "⠁", 2: "⠃", 3: "⠉", 4: "⠙", 5: "⠑", 6: "⠋", 7: "⠛", 8: "⠓", 9: "⠊"
         })
-    readonly property color dimColour: Colours.layer(Colours.palette.m3outlineVariant, 2)
+    readonly property color dimColour: Colours.light ? Colours.mutedLine : Colours.layer(Colours.palette.m3outlineVariant, 2)
 
-    property color offMonitorColour: Colours.palette.m3outlineVariant
+    property color offMonitorColour: Colours.light ? Qt.alpha(Colours.palette.m3secondary, 0.25) : Colours.palette.m3outlineVariant
     readonly property bool onOtherMonitor: {
         if (Config.bar.workspaces.perMonitor)
             return false;
@@ -48,6 +48,13 @@ Item {
     readonly property color fgColour: {
         if (onOtherMonitor)
             return offMonitorColour;
+        if (Colours.light) {
+            // Tinted hierarchy: pink focus, teal occupied, faint teal empty.
+            // onSurface reads as plain gray-black on light bars.
+            if (focused)
+                return Colours.palette.m3primary;
+            return isOccupied ? Colours.mutedText : Colours.mutedLine;
+        }
         if (focused || isOccupied || Config.bar.workspaces.occupiedBg)
             return Colours.palette.m3onSurface;
         return Colours.layer(Colours.palette.m3outlineVariant, 2);
@@ -117,7 +124,7 @@ Item {
             implicitHeight: Tokens.sizes.bar.innerWidth - Tokens.padding.small
             implicitWidth: root.focused ? label.implicitWidth + Tokens.padding.small * 2 : implicitHeight * 0.4
             radius: Tokens.rounding.full
-            color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.dimColour : Colours.layer(Colours.palette.m3outlineVariant, 1)
+            color: root.focused ? Colours.palette.m3primary : root.isOccupied ? root.dimColour : (Colours.light ? Colours.mutedLine : Colours.layer(Colours.palette.m3outlineVariant, 1))
 
             Behavior on implicitWidth {
                 Anim {

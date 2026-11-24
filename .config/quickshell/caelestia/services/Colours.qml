@@ -20,6 +20,14 @@ Singleton {
     property bool previewLight
     readonly property M3Palette palette: showPreview ? preview : current
     readonly property M3TPalette tPalette: M3TPalette {}
+
+    // Muted tiers. The gray M3 tokens (outline/outlineVariant) and the
+    // alpha-0.1 layer() washes disappear on light surfaces, so light mode
+    // reroutes them through the secondary hue. Dark values are unchanged.
+    readonly property color mutedText: light ? Qt.alpha(palette.m3secondary, 0.8) : palette.m3outline
+    readonly property color mutedLine: light ? Qt.alpha(palette.m3secondary, 0.45) : palette.m3outlineVariant
+    readonly property color mutedBg: light ? palette.m3secondaryContainer : layer(palette.m3surfaceContainerHigh, 2)
+    readonly property color mutedBgHigh: light ? palette.m3secondaryContainer : layer(palette.m3surfaceContainerHighest, 2)
     readonly property M3Palette current: M3Palette {}
     readonly property M3Palette preview: M3Palette {}
     readonly property Transparency transparency: Transparency {}

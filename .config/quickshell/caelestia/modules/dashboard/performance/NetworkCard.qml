@@ -96,7 +96,7 @@ StyledRect {
                 anchors.centerIn: parent
                 text: Tr.tr("Collecting data...")
                 font: Tokens.font.body.small
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
                 visible: NetworkUsage.downloadBuffer.count < 2
             }
         }

@@ -97,7 +97,7 @@ Item {
             Layout.rightMargin: Tokens.padding.large
             Layout.fillWidth: true
             implicitHeight: 1
-            color: Colours.palette.m3outlineVariant
+            color: Colours.mutedLine
         }
 
         RowLayout {
@@ -106,13 +106,13 @@ Item {
 
             MaterialIcon {
                 text: "public"
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
                 fontStyle: Tokens.font.icon.small
             }
 
             StyledText {
                 text: Tr.tr("Kathmandu")
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
                 font: Tokens.font.label.small
             }
         }

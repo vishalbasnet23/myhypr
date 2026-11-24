@@ -48,7 +48,7 @@ ConnectedRect {
                 Layout.fillWidth: true
                 visible: root.subtext
                 text: root.subtext
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
                 font: Tokens.font.label.small
                 elide: Text.ElideRight
             }

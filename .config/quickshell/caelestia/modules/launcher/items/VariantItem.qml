@@ -51,7 +51,7 @@ Item {
             StyledText {
                 text: root.modelData?.description ?? ""
                 font: Tokens.font.body.small
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
 
                 elide: Text.ElideRight
                 anchors.left: parent.left

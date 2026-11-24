@@ -131,7 +131,7 @@ PageBase {
                                     return Tr.trCtx("Connected • %1", "bluetooth device state with battery").arg(Strings.percentOne(device.modelData.battery));
                                 return Tr.trCtx("Connected", "bluetooth device state");
                             }
-                            color: Colours.palette.m3outline
+                            color: Colours.mutedText
                             font: Tokens.font.label.small
                             elide: Text.ElideRight
                             animate: true

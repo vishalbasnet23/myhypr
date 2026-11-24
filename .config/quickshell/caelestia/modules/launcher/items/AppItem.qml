@@ -62,7 +62,7 @@ Item {
 
                 text: (root.modelData?.comment || root.modelData?.genericName || root.modelData?.name) ?? ""
                 font: Tokens.font.body.small
-                color: Colours.palette.m3outline
+                color: Colours.mutedText
 
                 elide: Text.ElideRight
                 width: root.width - icon.width - favouriteIcon.width - Tokens.rounding.extraLargeIncreased

@@ -17,7 +17,7 @@ Item {
     required property ScreenState screenState
     required property FileDialog facePicker
 
-    property color pfpFallbackColour: Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+    property color pfpFallbackColour: Colours.mutedBgHigh
 
     anchors.fill: parent
     anchors.margins: Tokens.padding.large

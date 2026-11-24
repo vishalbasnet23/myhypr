@@ -86,7 +86,7 @@ StackView {
                 implicitHeight: modelData.isSeparator ? 1 : children.implicitHeight
 
                 radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
-                color: modelData.isSeparator ? Colours.palette.m3outlineVariant : "transparent"
+                color: modelData.isSeparator ? Colours.mutedLine : "transparent"
 
                 Loader {
                     id: children
@@ -145,7 +145,7 @@ StackView {
                             anchors.leftMargin: icon.active ? Tokens.spacing.medium : 0
 
                             text: labelMetrics.elidedText
-                            color: item.modelData.enabled ? Colours.palette.m3onSurface : Colours.palette.m3outline
+                            color: item.modelData.enabled ? Colours.palette.m3onSurface : Colours.mutedText
                         }
 
                         TextMetrics {
@@ -169,7 +169,7 @@ StackView {
 
                             sourceComponent: MaterialIcon {
                                 text: "chevron_right"
-                                color: item.modelData.enabled ? Colours.palette.m3onSurface : Colours.palette.m3outline
+                                color: item.modelData.enabled ? Colours.palette.m3onSurface : Colours.mutedText
                             }
                         }
                     }

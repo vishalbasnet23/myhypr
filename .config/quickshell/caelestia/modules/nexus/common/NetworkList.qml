@@ -139,7 +139,7 @@ ItemList {
                             return Tr.trCtx("Security: %1 • %2", "network security and status").arg(net.security).arg(status);
                         return Tr.trCtx("Security: %1", "network security").arg(net.security);
                     }
-                    color: Colours.palette.m3outline
+                    color: Colours.mutedText
                     font: Tokens.font.label.small
                     elide: Text.ElideRight
                 }

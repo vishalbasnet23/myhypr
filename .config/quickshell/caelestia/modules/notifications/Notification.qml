@@ -117,7 +117,7 @@ StyledRect {
 
                 sourceComponent: StyledClippingRect {
                     radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
-                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.modelData.urgency === NotificationUrgency.Low ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : Colours.palette.m3secondaryContainer
+                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.modelData.urgency === NotificationUrgency.Low ? Colours.mutedBgHigh : Colours.palette.m3secondaryContainer
                     implicitWidth: TokenConfig.sizes.notifs.image
                     implicitHeight: TokenConfig.sizes.notifs.image
 
@@ -148,7 +148,7 @@ StyledRect {
 
                 sourceComponent: StyledRect {
                     radius: Config.appearance.rounding.scale > 0 ? Tokens.rounding.full : 0
-                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.modelData.urgency === NotificationUrgency.Low ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : Colours.palette.m3secondaryContainer
+                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.modelData.urgency === NotificationUrgency.Low ? Colours.mutedBgHigh : Colours.palette.m3secondaryContainer
                     implicitWidth: root.hasImage ? Tokens.sizes.notifs.badge : TokenConfig.sizes.notifs.image
                     implicitHeight: root.hasImage ? Tokens.sizes.notifs.badge : TokenConfig.sizes.notifs.image
 
@@ -494,7 +494,7 @@ StyledRect {
                     isRound: true
                     shapeMorph: true
                     fillWidth: root.modelData.actions.length === 0
-                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.mutedBgHigh
                     inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondary : Colours.palette.m3onSurfaceVariant
                     icon: "close"
                     padding: Tokens.padding.extraSmall
@@ -510,7 +510,7 @@ StyledRect {
                         isRound: true
                         shapeMorph: true
                         fillWidth: true
-                        inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+                        inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.mutedBgHigh
                         inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondary : Colours.palette.m3onSurfaceVariant
                         text: modelData.text
                         onClicked: modelData.invoke()
@@ -529,7 +529,7 @@ StyledRect {
                     isRound: true
                     shapeMorph: true
                     fillWidth: root.modelData.actions.length === 0
-                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.mutedBgHigh
                     inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondary : Colours.palette.m3onSurfaceVariant
                     icon: copyTimer.running ? "inventory" : "content_copy"
                     padding: Tokens.padding.extraSmall
