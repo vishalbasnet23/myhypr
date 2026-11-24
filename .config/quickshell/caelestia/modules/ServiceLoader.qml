@@ -11,6 +11,7 @@ Scope {
         GameMode;
         Notifs;
         Players;
+        Clipboard; // Clipboard history capture must run from shell init, not first open
         Brightness;
         Weather.reload();
 
