@@ -77,6 +77,37 @@ StyledRect {
                     }
                 }
                 DelegateChoice {
+                    roleValue: "clipboard"
+                    delegate: EntryWrapper {
+                        // Clipboard picker status icon: hover opens the history
+                        // popout (like audio/network), click toggles the picker.
+                        Item {
+                            readonly property bool pickerOpen: ShellState.forActive()?.clipboard ?? false
+
+                            implicitWidth: icon.implicitWidth
+                            implicitHeight: icon.implicitHeight
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    const state = ShellState.forActive();
+                                    state.clipboard = !state.clipboard;
+                                }
+                            }
+
+                            MaterialIcon {
+                                id: icon
+
+                                animate: true
+                                text: "content_paste"
+                                fill: parent.pickerOpen ? 1 : 0
+                                color: parent.pickerOpen ? Colours.palette.m3primary : root.colour
+                                fontStyle: Tokens.font.icon.medium
+                            }
+                        }
+                    }
+                }
+                DelegateChoice {
                     roleValue: "audio"
                     delegate: EntryWrapper {
                         margin: Tokens.spacing.extraSmall / 2

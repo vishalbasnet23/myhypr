@@ -37,6 +37,13 @@ Item {
         }
 
         Popout {
+            name: "clipboard"
+            sourceComponent: ClipboardPopout {
+                popouts: root.popouts
+            }
+        }
+
+        Popout {
             id: networkPopout
 
             name: "network"
