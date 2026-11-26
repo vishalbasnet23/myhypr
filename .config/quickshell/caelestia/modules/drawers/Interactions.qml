@@ -38,7 +38,20 @@ CustomMouseArea {
         const panelWidth = panel.width * (1 - (panel.offsetScale ?? 0)); // qmllint disable missing-property
         // 20px floor so the hover hotspot stays usable even with border.thickness
         // at 0 (flat design) and the panel fully collapsed (panelWidth === 0).
-        return x < Math.max(20, Config.border.minThickness, panelWidth) && withinPanelHeight(panel, x, y);
+        return x < Math.max(20, Config.border.minThickness, panelWidth) && withinHotspotHeight(panel, y);
+    }
+
+    // Vertical half of the left-edge hotspot. withinPanelHeight() pads by
+    // border.rounding only, and a closed dashboard reports height 0, so with
+    // rounding at 0 (flat design) the trigger shrank to the single pixel row at
+    // the panel centre. Keep a band of at least hotspotMinHeight around it.
+    // Must match the dashboard hotspot Region in Regions.qml.
+    readonly property real hotspotMinHeight: 240
+
+    function withinHotspotHeight(panel: Item, y: real): bool {
+        const centre = root.borderThickness + bar.implicitHeight + panel.y + panel.height / 2;
+        const half = Math.max(panel.height, hotspotMinHeight) / 2 + Config.border.rounding;
+        return y >= centre - half && y <= centre + half;
     }
 
     function inRightPanel(panel: Item, x: real, y: real): bool {

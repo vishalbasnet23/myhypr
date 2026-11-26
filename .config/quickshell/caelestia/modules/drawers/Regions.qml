@@ -27,6 +27,22 @@ Region {
         width: panel.width * (1 - root.panels.dashboard.offsetScale) + root.borderThickness
     }
 
+    // mydots: left-edge dashboard hotspot, 20px wide and at least 240px tall
+    // (Interactions.hotspotMinHeight). The R above follows the panel, which is
+    // 0px tall while closed, so with border thickness 0 the only input left at
+    // the edge was a 2px strip: fine against a physical screen edge, skipped
+    // entirely by a cursor crossing into a neighbouring monitor.
+    Region {
+        readonly property Item panel: root.panels.dashboard
+        readonly property real h: Math.max(panel.height, 240)
+
+        x: 0
+        y: panel.y + panel.height / 2 - h / 2 + root.borderThickness + root.bar.implicitHeight
+        width: 20
+        height: h
+        intersection: Intersection.Subtract
+    }
+
     R {
         panel: root.panels.launcher
         y: root.win.height - height
