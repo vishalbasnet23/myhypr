@@ -68,6 +68,78 @@ Singleton {
             saveTimer.restart();
     }
 
+    // Toast -> notification bridge: every Toaster.toast() (audio device change,
+    // now playing, battery, VPN, DND, game mode, IPC toasts...) is re-posted as a
+    // regular notification so it shows in the normal popup + notification centre
+    // instead of the separate bottom-right toast stack. Toasts are closed right
+    // away (no locks yet, so the plugin drops them synchronously and the toast UI
+    // never shows them). Any toast still open here is therefore a new one.
+    function toastIcon(icon: string): string {
+        if (icon.startsWith("volume") || icon === "no_sound")
+            return "audio-volume-high-symbolic";
+        if (icon.startsWith("mic"))
+            return "audio-input-microphone-symbolic";
+        if (icon === "music_note")
+            return "media-playback-start-symbolic";
+        if (icon.startsWith("battery") || icon.startsWith("power"))
+            return "battery-symbolic";
+        if (icon.startsWith("vpn"))
+            return "network-vpn-symbolic";
+        if (icon.startsWith("do_not_disturb"))
+            return "notifications-disabled-symbolic";
+        if (icon === "gamepad")
+            return "input-gaming-symbolic";
+        if (icon === "error" || icon === "warning")
+            return "dialog-warning-symbolic";
+        return "dialog-information-symbolic";
+    }
+
+    function toastAppName(icon: string): string {
+        if (icon.startsWith("volume") || icon === "no_sound" || icon.startsWith("mic"))
+            return "Audio";
+        if (icon === "music_note")
+            return "Now Playing";
+        return "System";
+    }
+
+    function postToast(toast: Toast): void {
+        const appName = toastAppName(toast.icon);
+
+        // Now playing / audio device changes replace the previous one instead of
+        // piling up (Bluetooth reconnects fire output+input changes repeatedly)
+        if (appName === "Now Playing" || appName === "Audio")
+            for (const n of root.list.slice())
+                if (!n.closed && n.appName === appName && n.summary === Tr.trMarked(toast.title))
+                    n.close();
+
+        const comp = notifComp.createObject(root, {
+            popup: root.shouldShowPopup(),
+            // titles may carry a Tr marker; resolve it like ToastItem does
+            summary: Tr.trMarked(toast.title),
+            body: Tr.trMarked(toast.message),
+            hints: ({}),
+            appName: appName,
+            appIcon: toastIcon(toast.icon),
+            expireTimeout: toast.timeout,
+            urgency: toast.type === Toast.Error ? NotificationUrgency.Critical : NotificationUrgency.Normal
+        });
+        root.list = [comp, ...root.list];
+        root.trimStack(appName);
+    }
+
+    Connections {
+        function onToastsChanged(): void {
+            for (const toast of [...Toaster.toasts]) {
+                if (toast.closed)
+                    continue;
+                root.postToast(toast);
+                toast.close();
+            }
+        }
+
+        target: Toaster
+    }
+
     Timer {
         id: saveTimer
 

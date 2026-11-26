@@ -14,6 +14,11 @@ Item {
     property bool flag
 
     function shouldShowToast(toast: Toast): bool {
+        // Toasts are re-posted as notifications by the bridge in services/Notifs.qml.
+        // Never render them here: a ToastWrapper locks its toast on creation, so even
+        // an instantly-closed toast would flash through its exit animation.
+        return false;
+
         if (!Notifs.hasFullscreen())
             return true;
         if (GlobalConfig.utilities.toasts.fullscreen === "all")
