@@ -223,15 +223,23 @@ PageBase {
         ToggleRow {
             Layout.topMargin: Tokens.spacing.extraSmall / 2 - parent.spacing
 
-            last: true
             text: Tr.tr("Rounded corners")
             subtext: Tr.tr("Flat turns off corner rounding and the blob-wobble panel effect")
             checked: Config.appearance.rounding.scale > 0
             onToggled: {
                 GlobalConfig.appearance.rounding.scale = checked ? 1 : 0;
                 GlobalConfig.appearance.deformScale = checked ? 1 : 0;
-                GlobalConfig.border.rounding = checked ? 25 : 0;
             }
+        }
+
+        ToggleRow {
+            Layout.topMargin: Tokens.spacing.extraSmall / 2 - parent.spacing
+
+            last: true
+            text: Tr.tr("Rounded screen corners")
+            subtext: Tr.tr("Round the corners of the frame around the screen edge")
+            checked: Config.border.rounding > 0
+            onToggled: GlobalConfig.border.rounding = checked ? 25 : 0
         }
     }
 }
