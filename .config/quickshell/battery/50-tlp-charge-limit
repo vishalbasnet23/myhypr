@@ -1,0 +1,3 @@
+# Allow the caelestia battery popout to switch charge-limit presets.
+# Exact argument lists only; anything else still requires a password.
+vishalbasnet23 ALL=(root) NOPASSWD: /usr/bin/tlp setcharge 75 80 BAT0, /usr/bin/tlp setcharge 85 90 BAT0, /usr/bin/tlp setcharge 0 100 BAT0
