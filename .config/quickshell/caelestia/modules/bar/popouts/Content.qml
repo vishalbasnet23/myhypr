@@ -127,6 +127,11 @@ Item {
         }
 
         Popout {
+            name: "worldclock"
+            sourceComponent: WorldClock {}
+        }
+
+        Popout {
             name: "lockstatus"
             sourceComponent: LockStatus {}
         }
