@@ -71,8 +71,14 @@ RowLayout {
                 tray.expanded = true;
             }
         } else if (id === "clock") {
-            popouts.currentName = "worldclock";
-            popouts.currentCenter = (ch.item as Item).mapToItem(root, (ch.item as Item).implicitWidth / 2, 0).x ?? 0;
+            // Date segment -> calendar, everything else (time) -> world clock.
+            // Left padding counts as date so the boundary sits at the divider.
+            const clock = ch.item as Clock;
+            const dateItem = clock.dateItem;
+            const onDate = dateItem.visible && dateItem.width > 0 && mapToItem(dateItem, pos, 0).x <= dateItem.width;
+            const anchor = onDate ? dateItem : clock;
+            popouts.currentName = onDate ? "calendar" : "worldclock";
+            popouts.currentCenter = anchor.mapToItem(root, anchor.width / 2, 0).x ?? 0;
             popouts.hasCurrent = true;
         } else if (id === "activeWindow" && Config.bar.popouts.activeWindow && Config.bar.activeWindow.showOnHover) {
             popouts.currentName = id.toLowerCase();

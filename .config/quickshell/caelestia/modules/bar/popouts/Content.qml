@@ -132,6 +132,11 @@ Item {
         }
 
         Popout {
+            name: "calendar"
+            sourceComponent: CalendarPopout {}
+        }
+
+        Popout {
             name: "lockstatus"
             sourceComponent: LockStatus {}
         }
