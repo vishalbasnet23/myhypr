@@ -24,6 +24,28 @@ symlink). Symptoms: `caelestia scheme set -m light` silently bounces back
 to dark (`_check_mode` validates against `*.txt` stems in the flavour dir).
 Fix: re-run the install command above.
 
+## Extra flavours
+
+`flavours/<name>/{dark,light}.txt` adds sibling flavours in the same
+family: `synthwave`, `acid`, `glacier`, `redline`, `amber`, `deepsea`,
+`moss`, `cobalt`, `chrome`. Each is a dark/light pair,
+so the mode toggle works on all of them. They are picked from Nexus settings
+→ Wallpaper & style → Colours (`caelestia/modules/nexus/pages/wallandstyle/ColourSelect.qml`),
+or `caelestia scheme set -n nightwire -f <name>`.
+
+The hand-picked tokens (surfaces, primary/secondary/tertiary and containers)
+live in `FLAVOURS` in `gen-nightwire-flavours.py`; everything else is filled
+from materialyoucolor and neon's own term/named colours. Edit the table,
+then regenerate and reinstall:
+
+```sh
+python3 gen-nightwire-flavours.py     # rewrites flavours/*/{dark,light}.txt
+sudo bash install.sh
+```
+
+`install.sh` copies them along with `light.txt`, and they get wiped by the
+same `caelestia-shell` package update.
+
 ## Regenerate
 
 `gen-nightwire-light.py` parses key colours out of the installed
